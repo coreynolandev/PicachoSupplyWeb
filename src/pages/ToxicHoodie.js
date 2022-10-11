@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LogoBlue from '../assets/toxic-wave-logo/logo_blue.png';
 import LogoBlueGreenGradient from '../assets/toxic-wave-logo/logo_blue_green_gradient.png';
 import LogoPinkOrangeGradient from '../assets/toxic-wave-logo/logo_pink_orange_gradient.png';
@@ -15,7 +15,7 @@ import HoodieBlue from '../assets/hoodie/hoodie_blue.png';
 import HoodieLavender from '../assets/hoodie/hoodie_lavender.png';
 import HoodiePlum from '../assets/hoodie/hoodie_plum.png';
 import HoodieYellow from '../assets/hoodie/hoodie_yellow.png';
-import { Box, Button, Card, CardHeader, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardHeader, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Tooltip, Typography } from '@mui/material';
 
 import HoodieSwatchArmy from '../assets/hoodie/swatch/army.png';
 import HoodieSwatchBlack from '../assets/hoodie/swatch/black.png';
@@ -34,16 +34,46 @@ import StitchBorderSwatchBlue from '../assets/swatch/swatch_blue.png';
 import StitchBorderSwatchBlack from '../assets/hoodie/swatch/black.png';
 import StitchBorderSwatchWhite from '../assets/swatch/swatch_white.png';
 import SizeSelectionAccordion from '../components/SizeSelectionAccordion';
-import { Refresh } from '@mui/icons-material';
+import { Clear, Refresh, Shuffle } from '@mui/icons-material';
+
+const hoodieSelectionList = [
+	{ logo: HoodieArmy, swatchImage: HoodieSwatchArmy, alt: 'Army', order: 0 },
+	{ logo: HoodieBlack, swatchImage: HoodieSwatchBlack, alt: 'Black', order: 1 },
+	{ logo: HoodieBlue, swatchImage: HoodieSwatchBlue, alt: 'Blue', order: 2 },
+	{ logo: HoodieLavender, swatchImage: HoodieSwatchLavender, alt: 'Lavender', order: 3 },
+	{ logo: HoodiePlum, swatchImage: HoodieSwatchPlum, alt: 'Plum', order: 4 },
+	{ logo: HoodieYellow, swatchImage: HoodieSwatchYellow, alt: 'Yellow', order: 5 }
+];
+
+const borderSelectionList = [
+	{ logo: BorderWhite, swatchImage: StitchBorderSwatchWhite, alt: 'White', order: 0 },
+	{ logo: BorderNavy, swatchImage: StitchBorderSwatchBlue, alt: 'Navy', order: 1 },
+	{ logo: BorderBlack, swatchImage: StitchBorderSwatchBlack, alt: 'Black', order: 2 }
+];
+
+const stitchFillSelectionList = [
+	{ id: 1, logo: LogoBlue, swatchImage: StitchSwatchBlue, alt: 'Blue', order: 0, type: 'solid' },
+	{ id: 2, logo: FillWhite, swatchImage: StitchSwatchWhite, alt: 'White', order: 1, type: 'solid' },
+	{ id: 3, logo: LogoBlueGreenGradient, swatchImage: StitchSwatchBlueGreenGradient, alt: 'Blue / Green', order: 2, type: 'gradient' },
+	{ id: 4, logo: LogoPinkOrangeGradient, swatchImage: StitchSwatchPinkOrangeGradient, alt: 'Pink  / Orange', order: 3, type: 'gradient' }
+];
+
+const sizeSelectionList = [
+	{ size: 'S', order: 0 },
+	{ size: 'M', order: 1 },
+	{ size: 'L', order: 2 },
+	{ size: 'XL', order: 3 }
+];
 
 const ToxicHoodie = () => {
 	const [expanded, setExpanded] = useState(1);
 	const [selectedHoodie, setSelectedHoodie] = useState(null);
 	const [selectedBorder, setSelectedBorder] = useState(null);
-	const [patternType, setPatternType] = useState('solid');
 	const [selectedStitchFill, setSelectedStitchFill] = useState(null);
+	const [patternType, setPatternType] = useState('solid');
 	const [selectedSize, setSelectedSize] = useState(null);
 	const [quantity, setQuantity] = useState(1);
+	const [orderMaterials, setOrderMaterials] = useState({ hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill });
 
 	const changeExpandedAccordion = (accordionNumber) => {
 		if (accordionNumber === expanded) {
@@ -58,34 +88,40 @@ const ToxicHoodie = () => {
 		setPatternType(newPatternType);
 	};
 
-	const hoodieSelectionList = [
-		{ logo: HoodieArmy, swatchImage: HoodieSwatchArmy, alt: 'Army', order: 0 },
-		{ logo: HoodieBlack, swatchImage: HoodieSwatchBlack, alt: 'Black', order: 1 },
-		{ logo: HoodieBlue, swatchImage: HoodieSwatchBlue, alt: 'Blue', order: 2 },
-		{ logo: HoodieLavender, swatchImage: HoodieSwatchLavender, alt: 'Lavender', order: 3 },
-		{ logo: HoodiePlum, swatchImage: HoodieSwatchPlum, alt: 'Plum', order: 4 },
-		{ logo: HoodieYellow, swatchImage: HoodieSwatchYellow, alt: 'Yellow', order: 5 }
-	];
+	const resetAllSelections = () => {
+		var confirmReset = window.confirm('Reset all Selections?');
+		if (confirmReset) {
+			setSelectedHoodie(null);
+			setSelectedBorder(null);
+			setSelectedStitchFill(null);
+			setPatternType('solid');
+			setSelectedSize(null);
+			setQuantity(1);
+		}
+	};
 
-	const borderSelectionList = [
-		{ logo: BorderWhite, swatchImage: StitchBorderSwatchWhite, alt: 'White', order: 0 },
-		{ logo: BorderNavy, swatchImage: StitchBorderSwatchBlue, alt: 'Navy', order: 1 },
-		{ logo: BorderBlack, swatchImage: StitchBorderSwatchBlack, alt: 'Black', order: 2 }
-	];
+	function areMaterialsEqual(newMaterials) {
+		return newMaterials.hoodie === orderMaterials.hoodie && newMaterials.border === orderMaterials.border && newMaterials.stitchFill === orderMaterials.stitchFill;
+	}
 
-	const stitchFillSelectionList = [
-		{ id: 1, logo: LogoBlue, swatchImage: StitchSwatchBlue, alt: 'Blue', order: 0, type: 'solid' },
-		{ id: 2, logo: LogoBlueGreenGradient, swatchImage: StitchSwatchBlueGreenGradient, alt: 'Blue / Green', order: 1, type: 'gradient' },
-		{ id: 3, logo: LogoPinkOrangeGradient, swatchImage: StitchSwatchPinkOrangeGradient, alt: 'Pink  / Orange', order: 2, type: 'gradient' },
-		{ id: 4, logo: FillWhite, swatchImage: StitchSwatchWhite, alt: 'White', order: 3, type: 'solid' }
-	];
+	const randomizeSelections = () => {
+		var confirmRandomize = true;
+		const lastSelections = { hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill };
 
-	const sizeSelectionList = [
-		{ size: 'S', order: 0 },
-		{ size: 'M', order: 1 },
-		{ size: 'L', order: 2 },
-		{ size: 'XL', order: 3 }
-	];
+		if (!areMaterialsEqual(lastSelections) && (selectedHoodie !== null || selectedBorder !== null || selectedStitchFill !== null)) {
+			confirmRandomize = window.confirm('Let the Great Hawk randomize your hoodie? All current selections will be lost.');
+		}
+		if (confirmRandomize) {
+			const hoodieRandom = Math.floor(Math.random() * hoodieSelectionList.length);
+			const borderRandom = Math.floor(Math.random() * borderSelectionList.length);
+			const stitchFillRandom = Math.floor(Math.random() * stitchFillSelectionList.length);
+			setSelectedHoodie(hoodieRandom);
+			setSelectedBorder(borderRandom);
+			setSelectedStitchFill(stitchFillRandom);
+			setPatternType(stitchFillSelectionList[stitchFillRandom].type);
+			setOrderMaterials({ hoodie: hoodieRandom, border: borderRandom, stitchFill: stitchFillRandom });
+		}
+	};
 
 	return (
 		<Stack direction={{ sm: 'column', md: 'row' }} justifyContent='center' alignItems='center' sx={{ width: '100%' }} mt={2}>
@@ -166,10 +202,20 @@ const ToxicHoodie = () => {
 						</Stack>
 
 						<Stack justifyContent='space-between' spacing={1} direction='row'>
-							<Button variant='contained'>Add to Cart</Button>
-							<IconButton>
-								<Refresh />
-							</IconButton>
+							<Button fullWidth variant='contained'>
+								Add to Cart
+							</Button>
+							<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+								<IconButton onClick={() => resetAllSelections()}>
+									<Clear />
+									{/* <Refresh /> */}
+								</IconButton>
+							</Tooltip>
+							<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+								<IconButton onClick={() => randomizeSelections()}>
+									<Shuffle />
+								</IconButton>
+							</Tooltip>
 						</Stack>
 					</Stack>
 				</Card>
