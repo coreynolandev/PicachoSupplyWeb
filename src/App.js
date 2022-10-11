@@ -14,9 +14,28 @@ import HoodieBlue from './assets/hoodie/hoodie_blue.png';
 import HoodieLavender from './assets/hoodie/hoodie_lavender.png';
 import HoodiePlum from './assets/hoodie/hoodie_plum.png';
 import HoodieYellow from './assets/hoodie/hoodie_yellow.png';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import Swatch from './components/Swatch';
-import { Container, IconButton, StepButton, Tooltip, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Card,
+	CardHeader,
+	Container,
+	createTheme,
+	CssBaseline,
+	FormControl,
+	IconButton,
+	InputLabel,
+	MenuItem,
+	responsiveFontSizes,
+	Select,
+	Stack,
+	StepButton,
+	Tooltip,
+	Typography,
+	useMediaQuery
+} from '@mui/material';
 
 import HoodieSwatchArmy from './assets/hoodie/swatch/army.png';
 import HoodieSwatchBlack from './assets/hoodie/swatch/black.png';
@@ -24,17 +43,57 @@ import HoodieSwatchBlue from './assets/hoodie/swatch/blue.png';
 import HoodieSwatchLavender from './assets/hoodie/swatch/lavender.png';
 import HoodieSwatchPlum from './assets/hoodie/swatch/plum.png';
 import HoodieSwatchYellow from './assets/hoodie/swatch/yellow.png';
+import { getMap } from './fetchit';
+import { ThemeProvider } from '@emotion/react';
+import Home from './components/Home';
+
+import desktopImage from './mountain_bg2.jpg';
+import mobileImage from './mountain_bg3.jpg';
+import HoodieSelectionAccordion from './components/HoodieSelectionAccordion';
+import MyNewAccordion from './components/MyNewAccordion';
+import ToxicHoodie from './pages/ToxicHoodie';
 
 // import { Swatch } from '@sajari/react-components';
 
 function App() {
 	const [selectedSwatch, setSelectedSwatch] = useState(0);
 	const [selectedHoodie, setSelectedHoodie] = useState(0);
+	const [selectedSize, setSelectedSize] = useState(null);
+	const [quantity, setQuantity] = useState(1);
+
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const [colorMode, setColorMode] = useState('dark');
+
+	useEffect(() => {
+		setColorMode(prefersDarkMode ? 'dark' : 'light');
+	}, []);
+
+	let theme = createTheme({
+		palette: {
+			mode: colorMode
+		},
+		typography: {
+			fontFamily: ['Catamaran', 'sans-serif'].join(','),
+			fontSize: 16,
+			fontWeightLight: 300,
+			fontWeightMedium: 400,
+			fontWeightRegular: 500,
+			fontWeightBold: 600
+		}
+	});
+	// fontFamily: ['Catamaran', 'sans-serif'].join(',')
+	theme = responsiveFontSizes(theme);
+
+	const changeColorMode = () => {
+		console.log('changing mode!');
+		const newMode = colorMode === 'dark' ? 'light' : 'dark';
+		setColorMode(newMode);
+	};
 
 	const swatchSelectionList = [
 		{ logo: LogoBlue, swatchImage: StitchSwatchBlue, alt: 'Blue', order: 0 },
-		{ logo: LogoBlueGreenGradient, swatchImage: StitchSwatchBlueGreenGradient, alt: 'Blue Green Gradient', order: 1 },
-		{ logo: LogoPinkOrangeGradient, swatchImage: StitchSwatchPinkOrangeGradient, alt: 'Pink Orange Gradient', order: 2 },
+		{ logo: LogoBlueGreenGradient, swatchImage: StitchSwatchBlueGreenGradient, alt: 'Blue / Green', order: 1 },
+		{ logo: LogoPinkOrangeGradient, swatchImage: StitchSwatchPinkOrangeGradient, alt: 'Pink  / Orange', order: 2 },
 		{ logo: LogoWhite, swatchImage: StitchSwatchWhite, alt: 'White', order: 3 }
 	];
 
@@ -44,72 +103,32 @@ function App() {
 		{ logo: HoodieBlue, swatchImage: HoodieSwatchBlue, alt: 'Blue', order: 2 },
 		{ logo: HoodieLavender, swatchImage: HoodieSwatchLavender, alt: 'Lavender', order: 3 },
 		{ logo: HoodiePlum, swatchImage: HoodieSwatchPlum, alt: 'Plum', order: 4 },
-		{ logo: HoodieYellow, swatchImage: HoodieSwatchYellow, alt: 'Yellow', order: 5 }
+		{ logo: HoodieYellow, swatchImage: HoodieSwatchYellow, alt: 'Yellow', order: 5 },
+		{ logo: HoodieYellow, swatchImage: HoodieSwatchYellow, alt: 'Yellow', order: 6 }
 	];
 
+	const sizeSelectionList = [
+		{ size: 'S', order: 0 },
+		{ size: 'M', order: 1 },
+		{ size: 'L', order: 2 },
+		{ size: 'XL', order: 3 }
+	];
+
+	// const imageUrl = window.innerWidth >= 650 ? desktopImage : mobileImage;
+
 	return (
-		<div className='App'>
-			<Container maxWidth='sm'>
-				<div className='hoodie-stitch container'>
-					<img className='toxic-wave-logo hoodie-stitch stitch' src={swatchSelectionList[selectedSwatch].logo} alt='Stitch' />
-					<img className='hoodie-base hoodie-stitch hoodie' src={hoodieSelectionList[selectedHoodie].logo} alt='Hoodie' />
+		<ThemeProvider theme={theme}>
+			{/* <Home /> */}
+			<CssBaseline />
+			<div className='App'>
+				{/* <div className='App' style={{ backgroundImage: `url(${imageUrl})` }}> */}
+				<div className='App-content'>
+					<Container maxWidth='xl' sx={{ minHeight: '100%' }}>
+						<ToxicHoodie />
+					</Container>
 				</div>
-				<div className='swatch-group'>
-					<div className='swatch-selector-group'>
-						<Typography sx={{ width: 100 }}>Stitching</Typography>
-
-						{swatchSelectionList.map((swatch) => {
-							return (
-								<Tooltip title={swatch.alt} placement='top'>
-									<IconButton
-										sx={{
-											borderRadius: 0,
-											borderColor: 'primary.main',
-											margin: 0,
-											padding: 0
-										}}>
-										<Swatch
-											swatchImage={swatch.swatchImage}
-											type='color-swatch'
-											alt={swatch.alt}
-											number={swatch.order}
-											selectedSwatch={selectedSwatch}
-											setSelectedSwatch={setSelectedSwatch}
-										/>
-									</IconButton>
-								</Tooltip>
-							);
-						})}
-					</div>
-
-					<div className='swatch-selector-group'>
-						<Typography sx={{ width: 100 }}>Base</Typography>
-						{hoodieSelectionList.map((swatch) => {
-							return (
-								<Tooltip title={swatch.alt}>
-									<IconButton
-										sx={{
-											borderRadius: 0,
-											borderColor: 'primary.main',
-											margin: 0,
-											padding: 0
-										}}>
-										<Swatch
-											swatchImage={swatch.swatchImage}
-											type='color-swatch'
-											alt={swatch.alt}
-											number={swatch.order}
-											selectedSwatch={selectedHoodie}
-											setSelectedSwatch={setSelectedHoodie}
-										/>
-									</IconButton>
-								</Tooltip>
-							);
-						})}
-					</div>
-				</div>
-			</Container>
-		</div>
+			</div>
+		</ThemeProvider>
 	);
 }
 
