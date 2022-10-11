@@ -5,6 +5,16 @@
 	/* opacity: 70%; */
 }
 
+.nospace-link {
+	padding: 0px;
+}
+.logo.container {
+	max-height: 90px;
+	min-width: 50px;
+	position: relative;
+	align-self: center;
+}
+
 .hoodie-stitch.container {
 	max-height: 600px;
 	max-width: 514.3px;
@@ -88,6 +98,15 @@
 .color-swatch.selected {
 	border: solid 2px black;
 	opacity: 100%;
+}
+
+.navlink {
+	text-decoration: none;
+	margin-right: 1rem;
+	color: inherit;
+}
+.navlink:hover {
+	text-decoration: underline;
 }
 
 .App {

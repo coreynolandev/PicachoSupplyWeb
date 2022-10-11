@@ -1,8 +1,8 @@
 import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
-import { Accordion } from './accordion/Accordion';
-import { AccordionSummary } from './accordion/AccordionSummary';
-import { AccordionDetails } from './accordion/AccordionDetails';
-import Swatch from './Swatch';
+import { Accordion } from '../design/Accordion';
+import { AccordionSummary } from './AccordionSummary';
+import { AccordionDetails } from './AccordionDetails';
+import Swatch from '../design/Swatch';
 
 const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedHoodie, setSelectedHoodie }) => {
 	return (
@@ -14,9 +14,9 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 			</AccordionSummary>
 			<AccordionDetails>
 				<Grid container direction='row' justifyContent='flex-start'>
-					{hoodieSelectionList.map((swatch) => {
+					{hoodieSelectionList.map((swatch, index) => {
 						return (
-							<Grid item xs={3} sm={2}>
+							<Grid item xs={3} sm={2} key={`hoodieOption${index}`}>
 								<Tooltip
 									title={swatch.alt}
 									enterDelay={1000}

@@ -1,8 +1,8 @@
 import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
-import { Accordion } from './accordion/Accordion';
-import { AccordionSummary } from './accordion/AccordionSummary';
-import { AccordionDetails } from './accordion/AccordionDetails';
-import Swatch from './Swatch';
+import { Accordion } from '../design/Accordion';
+import { AccordionSummary } from './AccordionSummary';
+import { AccordionDetails } from './AccordionDetails';
+import Swatch from '../design/Swatch';
 
 const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedBorder, setSelectedBorder }) => {
 	return (
@@ -14,9 +14,9 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 			</AccordionSummary>
 			<AccordionDetails>
 				<Grid container direction='row' justifyContent='flex-start'>
-					{borderSelectionList.map((border) => {
+					{borderSelectionList.map((border, index) => {
 						return (
-							<Grid item xs={3} sm={2}>
+							<Grid item xs={3} sm={2} key={`borderOption${index}`}>
 								<Tooltip
 									title={border.alt}
 									enterDelay={1000}

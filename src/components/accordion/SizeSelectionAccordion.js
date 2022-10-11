@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from '@mui/material';
-import { Accordion } from './accordion/Accordion';
-import { AccordionSummary } from './accordion/AccordionSummary';
-import { AccordionDetails } from './accordion/AccordionDetails';
+import { Accordion } from '../design/Accordion';
+import { AccordionSummary } from './AccordionSummary';
+import { AccordionDetails } from './AccordionDetails';
 
 const SizeSelectionAccordion = ({ sizeSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedSize, setSelectedSize }) => {
 	return (
@@ -15,7 +15,7 @@ const SizeSelectionAccordion = ({ sizeSelectionList, accordionNumber, expanded, 
 				<Grid container direction='row' justifyContent='flex-start'>
 					{sizeSelectionList.map((size, index) => {
 						return (
-							<Grid item xs={3} sm={2}>
+							<Grid item xs={3} sm={2} key={`sizeOption${index}`}>
 								<Button
 									sx={{
 										borderRadius: 0,

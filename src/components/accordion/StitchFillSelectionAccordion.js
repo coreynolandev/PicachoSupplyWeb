@@ -1,8 +1,8 @@
 import { Grid, IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
-import { Accordion } from './accordion/Accordion';
-import { AccordionSummary } from './accordion/AccordionSummary';
-import { AccordionDetails } from './accordion/AccordionDetails';
-import Swatch from './Swatch';
+import { Accordion } from '../design/Accordion';
+import { AccordionSummary } from './AccordionSummary';
+import { AccordionDetails } from './AccordionDetails';
+import Swatch from '../design/Swatch';
 
 const StitchFillSelectionAccordion = ({
 	stitchFillSelectionList,
@@ -17,7 +17,7 @@ const StitchFillSelectionAccordion = ({
 	return (
 		<Accordion key='stitchFillBase' expanded={expanded === accordionNumber} onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header'>
-				<Typography textAlign='left' fontFamily={'catamaran'} >
+				<Typography textAlign='left' fontFamily={'catamaran'}>
 					{accordionNumber}. Choose a Fill{selectedStitchFill !== null && ` - ${stitchFillSelectionList[selectedStitchFill].alt}`}
 				</Typography>
 			</AccordionSummary>
@@ -38,9 +38,9 @@ const StitchFillSelectionAccordion = ({
 				<Grid container direction='row' justifyContent='flex-start'>
 					{stitchFillSelectionList
 						.filter((option) => option.type === patternType)
-						.map((stitchFill) => {
+						.map((stitchFill, index) => {
 							return (
-								<Grid item xs={3} sm={2}>
+								<Grid item xs={3} sm={2} key={`stitchFillOption${index}`}>
 									<Tooltip
 										title={stitchFill.alt}
 										enterDelay={1000}

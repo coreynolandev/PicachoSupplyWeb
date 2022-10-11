@@ -23,9 +23,9 @@ import HoodieSwatchBlue from '../assets/hoodie/swatch/blue.png';
 import HoodieSwatchLavender from '../assets/hoodie/swatch/lavender.png';
 import HoodieSwatchPlum from '../assets/hoodie/swatch/plum.png';
 import HoodieSwatchYellow from '../assets/hoodie/swatch/yellow.png';
-import HoodieSelectionAccordion from '../components/HoodieSelectionAccordion';
-import BorderSelectionAccordion from '../components/BorderSelectionAccordion';
-import StitchFillSelectionAccordion from '../components/StitchFillSelectionAccordion';
+import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
+import BorderSelectionAccordion from '../components/accordion/BorderSelectionAccordion';
+import StitchFillSelectionAccordion from '../components/accordion/StitchFillSelectionAccordion';
 import BorderWhite from '../assets/border/border_white.png';
 import BorderNavy from '../assets/border/border_navy.png';
 import BorderBlack from '../assets/border/border_black.png';
@@ -33,7 +33,7 @@ import FillWhite from '../assets/solid-fill/fill_white.png';
 import StitchBorderSwatchBlue from '../assets/swatch/swatch_blue.png';
 import StitchBorderSwatchBlack from '../assets/hoodie/swatch/black.png';
 import StitchBorderSwatchWhite from '../assets/swatch/swatch_white.png';
-import SizeSelectionAccordion from '../components/SizeSelectionAccordion';
+import SizeSelectionAccordion from '../components/accordion/SizeSelectionAccordion';
 import { Clear, Refresh, Shuffle } from '@mui/icons-material';
 
 const hoodieSelectionList = [
@@ -65,7 +65,7 @@ const sizeSelectionList = [
 	{ size: 'XL', order: 3 }
 ];
 
-const ToxicHoodie = () => {
+const ToxicHoodie = ({ mode }) => {
 	const [expanded, setExpanded] = useState(1);
 	const [selectedHoodie, setSelectedHoodie] = useState(null);
 	const [selectedBorder, setSelectedBorder] = useState(null);
@@ -140,7 +140,7 @@ const ToxicHoodie = () => {
 			</Box>
 
 			<Stack direction={'column'} alignItems='flex-start' flexShrink={0} sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: { xs: '600px' } }}>
-				<Card raised sx={{ backgroundColor: 'rgb(0,0,0,0.8)', width: '100%', padding: 2 }}>
+				<Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}>
 					<Stack spacing={2}>
 						<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
 
