@@ -5,20 +5,34 @@ import { AccordionDetails } from './AccordionDetails';
 import Swatch from '../design/Swatch';
 
 const StitchFillSelectionAccordion = ({
-	stitchFillSelectionList,
 	patternType,
 	changePatternType,
+	stitchFillSelectionList,
+	stitchGradientSelectionList,
 	accordionNumber,
 	expanded,
 	changeExpandedAccordion,
 	selectedStitchFill,
-	setSelectedStitchFill
+	selectedStitchGradient,
+	changeStitchFill
 }) => {
+	var name = selectedStitchFill !== null ? ` - ${stitchFillSelectionList[selectedStitchFill].alt}` : '';
+	if (selectedStitchGradient !== null) {
+		if (name !== '') {
+			name += `/${stitchFillSelectionList[selectedStitchGradient].alt}`;
+		} else {
+			name = `${stitchGradientSelectionList[selectedStitchGradient].alt}`;
+		}
+	}
+
+	const colorSetList = patternType === 'fill' ? stitchFillSelectionList : stitchGradientSelectionList;
+	const currentSwatchChosen = patternType === 'fill' ? selectedStitchFill : selectedStitchGradient;
+
 	return (
 		<Accordion key='stitchFillBase' expanded={expanded === accordionNumber} onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header'>
 				<Typography textAlign='left' fontFamily={'catamaran'}>
-					{accordionNumber}. Choose a Fill{selectedStitchFill !== null && ` - ${stitchFillSelectionList[selectedStitchFill].alt}`}
+					{accordionNumber}. Choose a Fill{name !== '' && name}
 				</Typography>
 			</AccordionSummary>
 			<AccordionDetails>
@@ -30,55 +44,53 @@ const StitchFillSelectionAccordion = ({
 					color='warning'
 					exclusive
 					size='small'
-					aria-label='Select solid or gradient fill color options'
+					aria-label='Select fill or gradient fill color options'
 					sx={{ marginBottom: 1 }}>
-					<ToggleButton value={'solid'}>Solid</ToggleButton>
-					<ToggleButton value={'gradient'}>Gradient</ToggleButton>
+					<ToggleButton value={'fill'}>Base Fill</ToggleButton>
+					<ToggleButton value={'gradient'}>Gradient (Optional)</ToggleButton>
 				</ToggleButtonGroup>
 				<Grid container direction='row' justifyContent='flex-start'>
-					{stitchFillSelectionList
-						.filter((option) => option.type === patternType)
-						.map((stitchFill, index) => {
-							return (
-								<Grid item xs={3} sm={2} key={`stitchFillOption${index}`}>
-									<Tooltip
-										title={stitchFill.alt}
-										enterDelay={1000}
-										enterNextDelay={1000}
-										disableInteractive={true}
-										PopperProps={{
-											modifiers: [
-												{
-													name: 'offset',
-													options: {
-														offset: [0, -22]
-													}
+					{colorSetList.map((stitchFill, index) => {
+						return (
+							<Grid item xs={3} sm={2} key={`stitchFillOption${index}`}>
+								<Tooltip
+									title={stitchFill.alt}
+									enterDelay={1000}
+									enterNextDelay={1000}
+									disableInteractive={true}
+									PopperProps={{
+										modifiers: [
+											{
+												name: 'offset',
+												options: {
+													offset: [0, -22]
 												}
-											]
+											}
+										]
+									}}>
+									<IconButton
+										sx={{
+											borderRadius: 0,
+											borderColor: 'primary.main',
+											margin: 0,
+											padding: 0,
+											'&:hover': {
+												cursor: 'pointer'
+											}
 										}}>
-										<IconButton
-											sx={{
-												borderRadius: 0,
-												borderColor: 'primary.main',
-												margin: 0,
-												padding: 0,
-												'&:hover': {
-													cursor: 'pointer'
-												}
-											}}>
-											<Swatch
-												swatchImage={stitchFill.swatchImage}
-												type='color-swatch'
-												alt={stitchFill.alt}
-												number={stitchFill.order}
-												selectedSwatch={selectedStitchFill}
-												setSelectedSwatch={setSelectedStitchFill}
-											/>
-										</IconButton>
-									</Tooltip>
-								</Grid>
-							);
-						})}
+										<Swatch
+											swatchImage={stitchFill.swatchImage}
+											type='color-swatch'
+											alt={stitchFill.alt}
+											number={stitchFill.order}
+											selectedSwatch={currentSwatchChosen}
+											setSelectedSwatch={changeStitchFill}
+										/>
+									</IconButton>
+								</Tooltip>
+							</Grid>
+						);
+					})}
 				</Grid>
 			</AccordionDetails>
 		</Accordion>

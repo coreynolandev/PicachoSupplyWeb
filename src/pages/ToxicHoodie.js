@@ -15,7 +15,7 @@ import HoodieBlue from '../assets/hoodie/hoodie_blue.png';
 import HoodieLavender from '../assets/hoodie/hoodie_lavender.png';
 import HoodiePlum from '../assets/hoodie/hoodie_plum.png';
 import HoodieYellow from '../assets/hoodie/hoodie_yellow.png';
-import { Box, Button, Card, CardHeader, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Card, CardHeader, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
 
 import HoodieSwatchArmy from '../assets/hoodie/swatch/army.png';
 import HoodieSwatchBlack from '../assets/hoodie/swatch/black.png';
@@ -35,28 +35,14 @@ import StitchBorderSwatchBlack from '../assets/hoodie/swatch/black.png';
 import StitchBorderSwatchWhite from '../assets/swatch/swatch_white.png';
 import SizeSelectionAccordion from '../components/accordion/SizeSelectionAccordion';
 import { Clear, Refresh, Shuffle } from '@mui/icons-material';
+import { HOODIE_SELECTION_LIST } from '../components/toxic-build/Hoodies';
+import { BORDERS_SELECTION_LIST } from '../components/toxic-build/Borders';
+import { FILLS_SELECTION_LIST, GRADIENTS_SELECTION_LIST } from '../components/toxic-build/Fills';
 
-const hoodieSelectionList = [
-	{ logo: HoodieArmy, swatchImage: HoodieSwatchArmy, alt: 'Army', order: 0 },
-	{ logo: HoodieBlack, swatchImage: HoodieSwatchBlack, alt: 'Black', order: 1 },
-	{ logo: HoodieBlue, swatchImage: HoodieSwatchBlue, alt: 'Blue', order: 2 },
-	{ logo: HoodieLavender, swatchImage: HoodieSwatchLavender, alt: 'Lavender', order: 3 },
-	{ logo: HoodiePlum, swatchImage: HoodieSwatchPlum, alt: 'Plum', order: 4 },
-	{ logo: HoodieYellow, swatchImage: HoodieSwatchYellow, alt: 'Yellow', order: 5 }
-];
-
-const borderSelectionList = [
-	{ logo: BorderWhite, swatchImage: StitchBorderSwatchWhite, alt: 'White', order: 0 },
-	{ logo: BorderNavy, swatchImage: StitchBorderSwatchBlue, alt: 'Navy', order: 1 },
-	{ logo: BorderBlack, swatchImage: StitchBorderSwatchBlack, alt: 'Black', order: 2 }
-];
-
-const stitchFillSelectionList = [
-	{ id: 1, logo: LogoBlue, swatchImage: StitchSwatchBlue, alt: 'Blue', order: 0, type: 'solid' },
-	{ id: 2, logo: FillWhite, swatchImage: StitchSwatchWhite, alt: 'White', order: 1, type: 'solid' },
-	{ id: 3, logo: LogoBlueGreenGradient, swatchImage: StitchSwatchBlueGreenGradient, alt: 'Blue / Green', order: 2, type: 'gradient' },
-	{ id: 4, logo: LogoPinkOrangeGradient, swatchImage: StitchSwatchPinkOrangeGradient, alt: 'Pink  / Orange', order: 3, type: 'gradient' }
-];
+const hoodieSelectionList = HOODIE_SELECTION_LIST;
+const borderSelectionList = BORDERS_SELECTION_LIST;
+const stitchFillSelectionList = FILLS_SELECTION_LIST;
+const stitchGradientSelectionList = GRADIENTS_SELECTION_LIST;
 
 const sizeSelectionList = [
 	{ size: 'S', order: 0 },
@@ -69,8 +55,8 @@ const ToxicHoodie = ({ mode }) => {
 	const [expanded, setExpanded] = useState(1);
 	const [selectedHoodie, setSelectedHoodie] = useState(null);
 	const [selectedBorder, setSelectedBorder] = useState(null);
-	const [selectedStitchFill, setSelectedStitchFill] = useState(null);
-	const [patternType, setPatternType] = useState('solid');
+	const [selectedStitchFill, setSelectedStitchFill] = useState({ fill: null, gradient: null });
+	const [patternType, setPatternType] = useState('fill');
 	const [selectedSize, setSelectedSize] = useState(null);
 	const [quantity, setQuantity] = useState(1);
 	const [orderMaterials, setOrderMaterials] = useState({ hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill });
@@ -83,8 +69,32 @@ const ToxicHoodie = ({ mode }) => {
 		}
 	};
 
+	const [fillColor, setFillColor] = useState(null);
+	const [gradientColor, setGradientColor] = useState(null);
+
+	const changeStitchFill = (newColor) => {
+		if (patternType === 'fill') {
+			if (fillColor === newColor) {
+				console.log('null fill');
+				setFillColor(null);
+				setSelectedStitchFill({ ...selectedStitchFill, fill: null });
+			} else {
+				console.log('new fill');
+				setFillColor(newColor);
+				setSelectedStitchFill({ ...selectedStitchFill, fill: newColor });
+			}
+		} else if (gradientColor === newColor) {
+			setGradientColor(null);
+			console.log('null gradient');
+			setSelectedStitchFill({ ...selectedStitchFill, gradient: null });
+		} else {
+			setGradientColor(newColor);
+			console.log('new gradient');
+			setSelectedStitchFill({ ...selectedStitchFill, gradient: newColor });
+		}
+	};
+
 	const changePatternType = (newPatternType) => {
-		setSelectedStitchFill(null);
 		setPatternType(newPatternType);
 	};
 
@@ -93,8 +103,10 @@ const ToxicHoodie = ({ mode }) => {
 		if (confirmReset) {
 			setSelectedHoodie(null);
 			setSelectedBorder(null);
-			setSelectedStitchFill(null);
-			setPatternType('solid');
+			setFillColor(null);
+			setGradientColor(null);
+			setSelectedStitchFill({ fill: null, gradient: null });
+			setPatternType('fill');
 			setSelectedSize(null);
 			setQuantity(1);
 		}
@@ -115,31 +127,71 @@ const ToxicHoodie = ({ mode }) => {
 			const hoodieRandom = Math.floor(Math.random() * hoodieSelectionList.length);
 			const borderRandom = Math.floor(Math.random() * borderSelectionList.length);
 			const stitchFillRandom = Math.floor(Math.random() * stitchFillSelectionList.length);
+			const shouldSetGradient = Math.random() >= 0.5;
+			var stitchGradientRandom = null;
+			if (shouldSetGradient) {
+				stitchGradientRandom = Math.floor(Math.random() * stitchFillSelectionList.length);
+			}
+
 			setSelectedHoodie(hoodieRandom);
 			setSelectedBorder(borderRandom);
-			setSelectedStitchFill(stitchFillRandom);
-			setPatternType(stitchFillSelectionList[stitchFillRandom].type);
-			setOrderMaterials({ hoodie: hoodieRandom, border: borderRandom, stitchFill: stitchFillRandom });
+			setFillColor(stitchFillRandom);
+			setGradientColor(stitchGradientRandom);
+			const newStitchFillObject = { fill: stitchFillRandom, gradient: stitchGradientRandom };
+			setSelectedStitchFill(newStitchFillObject);
+			// setPatternType('');
+			setOrderMaterials({ hoodie: hoodieRandom, border: borderRandom, stitchFill: newStitchFillObject });
 		}
 	};
 
-	return (
-		<Stack direction={{ sm: 'column', md: 'row' }} justifyContent='center' alignItems='center' sx={{ width: '100%' }} mt={2}>
-			<Box position={'relative'} className='hoodie-stitch container'>
-				{selectedHoodie !== null && selectedBorder !== null && (
-					<img className='toxic-wave-logo hoodie-stitch outline' src={borderSelectionList[selectedBorder]?.logo} alt='Border' />
-				)}
-				{selectedHoodie !== null && selectedStitchFill !== null && (
-					<img className='toxic-wave-logo hoodie-stitch stitch' src={stitchFillSelectionList[selectedStitchFill]?.logo} alt='Stitch' />
-				)}
-				{selectedHoodie !== null ? (
-					<img className='hoodie-base hoodie-stitch hoodie' src={hoodieSelectionList[selectedHoodie]?.logo} alt='Hoodie' />
-				) : (
-					<img className=' hoodie-base hoodie-stitch hoodie' src={HoodieBlank} alt='Hoodie' />
-				)}
-			</Box>
+	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
 
-			<Stack direction={'column'} alignItems='flex-start' flexShrink={0} sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: { xs: '600px' } }}>
+	return (
+		<Stack direction={{ sm: 'column', md: 'row' }} justifyContent='space-around' alignItems={{ sm: 'center', md: 'flex-start' }} sx={{ width: '100%' }} mt={2} mb={2} spacing={2}>
+			<Stack alignItems={'center'}>
+				{hoodieOrPreview === 'hoodie' ? (
+					<Box position={'relative'} className='hoodie-stitch container'>
+						{selectedHoodie !== null && selectedBorder !== null && (
+							<img className='toxic-wave-logo hoodie-stitch outline' src={borderSelectionList[selectedBorder]?.logo} alt='Border' />
+						)}
+						{selectedHoodie !== null && fillColor !== null && (
+							<img className='toxic-wave-logo hoodie-stitch stitch' src={stitchFillSelectionList[fillColor]?.logo} alt='Stitch' />
+						)}
+						{selectedHoodie !== null && gradientColor !== null && (
+							<img className='toxic-wave-logo hoodie-stitch stitch gradient' src={stitchGradientSelectionList[gradientColor]?.logo} alt='Stitch' />
+						)}
+						{selectedHoodie !== null ? (
+							<img className='hoodie-base hoodie-stitch hoodie' src={hoodieSelectionList[selectedHoodie]?.logo} alt='Hoodie' />
+						) : (
+							<img className=' hoodie-base hoodie-stitch hoodie' src={HoodieBlank} alt='Hoodie' />
+						)}
+					</Box>
+				) : (
+					<Box position={'relative'} className='hoodie-stitch container'>
+						{selectedBorder !== null && <img className='toxic-wave-logo hoodie-stitch-only outline' src={borderSelectionList[selectedBorder]?.logo} alt='Border' />}
+						{fillColor !== null && <img className='toxic-wave-logo hoodie-stitch-only stitch' src={stitchFillSelectionList[fillColor]?.logo} alt='Stitch' />}
+						{gradientColor !== null && (
+							<img className='toxic-wave-logo hoodie-stitch-only stitch gradient' src={stitchGradientSelectionList[gradientColor]?.logo} alt='Stitch' />
+						)}
+						<img
+							className='hoodie-base hoodie-stitch-only hoodie'
+							src={selectedHoodie !== null ? hoodieSelectionList[selectedHoodie]?.logo : hoodieSelectionList[0]?.logo}
+							alt='Hoodie'
+						/>
+					</Box>
+				)}
+				{selectedHoodie !== null && (selectedBorder !== null || fillColor !== null || gradientColor || null) && (
+					<Button
+						color='warning'
+						variant={hoodieOrPreview === 'hoodie' ? 'outlined' : 'contained'}
+						onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
+						sx={{ width: '50%' }}>
+						Show Preview
+					</Button>
+				)}
+			</Stack>
+
+			<Stack direction={'column'} alignItems='flex-start' flexShrink={0} sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: { md: '500px', lg: '600px' } }}>
 				<Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}>
 					<Stack spacing={2}>
 						<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
@@ -165,11 +217,13 @@ const ToxicHoodie = ({ mode }) => {
 								patternType={patternType}
 								changePatternType={changePatternType}
 								stitchFillSelectionList={stitchFillSelectionList}
+								stitchGradientSelectionList={stitchGradientSelectionList}
 								accordionNumber={3}
 								expanded={expanded}
 								changeExpandedAccordion={changeExpandedAccordion}
-								selectedStitchFill={selectedStitchFill}
-								setSelectedStitchFill={setSelectedStitchFill}
+								selectedStitchFill={fillColor}
+								selectedStitchGradient={gradientColor}
+								changeStitchFill={changeStitchFill}
 							/>
 							<SizeSelectionAccordion
 								sizeSelectionList={sizeSelectionList}
@@ -207,8 +261,8 @@ const ToxicHoodie = ({ mode }) => {
 							</Button>
 							<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
 								<IconButton onClick={() => resetAllSelections()}>
-									<Clear />
-									{/* <Refresh /> */}
+									{/* <Clear /> */}
+									<Refresh />
 								</IconButton>
 							</Tooltip>
 							<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>

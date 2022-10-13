@@ -23,6 +23,27 @@
 	position: relative;
 	align-self: center;
 }
+
+.hoodie-stitch-only.stitch {
+	position: absolute;
+	left: 0px;
+	width: 100%;
+	z-index: 100;
+	top: 30%;
+}
+.hoodie-stitch-only.outline {
+	position: absolute;
+	left: 0px;
+	top: 30%;
+	width: 100%;
+	z-index: 110;
+}
+.hoodie-stitch-only.gradient {
+	z-index: 105 !important;
+}
+.hoodie-stitch.gradient {
+	z-index: 105 !important;
+}
 .hoodie-stitch.stitch {
 	position: absolute;
 	width: 37%;
@@ -30,6 +51,7 @@
 	top: 30%;
 	z-index: 100;
 }
+
 .hoodie-stitch.outline {
 	position: absolute;
 	width: 37%;
@@ -38,13 +60,16 @@
 	z-index: 110;
 }
 
-.hoodie-stitch.hoodie {
+.hoodie-stitch.hoodie,
+.hoodie-stitch-only.hoodie {
 	height: auto;
 	width: 100%;
 }
+.hoodie-stitch-only.hoodie {
+	opacity: 70%;
+}
 
 .hoodie-stitch.alt {
-
 	height: 100%;
 	width: 60%;
 }

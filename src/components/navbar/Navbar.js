@@ -3,6 +3,7 @@ import { AppBar, Box, Button, Container, IconButton, Link, Menu, MenuItem, Toolb
 import MenuIcon from '@mui/icons-material/Menu';
 
 import PicachoLogo from '../../assets/picacho_logo.png';
+import PicachoLogoDark from '../../assets/dark_picacho_logo.png';
 import { useState } from 'react';
 
 const pages = [
@@ -23,11 +24,11 @@ const Navbar = ({ changeColorMode, mode }) => {
 
 	return (
 		<AppBar position='sticky' color='default' sx={{}}>
-			<Container maxWidth='xl' disableGutters>
+			<Container maxWidth='none' disableGutters>
 				<Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
 					{/* <Box sx={{ display: { xs: 'flex', sm: 'none' } }}></Box> */}
 
-					<Box className='logo container' component='img' src={PicachoLogo} alt='Picacho Logo' sx={{ maxHeight: '90px' }} />
+					<Box className='logo container' component='img' src={mode === 'dark' ? PicachoLogoDark : PicachoLogo} alt='Picacho Logo' sx={{ maxHeight: '90px' }} />
 					<Box sx={{ justifyContent: 'flex-end', alignItems: 'center', display: 'flex' }}>
 						<IconButton onClick={changeColorMode} color='inherit'>
 							{mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
@@ -41,7 +42,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 						<Menu
 							id='menu-appbar'
 							anchorEl={anchorElNav}
-							anchorPosition={{ top: 100}}
+							anchorPosition={{ top: 100 }}
 							anchorOrigin={{
 								vertical: 'bottom',
 								horizontal: 'left'
