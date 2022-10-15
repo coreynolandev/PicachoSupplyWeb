@@ -1,7 +1,7 @@
 import { Grid, IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
-import { AccordionSummary } from './AccordionSummary';
-import { AccordionDetails } from './AccordionDetails';
+import { AccordionSummary } from '../design/AccordionSummary';
+import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
 
 const StitchFillSelectionAccordion = ({
@@ -27,10 +27,15 @@ const StitchFillSelectionAccordion = ({
 
 	const colorSetList = patternType === 'fill' ? stitchFillSelectionList : stitchGradientSelectionList;
 	const currentSwatchChosen = patternType === 'fill' ? selectedStitchFill : selectedStitchGradient;
+	const isSelected = expanded === accordionNumber;
 
 	return (
-		<Accordion key='stitchFillBase' expanded={expanded === accordionNumber} onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header'>
+		<Accordion
+			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
+			key='stitchFillBase'
+			expanded={isSelected}
+			onChange={() => changeExpandedAccordion(accordionNumber)}>
+			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={isSelected} >
 				<Typography textAlign='left' fontFamily={'catamaran'}>
 					{accordionNumber}. Choose a Fill{name !== '' && name}
 				</Typography>

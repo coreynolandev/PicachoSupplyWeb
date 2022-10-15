@@ -1,40 +1,12 @@
 import { useEffect, useState } from 'react';
-import LogoBlue from '../assets/toxic-wave-logo/logo_blue.png';
-import LogoBlueGreenGradient from '../assets/toxic-wave-logo/logo_blue_green_gradient.png';
-import LogoPinkOrangeGradient from '../assets/toxic-wave-logo/logo_pink_orange_gradient.png';
-import LogoWhite from '../assets/toxic-wave-logo/logo_white.png';
-import StitchSwatchBlue from '../assets/swatch/swatch_blue.png';
-import StitchSwatchBlueGreenGradient from '../assets/swatch/swatch_blue_green_gradient.png';
-import StitchSwatchPinkOrangeGradient from '../assets/swatch/swatch_pink_orange_gradient.png';
-import StitchSwatchWhite from '../assets/swatch/swatch_white.png';
-// import HoodieBlank from '../assets/hoodie/hoodie_blank.png';
 import HoodieBlank from '../assets/build_adventure.png';
-import HoodieArmy from '../assets/hoodie/hoodie_army.png';
-import HoodieBlack from '../assets/hoodie/hoodie_black.png';
-import HoodieBlue from '../assets/hoodie/hoodie_blue.png';
-import HoodieLavender from '../assets/hoodie/hoodie_lavender.png';
-import HoodiePlum from '../assets/hoodie/hoodie_plum.png';
-import HoodieYellow from '../assets/hoodie/hoodie_yellow.png';
-import { Box, Button, Card, CardHeader, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
+import { Box, Button, CardHeader, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 
-import HoodieSwatchArmy from '../assets/hoodie/swatch/army.png';
-import HoodieSwatchBlack from '../assets/hoodie/swatch/black.png';
-import HoodieSwatchBlue from '../assets/hoodie/swatch/blue.png';
-import HoodieSwatchLavender from '../assets/hoodie/swatch/lavender.png';
-import HoodieSwatchPlum from '../assets/hoodie/swatch/plum.png';
-import HoodieSwatchYellow from '../assets/hoodie/swatch/yellow.png';
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
 import BorderSelectionAccordion from '../components/accordion/BorderSelectionAccordion';
 import StitchFillSelectionAccordion from '../components/accordion/StitchFillSelectionAccordion';
-import BorderWhite from '../assets/border/border_white.png';
-import BorderNavy from '../assets/border/border_navy.png';
-import BorderBlack from '../assets/border/border_black.png';
-import FillWhite from '../assets/solid-fill/fill_white.png';
-import StitchBorderSwatchBlue from '../assets/swatch/swatch_blue.png';
-import StitchBorderSwatchBlack from '../assets/hoodie/swatch/black.png';
-import StitchBorderSwatchWhite from '../assets/swatch/swatch_white.png';
 import SizeSelectionAccordion from '../components/accordion/SizeSelectionAccordion';
-import { Clear, Refresh, Shuffle } from '@mui/icons-material';
+import { Refresh, Shuffle } from '@mui/icons-material';
 import { HOODIE_SELECTION_LIST } from '../components/toxic-build/Hoodies';
 import { BORDERS_SELECTION_LIST } from '../components/toxic-build/Borders';
 import { FILLS_SELECTION_LIST, GRADIENTS_SELECTION_LIST } from '../components/toxic-build/Fills';
@@ -60,6 +32,7 @@ const ToxicHoodie = ({ mode }) => {
 	const [selectedSize, setSelectedSize] = useState(null);
 	const [quantity, setQuantity] = useState(1);
 	const [orderMaterials, setOrderMaterials] = useState({ hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill });
+	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
 
 	const changeExpandedAccordion = (accordionNumber) => {
 		if (accordionNumber === expanded) {
@@ -101,6 +74,7 @@ const ToxicHoodie = ({ mode }) => {
 	const resetAllSelections = () => {
 		var confirmReset = window.confirm('Reset all Selections?');
 		if (confirmReset) {
+			setHoodieOrPreview('hoodie');
 			setSelectedHoodie(null);
 			setSelectedBorder(null);
 			setFillColor(null);
@@ -144,10 +118,15 @@ const ToxicHoodie = ({ mode }) => {
 		}
 	};
 
-	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
-
 	return (
-		<Stack direction={{ sm: 'column', md: 'row' }} justifyContent='space-around' alignItems={{ sm: 'center', md: 'flex-start' }} sx={{ width: '100%' }} mt={2} mb={2} spacing={2}>
+		<Stack
+			direction={{ sm: 'column', md: 'row' }}
+			justifyContent='space-around'
+			alignItems={{ sm: 'center', md: 'flex-start' }}
+			sx={{ width: '100%' }}
+			mt={2}
+			mb={2}
+			spacing={2}>
 			<Stack alignItems={'center'}>
 				{hoodieOrPreview === 'hoodie' ? (
 					<Box position={'relative'} className='hoodie-stitch container'>
@@ -185,59 +164,82 @@ const ToxicHoodie = ({ mode }) => {
 						color='warning'
 						variant={hoodieOrPreview === 'hoodie' ? 'outlined' : 'contained'}
 						onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
-						sx={{ width: '50%' }}>
-						Show Preview
+						sx={{ width: '50%', marginBottom: 1 }}>
+						{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
 					</Button>
 				)}
 			</Stack>
 
-			<Stack direction={'column'} alignItems='flex-start' flexShrink={0} sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: { md: '500px', lg: '600px' } }}>
-				<Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}>
-					<Stack spacing={2}>
-						<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
+			<Stack
+				direction={'column'}
+				alignItems='flex-start'
+				flexShrink={0}
+				sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: { md: '500px', lg: '600px' }, background: 'transparent' }}>
+				{/* <Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}> */}
+				<Stack spacing={2} width='100%'>
+					<Grid container>
+						<Grid item xs={2}>
+							<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+								<IconButton onClick={() => resetAllSelections()}>
+									{/* <Clear /> */}
+									<Refresh />
+								</IconButton>
+							</Tooltip>
+						</Grid>
+						<Grid item xs={8}>
+							<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
+						</Grid>
+						<Grid item xs={2}>
+							<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+								<IconButton onClick={() => randomizeSelections()} sx={{ padding: 0 }}>
+									<Shuffle />
+								</IconButton>
+							</Tooltip>
+						</Grid>
+					</Grid>
 
-						<Stack sx={{ padding: -2 }}>
-							<HoodieSelectionAccordion
-								hoodieSelectionList={hoodieSelectionList}
-								accordionNumber={1}
-								expanded={expanded}
-								changeExpandedAccordion={changeExpandedAccordion}
-								selectedHoodie={selectedHoodie}
-								setSelectedHoodie={setSelectedHoodie}
-							/>
-							<BorderSelectionAccordion
-								borderSelectionList={borderSelectionList}
-								accordionNumber={2}
-								expanded={expanded}
-								changeExpandedAccordion={changeExpandedAccordion}
-								selectedBorder={selectedBorder}
-								setSelectedBorder={setSelectedBorder}
-							/>
-							<StitchFillSelectionAccordion
-								patternType={patternType}
-								changePatternType={changePatternType}
-								stitchFillSelectionList={stitchFillSelectionList}
-								stitchGradientSelectionList={stitchGradientSelectionList}
-								accordionNumber={3}
-								expanded={expanded}
-								changeExpandedAccordion={changeExpandedAccordion}
-								selectedStitchFill={fillColor}
-								selectedStitchGradient={gradientColor}
-								changeStitchFill={changeStitchFill}
-							/>
-							<SizeSelectionAccordion
-								sizeSelectionList={sizeSelectionList}
-								accordionNumber={4}
-								expanded={expanded}
-								changeExpandedAccordion={changeExpandedAccordion}
-								selectedSize={selectedSize}
-								setSelectedSize={setSelectedSize}
-							/>
-						</Stack>
+					<Stack sx={{ padding: -2 }}>
+						<HoodieSelectionAccordion
+							hoodieSelectionList={hoodieSelectionList}
+							accordionNumber={1}
+							expanded={expanded}
+							changeExpandedAccordion={changeExpandedAccordion}
+							selectedHoodie={selectedHoodie}
+							setSelectedHoodie={setSelectedHoodie}
+						/>
+						<BorderSelectionAccordion
+							borderSelectionList={borderSelectionList}
+							accordionNumber={2}
+							expanded={expanded}
+							changeExpandedAccordion={changeExpandedAccordion}
+							selectedBorder={selectedBorder}
+							setSelectedBorder={setSelectedBorder}
+						/>
+						<StitchFillSelectionAccordion
+							patternType={patternType}
+							changePatternType={changePatternType}
+							stitchFillSelectionList={stitchFillSelectionList}
+							stitchGradientSelectionList={stitchGradientSelectionList}
+							accordionNumber={3}
+							expanded={expanded}
+							changeExpandedAccordion={changeExpandedAccordion}
+							selectedStitchFill={fillColor}
+							selectedStitchGradient={gradientColor}
+							changeStitchFill={changeStitchFill}
+						/>
+						<SizeSelectionAccordion
+							sizeSelectionList={sizeSelectionList}
+							accordionNumber={4}
+							expanded={expanded}
+							changeExpandedAccordion={changeExpandedAccordion}
+							selectedSize={selectedSize}
+							setSelectedSize={setSelectedSize}
+						/>
+					</Stack>
 
-						<Stack>
+					{/* <Stack>
 							<Stack direction='row' justifyContent='space-between' mb={1}>
-								<FormControl fullWidth>
+								<FormControl fullWidth sx={{bgcolor: 'white'}}>
 									<InputLabel id='quantity-select-label'>Quantity</InputLabel>
 									<Select
 										labelId='quantity-select-label'
@@ -253,26 +255,15 @@ const ToxicHoodie = ({ mode }) => {
 									</Select>
 								</FormControl>
 							</Stack>
-						</Stack>
+						</Stack> */}
 
-						<Stack justifyContent='space-between' spacing={1} direction='row'>
-							<Button fullWidth variant='contained'>
-								Add to Cart
-							</Button>
-							<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
-								<IconButton onClick={() => resetAllSelections()}>
-									{/* <Clear /> */}
-									<Refresh />
-								</IconButton>
-							</Tooltip>
-							<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
-								<IconButton onClick={() => randomizeSelections()}>
-									<Shuffle />
-								</IconButton>
-							</Tooltip>
-						</Stack>
+					<Stack justifyContent='space-between' spacing={1} direction='row'>
+						<Button fullWidth variant='contained'>
+							Add to Cart
+						</Button>
 					</Stack>
-				</Card>
+				</Stack>
+				{/* </Card> */}
 			</Stack>
 		</Stack>
 	);

@@ -1,12 +1,17 @@
 import { Button, Grid, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
-import { AccordionSummary } from './AccordionSummary';
-import { AccordionDetails } from './AccordionDetails';
+import { AccordionSummary } from '../design/AccordionSummary';
+import { AccordionDetails } from '../design/AccordionDetails';
 
 const SizeSelectionAccordion = ({ sizeSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedSize, setSelectedSize }) => {
+	const isSelected = expanded === accordionNumber;
 	return (
-		<Accordion key='hoodieBase' expanded={expanded === accordionNumber} onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='hoodie-color' id='select-hoodie-color-header'>
+		<Accordion
+			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
+			key='hoodieBase'
+			expanded={isSelected}
+			onChange={() => changeExpandedAccordion(accordionNumber)}>
+			<AccordionSummary aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={isSelected}>
 				<Typography textAlign='left'>
 					{accordionNumber}. Choose a Size{selectedSize !== null && ` - ${sizeSelectionList[selectedSize].size}`}
 				</Typography>

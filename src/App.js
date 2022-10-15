@@ -15,7 +15,7 @@ function App() {
 
 	let theme = createTheme({
 		palette: {
-			mode: colorMode
+			mode: 'light'
 		},
 		typography: {
 			fontFamily: ['Catamaran', 'sans-serif'].join(','),
@@ -38,8 +38,8 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Navbar changeColorMode={changeColorMode} mode={colorMode} />
 			<div className='App'>
+				<Navbar changeColorMode={changeColorMode} mode={colorMode} />
 				<div className='App-content'>
 					<Container maxWidth='xl' sx={{ minHeight: '100%' }}>
 						<ToxicHoodie mode={colorMode} />

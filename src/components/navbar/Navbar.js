@@ -23,12 +23,12 @@ const Navbar = ({ changeColorMode, mode }) => {
 	};
 
 	return (
-		<AppBar position='sticky' color='default' sx={{}}>
+		<AppBar position='sticky' color='default' sx={{ background: 'transparent', boxShadow: 'none'}}>
 			<Container maxWidth='none' disableGutters>
-				<Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-					{/* <Box sx={{ display: { xs: 'flex', sm: 'none' } }}></Box> */}
+				<Toolbar disableGutters sx={{ justifyContent: 'space-between', background: 'transparent' }}>
 
-					<Box className='logo container' component='img' src={mode === 'dark' ? PicachoLogoDark : PicachoLogo} alt='Picacho Logo' sx={{ maxHeight: '90px' }} />
+					<Box className='logo container' component='img' src={mode === 'dark' ? PicachoLogo : PicachoLogo} alt='Picacho Logo' sx={{ maxHeight: '90px' }} />
+					{/* <Box className='logo container' component='img' src={mode === 'dark' ? PicachoLogoDark : PicachoLogo} alt='Picacho Logo' sx={{ maxHeight: '90px' }} /> */}
 					<Box sx={{ justifyContent: 'flex-end', alignItems: 'center', display: 'flex' }}>
 						<IconButton onClick={changeColorMode} color='inherit'>
 							{mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
