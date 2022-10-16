@@ -1,8 +1,11 @@
-import { Grid, IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
+import { IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
 import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
+
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const StitchFillSelectionAccordion = ({
 	patternType,
@@ -25,6 +28,35 @@ const StitchFillSelectionAccordion = ({
 		}
 	}
 
+	const responsive = {
+		superLargeDesktop: {
+			// the naming can be any, depends on you.
+			breakpoint: { max: 4000, min: 1536 },
+			items: Math.ceil(stitchFillSelectionList.length / 2),
+			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 2) // optional, default to 1.
+			// partialVisibilityGutter: 80
+		},
+		desktop: {
+			// the naming can be any, depends on you.
+			breakpoint: { max: 1536, min: 900 },
+			items: Math.ceil(stitchFillSelectionList.length / 2),
+			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 2) // optional, default to 1.
+			// partialVisibilityGutter: 80
+		},
+		tablet: {
+			breakpoint: { max: 900, min: 600 },
+			items: Math.ceil(stitchFillSelectionList.length / 3),
+			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 3) // optional, default to 1.
+			// partialVisibilityGutter: 50
+		},
+		mobile: {
+			breakpoint: { max: 600, min: 0 },
+			items: Math.ceil(stitchFillSelectionList.length / 4),
+			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 4) // optional, default to 1.
+			// partialVisibilityGutter: 80
+		}
+	};
+
 	const colorSetList = patternType === 'fill' ? stitchFillSelectionList : stitchGradientSelectionList;
 	const currentSwatchChosen = patternType === 'fill' ? selectedStitchFill : selectedStitchGradient;
 	const isSelected = expanded === accordionNumber;
@@ -35,12 +67,13 @@ const StitchFillSelectionAccordion = ({
 			key='stitchFillBase'
 			expanded={isSelected}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={isSelected} >
+			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={isSelected}>
 				<Typography textAlign='left' fontFamily={'catamaran'}>
 					{accordionNumber}. Choose a Fill{name !== '' && name}
 				</Typography>
 			</AccordionSummary>
-			<AccordionDetails>
+
+			<AccordionDetails sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
 				<ToggleButtonGroup
 					name='patternType'
 					value={patternType}
@@ -54,10 +87,28 @@ const StitchFillSelectionAccordion = ({
 					<ToggleButton value={'fill'}>Base Fill</ToggleButton>
 					<ToggleButton value={'gradient'}>Gradient (Optional)</ToggleButton>
 				</ToggleButtonGroup>
-				<Grid container direction='row' justifyContent='flex-start'>
+				<Carousel
+					swipeable={true}
+					draggable={false}
+					// showDots={true}
+					// renderDotsOutside={true}
+					responsive={responsive}
+					infinite={false}
+					autoPlay={false}
+					// renderButtonGroupOutside={true}
+					// centerMode={true}
+					// partialVisbile={true}
+					// focusOnSelect={true}
+					// keyBoardControl={true}
+					// transitionDuration={300}
+					containerClass='carousel-container'
+					// removeArrowOnDeviceType={['tablet', 'mobile']}
+					// dotListClass='custom-dot-list-style'
+					// itemClass='swatch-carousel item'
+				>
 					{colorSetList.map((stitchFill, index) => {
 						return (
-							<Grid item xs={3} sm={2} key={`stitchFillOption${index}`}>
+							<div>
 								<Tooltip
 									title={stitchFill.alt}
 									enterDelay={1000}
@@ -93,10 +144,10 @@ const StitchFillSelectionAccordion = ({
 										/>
 									</IconButton>
 								</Tooltip>
-							</Grid>
+							</div>
 						);
 					})}
-				</Grid>
+				</Carousel>
 			</AccordionDetails>
 		</Accordion>
 	);

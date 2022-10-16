@@ -120,9 +120,9 @@ const ToxicHoodie = ({ mode }) => {
 
 	return (
 		<Stack
-			direction={{ sm: 'column', md: 'row' }}
+			direction={{ sm: 'column', md: 'column' }}
 			justifyContent='space-around'
-			alignItems={{ sm: 'center', md: 'flex-start' }}
+			alignItems={{ sm: 'center', md: 'center' }}
 			sx={{ width: '100%' }}
 			mt={2}
 			mb={2}
@@ -174,7 +174,7 @@ const ToxicHoodie = ({ mode }) => {
 				direction={'column'}
 				alignItems='flex-start'
 				flexShrink={0}
-				sx={{ width: { xs: '100%', md: 'auto' }, maxWidth: { md: '500px', lg: '600px' }, background: 'transparent' }}>
+				sx={{ width: { xs: '100%'},  background: 'transparent' }}>
 				{/* <Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}> */}
 				<Stack spacing={2} width='100%'>
 					<Grid container>

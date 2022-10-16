@@ -74,7 +74,6 @@ export const HOODIE_SWATCHES = {
 	YELLOW: YELLOWSWATCH,
 	Black: BlackSwatch,
 	Lavender: LavenderSwatch,
-	SkyBlue: SkyBlueSwatch,
 	Army: ArmySwatch,
 	Plum: PlumSwatch,
 	PaleYellow: PaleYellowSwatch,
@@ -82,5 +81,6 @@ export const HOODIE_SWATCHES = {
 	BlackGrey: BlackGreySWATCH,
 	RedGrey: RedGreySWATCH,
 	Cardinal: CardinalSWATCH,
-	DustyPink: DustyPinkSWATCH
+	DustyPink: DustyPinkSWATCH,
+	ForrestGreen: ForrestGreenSwatch
 };
