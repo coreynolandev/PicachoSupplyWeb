@@ -44,15 +44,15 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 			key='hoodieBase'
 			expanded={isSelected}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={isSelected}>
+			<AccordionSummary key='hoodieaccdsummary' aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={isSelected}>
 				<Typography textAlign='left'>
 					{accordionNumber}. Choose a Base{selectedHoodie !== null && ` - ${hoodieSelectionList[selectedHoodie].alt}`}
 				</Typography>
 			</AccordionSummary>
-			<AccordionDetails sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
+			<AccordionDetails key='hoodiedetails1' sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
 				<Carousel
 					swipeable={true}
-					draggable={false}
+					draggable={true}
 					// showDots={true}
 					// renderDotsOutside={true}
 					responsive={responsive}
@@ -68,10 +68,10 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 					// removeArrowOnDeviceType={['tablet', 'mobile']}
 					// dotListClass='custom-dot-list-style'
 					// itemClass='swatch-carousel item'
-				>
-					{hoodieSelectionList.map((swatch) => {
+					key='hoodiecarousel'>
+					{hoodieSelectionList.map((swatch, index) => {
 						return (
-							<div>
+							<div key={`hoodieswatchcaro${index}`}>
 								<Tooltip
 									title={swatch.alt}
 									enterDelay={1000}
@@ -99,6 +99,7 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 											}
 										}}>
 										<Swatch
+											key={`hoodieswatch${index}`}
 											swatchImage={swatch.swatchImage}
 											type='color-swatch'
 											alt={swatch.alt}

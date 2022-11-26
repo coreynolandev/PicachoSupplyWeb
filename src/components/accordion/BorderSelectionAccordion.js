@@ -53,7 +53,7 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 			<AccordionDetails sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
 				<Carousel
 					swipeable={true}
-					draggable={false}
+					draggable={true}
 					// showDots={true}
 					// renderDotsOutside={true}
 					responsive={responsive}
@@ -72,7 +72,7 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 				>
 					{borderSelectionList.map((border, index) => {
 						return (
-							<div>
+							<div key={`borderselectioncaro${index}`}>
 								<Tooltip
 									title={border.alt}
 									enterDelay={1000}

@@ -4,6 +4,30 @@ import { ThemeProvider } from '@emotion/react';
 import ToxicHoodie from './pages/ToxicHoodie';
 import { useEffect, useState } from 'react';
 import Navbar from './components/navbar/Navbar';
+import Home from './pages/Home';
+import 'animate.css';
+import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
+import AboutUs from './pages/AboutUs';
+import Shop from './pages/Shop';
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Home />
+	},
+	{
+		path: 'shop',
+		element: <Shop />
+	},
+	{
+		path: 'about-us',
+		element: <AboutUs />
+	},
+	{
+		path: 'hoodies',
+		element: <ToxicHoodie />
+	}
+]);
 
 function App() {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
@@ -18,7 +42,8 @@ function App() {
 			mode: 'light'
 		},
 		typography: {
-			fontFamily: ['Catamaran', 'sans-serif'].join(','),
+			fontFamily: ['Raleway', 'sans-serif'].join(','),
+			// fontFamily: ['Montserrat', 'sans-serif'].join(','),
 			fontSize: 16,
 			fontWeightLight: 300,
 			fontWeightMedium: 400,
@@ -41,8 +66,9 @@ function App() {
 			<div className='App'>
 				<Navbar changeColorMode={changeColorMode} mode={colorMode} />
 				<div className='App-content'>
-					<Container maxWidth='xl' sx={{ minHeight: '100%' }}>
-						<ToxicHoodie mode={colorMode} />
+					<Container disableGutters maxWidth='false'  sx={{ minHeight: '100%' }}>
+					{/* <Container disableGutters maxWidth='xl' sx={{ minHeight: '100%' }}> */}
+						<RouterProvider router={router} />
 					</Container>
 				</div>
 			</div>

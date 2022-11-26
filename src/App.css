@@ -9,25 +9,209 @@
 	padding: 0px;
 }
 .logo.container {
-	max-height: 90px;
-	min-width: 50px;
+	width: 100%;
+	padding: 0.5rem 0.5rem 0 0.5rem;
+	max-height: 70px;
 	position: relative;
 	align-self: center;
 }
 
+.shop-card {
+	max-width: 700px !important;
+}
+.shop-card-content {
+	max-height: 400px;
+	max-width: 600px;
+	width: 100%;
+	aspect-ratio: 3/2;
+	margin: auto;
+	display: flex;
+	overflow: hidden;
+	align-items: center;
+	justify-content: center;
+}
+
+.shop-card-content.thumbnail {
+	border-radius: 4px;
+	display: block;
+	width: 90%;
+	height: auto;
+	object-fit: contain;
+}
+
+.fullcard.navy {
+	margin-left: -16px !important;
+	margin-right: -16px !important;
+	/* background-color: rgba(0, 22, 82, 1) !important; */
+	background-color: rgba(0, 0, 0, 0.7) !important;
+
+	border-radius: 0;
+}
+
 .lightcard,
 .darkcard {
-	background-color: rgba(200, 200, 200, 0.5) !important;
+	background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.picacho-white-logo {
+	width: 70%;
+	height: 30vh;
+	object-fit: contain;
+}
+
+.strokeme {
+	color: white;
+	text-shadow: 2px 2px 0px #000000; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+}
+
+.about-us-img-text {
+	width: 90%;
+	height: 100px;
+	object-fit: contain;
+}
+.stroke-text {
+	/* font-size:100px; */
+	text-align: center;
+	text-anchor: middle;
+	stroke: black;
+	stroke-width: 2px;
+	fill: white;
+}
+
+.home-media.container {
+	scroll-snap-align: start;
+	min-height: 94vh;
+	padding: 1rem;
+	width: 100vw;
+}
+.home-media.container.light {
+	/* background-color: linear-g; */
+	background: linear-gradient(90deg, #f8f8f8 0%, #eaebea 101.99%);
+	/* background: 'linear-gradient(90deg, #F8F8F8 0%, #EAEBEA 101.99%);', */
+}
+.home-media.container.dark {
+	background-color: black;
+}
+
+.home-media.image {
+	width: 100%;
+	object-fit: contain;
+}
+
+.home-media.video-wrapper {
+	aspect-ratio: 16/9;
+	margin: auto;
+	width: 100%;
+}
+
+.bounceimage {
+	width: 41.1px;
+	height: 41.1px;
+}
+
+.scroll-snap {
+	width: 100vw;
+	max-height: 94vh;
+	scroll-snap-type: y mandatory;
+	/* Reserve space for header plus some extra space for sneak peeking. */
+	/* scroll-padding-top: 3vh; */
+	overflow-y: scroll;
+	overflow-x: visible;
+}
+
+.footer-media.image {
+	width: 50px;
+	height: 50px;
+}
+
+.moonsun {
+	cursor: pointer;
+	width: 90%;
+	aspect-ratio: 1;
+}
+
+.moonsun.container {
+	min-height: 94vh;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.profile-picture {
+	width: 240px;
+	aspect-ratio: 1;
+}
+.aboutus {
+	display: flex;
+	flex-direction: column;
+	background-color: transparent !important;
+	margin: 1rem;
+	background: transparent;
+	justify-content: center;
+	min-height: 91vh;
+}
+
+.landmeetssky {
+	text-align: left;
+	font-weight: 600;
+	background-color: #fed782 !important;
+	/* background-color: #fdf9d5 !important; */
+	/* background-image: url('../public/mountain_bg10.jpg'); */
+	background: transparent;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}
+
+.airski {
+	text-align: right;
+	font-weight: 600;
+	background-color: #14264e !important;
+	/* background-color: rgb(0, 0, 0) !important; */
+	margin-top: -10px;
+	/* background-image: url('../src/assets2/air_ski.jpg'); */
+}
+
+.airski > * {
+	color: white;
+}
+
+.custom-shape-divider-top-1668472425 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	line-height: 0;
+}
+
+.custom-shape-divider-top-1668472425 svg {
+	position: relative;
+	display: block;
+	width: calc(100% + 1.3px);
+	height: 199px;
+	transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1668472425 .shape-fill {
+	fill: #ffffff;
 }
 
 .hoodie-stitch.container {
-	max-height: 600px;
+	max-height: 548px;
 	max-width: 514.3px;
 	min-width: 257.15px;
 	min-height: 300px;
 	position: relative;
 	align-self: center;
 }
+
+/* .hoodie-stitch.container:hover {
+	overflow: hidden;
+	transform-origin: 10 0 100 0;
+	transition: transform .25s, visibility .25s ease-in;
+	transform: scale(2);
+} */
 
 .hoodie-stitch-only.stitch {
 	position: absolute;
@@ -139,7 +323,7 @@
 .color-swatch {
 	aspect-ratio: 1;
 	padding: 1px;
-	height: 44px;
+	height: 30px;
 	margin: 8px 8px 0px 8px;
 	opacity: 100%;
 }
@@ -162,9 +346,30 @@
 	text-decoration: underline;
 }
 
+@keyframes slideInFromLeft {
+	0% {
+		transform: translateY(100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.movein {
+	/* This section calls the slideInFromLeft animation we defined above */
+	animation: 1s ease-in-out 0s 1 slideInFromLeft;
+
+	/* background: #333; */
+	/* padding: 30px; */
+}
+
 .App {
 	text-align: center;
-	background-image: url('../public/mountain_bg.jpg');
+	/* background-image: url('../public/mnote_bg1.png'); */
+	/* background-image: url('../public/mountain_bg.jpg'); */
+
+	background-image: url('../public/buffalo_bg.png');
+	/* background-image: url('../public/mountain_bg10.jpg'); */
 	min-height: 100vh;
 	background-repeat: no-repeat;
 	background-attachment: fixed;

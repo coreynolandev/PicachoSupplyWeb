@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import HoodieBlank from '../assets/build_adventure.png';
-import { Box, Button, CardHeader, Grid, IconButton, Stack, Tooltip } from '@mui/material';
+import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
 import BorderSelectionAccordion from '../components/accordion/BorderSelectionAccordion';
@@ -10,6 +10,7 @@ import { Refresh, Shuffle } from '@mui/icons-material';
 import { HOODIE_SELECTION_LIST } from '../components/toxic-build/Hoodies';
 import { BORDERS_SELECTION_LIST } from '../components/toxic-build/Borders';
 import { FILLS_SELECTION_LIST, GRADIENTS_SELECTION_LIST } from '../components/toxic-build/Fills';
+import { Accordion } from '../components/design/Accordion';
 
 const hoodieSelectionList = HOODIE_SELECTION_LIST;
 const borderSelectionList = BORDERS_SELECTION_LIST;
@@ -118,18 +119,64 @@ const ToxicHoodie = ({ mode }) => {
 		}
 	};
 
+	const addToCart = () => {
+		// console.log(selectedBorder)
+		// console.log(gradientColor)
+		// console.log(fillColor)
+		// console.log(selectedHoodie)
+		// console.log(selectedSize)
+		// console.log(selectedStitchFill)
+
+		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
+		console.log('border: ' + borderSelectionList[selectedBorder]?.alt);
+		console.log('stitchFill: ' + stitchFillSelectionList[fillColor]?.alt);
+		console.log('stitchGradient: ' + stitchGradientSelectionList[gradientColor]?.alt);
+		console.log('size: ' + sizeSelectionList[selectedSize]?.alt);
+		if (hoodieSelectionList[selectedHoodie] && borderSelectionList[selectedBorder] && stitchFillSelectionList[fillColor] && sizeSelectionList[selectedSize]) {
+			console.log('yes done!\n\n');
+		} else {
+			console.log('no not done!\n\n');
+			setNeedMoreOptions(true);
+		}
+	};
+
+	const [needMoreOptions, setNeedMoreOptions] = useState(false);
+
+	const handleClose = () => {
+		setNeedMoreOptions(false);
+	};
+
+	const selectMoreOptions = () => {
+		<div>
+			<Dialog open={needMoreOptions} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
+				<DialogTitle id='alert-dialog-title'>{"Use Google's location service?"}</DialogTitle>
+				<DialogContent>
+					<DialogContentText id='alert-dialog-description'>
+						Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Disagree</Button>
+					<Button onClick={handleClose} autoFocus>
+						Agree
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>;
+	};
+
 	return (
 		<Stack
-			direction={{ sm: 'column', md: 'column' }}
+			direction={{ sm: 'column', md: 'row' }}
 			justifyContent='space-around'
-			alignItems={{ sm: 'center', md: 'center' }}
+			alignItems={{ sm: 'center', md: 'flex-start' }}
 			sx={{ width: '100%' }}
 			mt={2}
 			mb={2}
 			spacing={2}>
-			<Stack alignItems={'center'}>
+			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'>
 				{hoodieOrPreview === 'hoodie' ? (
-					<Box position={'relative'} className='hoodie-stitch container'>
+					<Box component='div' sx={{ overflow: 'hidden' }} position={'relative'} className='hoodie-stitch container'>
 						{selectedHoodie !== null && selectedBorder !== null && (
 							<img className='toxic-wave-logo hoodie-stitch outline' src={borderSelectionList[selectedBorder]?.logo} alt='Border' />
 						)}
@@ -161,8 +208,8 @@ const ToxicHoodie = ({ mode }) => {
 				)}
 				{selectedHoodie !== null && (selectedBorder !== null || fillColor !== null || gradientColor || null) && (
 					<Button
-						color='warning'
-						variant={hoodieOrPreview === 'hoodie' ? 'outlined' : 'contained'}
+						color={hoodieOrPreview === 'hoodie' ? 'warning' : 'secondary'}
+						variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
 						onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
 						sx={{ width: '50%', marginBottom: 1 }}>
 						{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
@@ -171,34 +218,37 @@ const ToxicHoodie = ({ mode }) => {
 			</Stack>
 
 			<Stack
+				className='animate__animated animate__slideInRight '
 				direction={'column'}
 				alignItems='flex-start'
 				flexShrink={0}
-				sx={{ width: { xs: '100%'},  background: 'transparent' }}>
+				sx={{ maxWidth: { sm: '100%', md: '500px', lg: '700px' }, background: 'transparent' }}>
 				{/* <Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}> */}
 				<Stack spacing={2} width='100%'>
-					<Grid container>
-						<Grid item xs={2}>
-							<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
-								<IconButton onClick={() => resetAllSelections()}>
-									{/* <Clear /> */}
-									<Refresh />
-								</IconButton>
-							</Tooltip>
-						</Grid>
-						<Grid item xs={8}>
-							<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
-						</Grid>
-						<Grid item xs={2}>
-							<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
-								<IconButton onClick={() => randomizeSelections()} sx={{ padding: 0 }}>
-									<Shuffle />
-								</IconButton>
-							</Tooltip>
-						</Grid>
-					</Grid>
+					<Stack padding={-2}>
+						<Accordion>
+							<Grid container bgcolor={'white'} alignItems='center' border={'1px solid rgba(0, 0, 0, 0.03)'} sx={{ borderBottom: 'none' }}>
+								<Grid item xs={2}>
+									<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+										<IconButton onClick={() => resetAllSelections()}>
+											{/* <Clear /> */}
+											<Refresh />
+										</IconButton>
+									</Tooltip>
+								</Grid>
+								<Grid item xs={8}>
+									<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
+								</Grid>
+								<Grid item xs={2}>
+									<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+										<IconButton onClick={() => randomizeSelections()} sx={{ padding: 0 }}>
+											<Shuffle />
+										</IconButton>
+									</Tooltip>
+								</Grid>
+							</Grid>
+						</Accordion>
 
-					<Stack sx={{ padding: -2 }}>
 						<HoodieSelectionAccordion
 							hoodieSelectionList={hoodieSelectionList}
 							accordionNumber={1}
@@ -258,13 +308,15 @@ const ToxicHoodie = ({ mode }) => {
 						</Stack> */}
 
 					<Stack justifyContent='space-between' spacing={1} direction='row'>
-						<Button fullWidth variant='contained'>
+						<Button fullWidth variant='contained' onClick={addToCart}>
 							Add to Cart
 						</Button>
 					</Stack>
 				</Stack>
 				{/* </Card> */}
 			</Stack>
+
+			{selectMoreOptions}
 		</Stack>
 	);
 };

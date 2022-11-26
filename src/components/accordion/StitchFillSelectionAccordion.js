@@ -68,7 +68,7 @@ const StitchFillSelectionAccordion = ({
 			expanded={isSelected}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={isSelected}>
-				<Typography textAlign='left' fontFamily={'catamaran'}>
+				<Typography textAlign='left' >
 					{accordionNumber}. Choose a Fill{name !== '' && name}
 				</Typography>
 			</AccordionSummary>
@@ -84,12 +84,12 @@ const StitchFillSelectionAccordion = ({
 					size='small'
 					aria-label='Select fill or gradient fill color options'
 					sx={{ marginBottom: 1 }}>
-					<ToggleButton value={'fill'}>Base Fill</ToggleButton>
-					<ToggleButton value={'gradient'}>Gradient (Optional)</ToggleButton>
+					<ToggleButton sx={{fontSize: '.8rem'}} value={'fill'}>Base Color</ToggleButton>
+					<ToggleButton sx={{fontSize: '.8rem'}} value={'gradient'}>Add Gradient</ToggleButton>
 				</ToggleButtonGroup>
 				<Carousel
 					swipeable={true}
-					draggable={false}
+					draggable={true}
 					// showDots={true}
 					// renderDotsOutside={true}
 					responsive={responsive}
@@ -108,7 +108,7 @@ const StitchFillSelectionAccordion = ({
 				>
 					{colorSetList.map((stitchFill, index) => {
 						return (
-							<div>
+							<div key={`colorsetlistcarousel${index}`}>
 								<Tooltip
 									title={stitchFill.alt}
 									enterDelay={1000}
