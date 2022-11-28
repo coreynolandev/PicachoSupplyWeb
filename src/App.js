@@ -9,37 +9,19 @@ import 'animate.css';
 import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
 import AboutUs from './pages/AboutUs';
 import Shop from './pages/Shop';
+import ReviewOrder from './pages/ReviewOrder';
+import Checkout from './pages/Checkout';
 
-const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <Home />
-	},
-	{
-		path: 'shop',
-		element: <Shop />
-	},
-	{
-		path: 'about-us',
-		element: <AboutUs />
-	},
-	{
-		path: 'hoodies',
-		element: <ToxicHoodie />
-	}
-]);
-
-function App() {
+function App(props) {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const [colorMode, setColorMode] = useState(prefersDarkMode ? 'dark' : 'light');
 
-	// useEffect(() => {
-	// 	setColorMode(prefersDarkMode ? 'dark' : 'light');
-	// }, []);
-
 	let theme = createTheme({
 		palette: {
-			mode: 'light'
+			mode: 'light',
+			background: {
+				default: '#f5f5f5'
+			}
 		},
 		typography: {
 			fontFamily: ['Raleway', 'sans-serif'].join(','),
@@ -51,7 +33,7 @@ function App() {
 			fontWeightBold: 600
 		}
 	});
-	// fontFamily: ['Catamaran', 'sans-serif'].join(',')
+
 	theme = responsiveFontSizes(theme);
 
 	const changeColorMode = () => {
@@ -60,14 +42,41 @@ function App() {
 		setColorMode(newMode);
 	};
 
+	const router = createBrowserRouter([
+		{
+			path: '/',
+			element: <Home />
+		},
+		{
+			path: 'shop',
+			element: <Shop />
+		},
+		{
+			path: 'about-us',
+			element: <AboutUs />
+		},
+		{
+			path: 'hoodies',
+			element: <ToxicHoodie />
+		},
+		{
+			path: 'review-order',
+			element: <ReviewOrder />
+		},
+		{
+			path: 'checkout',
+			element: <Checkout />
+		}
+	]);
+
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<div className='App'>
 				<Navbar changeColorMode={changeColorMode} mode={colorMode} />
 				<div className='App-content'>
-					<Container disableGutters maxWidth='false'  sx={{ minHeight: '100%' }}>
-					{/* <Container disableGutters maxWidth='xl' sx={{ minHeight: '100%' }}> */}
+					<Container disableGutters maxWidth='false' sx={{ minHeight: '100%' }}>
+						{/* <Container disableGutters maxWidth='xl' sx={{ minHeight: '100%' }}> */}
 						<RouterProvider router={router} />
 					</Container>
 				</div>

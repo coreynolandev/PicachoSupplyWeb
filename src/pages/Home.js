@@ -9,7 +9,7 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 
 const Home = () => {
 	return (
-		<Box className='scroll-snap' sx={{ height: '94vh' }}>
+		<Box className='scroll-snap'>
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container  '>
 				<Stack justifyContent='center' spacing={2} alignItems='center' sx={{ width: '100%', height: '70vh' }}>
 					<img className='picacho-white-logo' src={PicachoWhiteLogo} alt='Picacho' />
@@ -33,28 +33,34 @@ const Home = () => {
 					<Icon sx={{ color: 'white' }} fontSize='large' component={KeyboardDoubleArrowDownIcon} />
 				</div>
 			</Stack>
-			<Box className={'home-media container light  '}>
-				<Typography variant='h2' m={3}>
-					THE DEAN'S LIST
-				</Typography>
+			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container light '>
+				{/* <Box className={'home-media container light  '}> */}
+				{/* <Stack direction='column' sx={{ height: 'calc(100vh - 80px - 2rem)' }}> */}
+				<div className='dontfill'>
+					<Typography variant='h2' m={3} mt={0}>
+						THE DEAN'S LIST
+					</Typography>
 
-				<Typography variant='h6' m={3}>
-					The Dean's List is a documentary style ski film that we had the opportunity to work with during the 2022 Winter. The film features mostly CU Boulder students
-					who exhibit the picacho lifestyle. Check out the video to see what we’re all about!
-				</Typography>
-
+					<Typography variant='h6' m={3}>
+						The Dean's List is a documentary style ski film that we had the opportunity to work with during the 2022 Winter. The film features mostly CU Boulder
+						students who exhibit the picacho lifestyle. Check out the video to see what we’re all about!
+					</Typography>
+				</div>
 				<div className='home-media video-wrapper'>
 					<iframe
 						width='100%'
 						height='100%'
 						src='https://www.youtube-nocookie.com/embed/VEg61BRc5FA'
 						title='YouTube video player'
-						frameborder='0'
+						// frameborder='0'
+						frameBorder={0}
 						allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-						allowfullscreen></iframe>
+						allowFullScreen></iframe>
 				</div>
-			</Box>
-			<Box className={'home-media container dark'}>
+			</Stack>
+			{/* </Box> */}
+			<Stack spacing={0} direction='column' alignItems='center' justifyContent='flex-start' className='home-media container dark '>
+				{/* <Box className={'home-media container dark'}> */}
 				<Stack spacing={2}>
 					<div>
 						<img className='footer-media image' src={UsaFlag} alt='USA' />
@@ -74,7 +80,7 @@ const Home = () => {
 						<Typography color='white'>At Picacho, our 100% Satistfaction Guarantee means our mission is not complete until you're happy.</Typography>
 					</div>
 				</Stack>
-			</Box>
+			</Stack>
 		</Box>
 	);
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import HoodieBlank from '../assets/build_adventure.png';
 import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 
@@ -11,6 +11,11 @@ import { HOODIE_SELECTION_LIST } from '../components/toxic-build/Hoodies';
 import { BORDERS_SELECTION_LIST } from '../components/toxic-build/Borders';
 import { FILLS_SELECTION_LIST, GRADIENTS_SELECTION_LIST } from '../components/toxic-build/Fills';
 import { Accordion } from '../components/design/Accordion';
+import { useDispatch, useSelector } from 'react-redux';
+import { addHoodie, updateHoodie } from '../features/cartSlice';
+import uuid from 'react-uuid';
+
+import { useLocation } from 'react-router-dom';
 
 const hoodieSelectionList = HOODIE_SELECTION_LIST;
 const borderSelectionList = BORDERS_SELECTION_LIST;
@@ -24,16 +29,28 @@ const sizeSelectionList = [
 	{ size: 'XL', order: 3 }
 ];
 
-const ToxicHoodie = ({ mode }) => {
+function ToxicHoodie() {
+	// console.log();
+	const location = useLocation();
+	const { editId } = location.state || { editId: null };
+	const orders = useSelector((state) => state.cart.order);
+	const editItem = editId ? orders.find((item) => item.id === editId) : null;
+	const editMode = editItem !== null;
+
+	const dispatch = useDispatch();
 	const [expanded, setExpanded] = useState(1);
-	const [selectedHoodie, setSelectedHoodie] = useState(null);
-	const [selectedBorder, setSelectedBorder] = useState(null);
-	const [selectedStitchFill, setSelectedStitchFill] = useState({ fill: null, gradient: null });
+	const [selectedHoodie, setSelectedHoodie] = useState(editItem !== null && editItem?.baseColorId !== null ? editItem?.baseColorId : null);
+	const [selectedBorder, setSelectedBorder] = useState(editItem !== null && editItem?.borderColorId !== null ? editItem?.borderColorId : null);
+	const [selectedStitchFill, setSelectedStitchFill] = useState({
+		fill: editItem !== null && editItem?.fillColorId !== null ? editItem?.fillColorId : null,
+		gradient: editItem !== null && editItem?.gradientColorId !== null ? editItem?.gradientColorId : null
+	});
 	const [patternType, setPatternType] = useState('fill');
-	const [selectedSize, setSelectedSize] = useState(null);
-	const [quantity, setQuantity] = useState(1);
+	const [selectedSize, setSelectedSize] = useState(editItem !== null && editItem?.sizeId !== null ? editItem.sizeId : null);
 	const [orderMaterials, setOrderMaterials] = useState({ hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill });
 	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
+	const [fillColor, setFillColor] = useState(editItem !== null && editItem?.fillColorId !== null ? editItem?.fillColorId : null);
+	const [gradientColor, setGradientColor] = useState(editItem !== null && editItem?.gradientColorId !== null ? editItem?.gradientColorId : null);
 
 	const changeExpandedAccordion = (accordionNumber) => {
 		if (accordionNumber === expanded) {
@@ -42,9 +59,6 @@ const ToxicHoodie = ({ mode }) => {
 			setExpanded(accordionNumber);
 		}
 	};
-
-	const [fillColor, setFillColor] = useState(null);
-	const [gradientColor, setGradientColor] = useState(null);
 
 	const changeStitchFill = (newColor) => {
 		if (patternType === 'fill') {
@@ -83,7 +97,6 @@ const ToxicHoodie = ({ mode }) => {
 			setSelectedStitchFill({ fill: null, gradient: null });
 			setPatternType('fill');
 			setSelectedSize(null);
-			setQuantity(1);
 		}
 	};
 
@@ -120,20 +133,39 @@ const ToxicHoodie = ({ mode }) => {
 	};
 
 	const addToCart = () => {
-		// console.log(selectedBorder)
-		// console.log(gradientColor)
-		// console.log(fillColor)
-		// console.log(selectedHoodie)
-		// console.log(selectedSize)
-		// console.log(selectedStitchFill)
-
 		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
 		console.log('border: ' + borderSelectionList[selectedBorder]?.alt);
 		console.log('stitchFill: ' + stitchFillSelectionList[fillColor]?.alt);
 		console.log('stitchGradient: ' + stitchGradientSelectionList[gradientColor]?.alt);
-		console.log('size: ' + sizeSelectionList[selectedSize]?.alt);
+		console.log('size: ' + sizeSelectionList[selectedSize]?.size);
 		if (hoodieSelectionList[selectedHoodie] && borderSelectionList[selectedBorder] && stitchFillSelectionList[fillColor] && sizeSelectionList[selectedSize]) {
-			console.log('yes done!\n\n');
+			var id = editMode ? editId : uuid();
+			const hoodie = {
+				id: id,
+				size: sizeSelectionList[selectedSize]?.size,
+				sizeId: selectedSize,
+				baseColor: hoodieSelectionList[selectedHoodie]?.alt,
+				baseColorImg: hoodieSelectionList[selectedHoodie]?.logo,
+				baseColorId: selectedHoodie,
+				borderColor: borderSelectionList[selectedBorder]?.alt,
+				borderColorImg: borderSelectionList[selectedBorder]?.logo,
+				borderColorId: selectedBorder,
+				fillColor: stitchFillSelectionList[fillColor]?.alt,
+				fillColorImg: stitchFillSelectionList[fillColor]?.logo,
+				fillColorId: fillColor,
+				gradientColor: stitchGradientSelectionList[gradientColor]?.alt,
+				gradientColorImg: stitchGradientSelectionList[gradientColor]?.logo,
+				gradientColorId: gradientColor,
+				quantity: 1,
+				cost: 50,
+				type: 'Toxic Wave Hoodie'
+			};
+
+			if (editItem) {
+				dispatch(updateHoodie(hoodie));
+			} else {
+				dispatch(addHoodie(hoodie));
+			}
 		} else {
 			console.log('no not done!\n\n');
 			setNeedMoreOptions(true);
@@ -143,26 +175,39 @@ const ToxicHoodie = ({ mode }) => {
 	const [needMoreOptions, setNeedMoreOptions] = useState(false);
 
 	const handleClose = () => {
+		console.log('closing');
 		setNeedMoreOptions(false);
 	};
 
-	const selectMoreOptions = () => {
-		<div>
-			<Dialog open={needMoreOptions} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
-				<DialogTitle id='alert-dialog-title'>{"Use Google's location service?"}</DialogTitle>
+	function SelectMoreOptionsDialog(props) {
+		const { open } = props;
+
+		return (
+			<Dialog onClose={handleClose} open={open}>
+				<DialogTitle>Please select more hoodie options</DialogTitle>
 				<DialogContent>
-					<DialogContentText id='alert-dialog-description'>
-						Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-					</DialogContentText>
+					<DialogContentText id='alert-dialog-description'>You must select a Base, Border, Fill, and Size before adding to your bag.</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose}>Disagree</Button>
-					<Button onClick={handleClose} autoFocus>
-						Agree
+					<Button variant='contained' onClick={handleClose} autoFocus>
+						Got it!
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</div>;
+		);
+	}
+
+	const sendEmail = (formData) => {
+
+		// changeFormStep(formStep + 1);
+		console.log(formData);
+		console.log(formData);
+		// sendWithSES(formData);
+		// console.log()
+		// const templateType = isQuote ? 'template_unx8qqv' : 'template_ppm0qln';
+		// const sendEmail = false;
+		// sendEmail && sendTestEmail(formData, templateType);
+		// setNotSaved(false);
 	};
 
 	return (
@@ -174,7 +219,8 @@ const ToxicHoodie = ({ mode }) => {
 			mt={2}
 			mb={2}
 			spacing={2}>
-			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'>
+			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className=''>
+			{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}
 				{hoodieOrPreview === 'hoodie' ? (
 					<Box component='div' sx={{ overflow: 'hidden' }} position={'relative'} className='hoodie-stitch container'>
 						{selectedHoodie !== null && selectedBorder !== null && (
@@ -206,7 +252,7 @@ const ToxicHoodie = ({ mode }) => {
 						/>
 					</Box>
 				)}
-				{selectedHoodie !== null && (selectedBorder !== null || fillColor !== null || gradientColor || null) && (
+				{selectedHoodie !== null && (selectedBorder !== null || fillColor !== null || gradientColor || null) ? (
 					<Button
 						color={hoodieOrPreview === 'hoodie' ? 'warning' : 'secondary'}
 						variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
@@ -214,15 +260,20 @@ const ToxicHoodie = ({ mode }) => {
 						sx={{ width: '50%', marginBottom: 1 }}>
 						{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
 					</Button>
+				) : (
+					<Button color='info' variant='outlined' sx={{ width: '50%', marginBottom: 1 }}>
+						Select more options
+					</Button>
 				)}
 			</Stack>
 
 			<Stack
-				className='animate__animated animate__slideInRight '
+				className=' '
+				// className='animate__animated animate__slideInRight '
 				direction={'column'}
 				alignItems='flex-start'
 				flexShrink={0}
-				sx={{ maxWidth: { sm: '100%', md: '500px', lg: '700px' }, background: 'transparent' }}>
+				sx={{ marginRight: { sm: 'none', md: '1rem !important' }, maxWidth: { sm: '100%', md: '500px', lg: '700px' }, background: 'transparent', willChange: 'transform' }}>
 				{/* <Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}> */}
 				<Stack spacing={2} width='100%'>
 					<Stack padding={-2}>
@@ -308,17 +359,21 @@ const ToxicHoodie = ({ mode }) => {
 						</Stack> */}
 
 					<Stack justifyContent='space-between' spacing={1} direction='row'>
-						<Button fullWidth variant='contained' onClick={addToCart}>
-							Add to Cart
+						<Button fullWidth color={editMode ? 'secondary' : 'primary'} variant={'contained'} onClick={addToCart}>
+							{/* TODO: change it to grey and say item added to cart. switch back to add if they change something */}
+							{/* TODO: make the #1 bounce? */}
+							{editMode ? 'Update Item' : 'Add to Cart'}
 						</Button>
 					</Stack>
 				</Stack>
 				{/* </Card> */}
 			</Stack>
 
-			{selectMoreOptions}
+			{/* {needMoreOptions && selectMoreOptions} */}
+			<SelectMoreOptionsDialog open={needMoreOptions} />
+			{/* {selectMoreOptions} */}
 		</Stack>
 	);
-};
+}
 
 export default ToxicHoodie;

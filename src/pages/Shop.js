@@ -7,7 +7,8 @@ import KrownThumbnail from '../assets2/Krown-001.png';
 const Shop = () => {
 	return (
 		<Grid container spacing={2} mt={2} mb={2} p={2} justifyContent='center'>
-			<Grid item sm={12} md={6} className='animate__animated animate__slideInLeft shop-card'>
+			<Grid item sm={12} md={6} className=' shop-card'>
+				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInLeft shop-card'> */}
 				<Card raised>
 					<CardActionArea disableRipple href='/hoodies'>
 						<CardHeader title='Toxic Wave Hoodie' sx={{ paddingBottom: 0 }} />
@@ -18,7 +19,8 @@ const Shop = () => {
 				</Card>
 			</Grid>
 
-			<Grid item sm={12} md={6} className='animate__animated animate__slideInRight shop-card'>
+			<Grid item sm={12} md={6} className=' shop-card'>
+				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInRight shop-card'> */}
 				<Card raised>
 					<CardActionArea disableRipple sx={{ cursor: 'auto' }}>
 						<CardHeader title='More Coming Soon!' sx={{ paddingBottom: 0 }} />
