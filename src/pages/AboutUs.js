@@ -1,13 +1,8 @@
-import { Box, Button, Card, CardContent, CardHeader, Grid, Icon, Stack, Typography } from '@mui/material';
-import AirSki from '../assets2/air_ski.jpg';
-import { ReactComponent as Tilt } from '../assets2/tilt.svg';
-import MoonSun from '../assets2/moonsun.png';
-import PicachoWhiteLogo from '../assets2/big_logo.png';
+import { Box, Card, CardContent, Icon, Stack, Typography } from '@mui/material';
 import FindPeak from '../assets2/FIND PEAK.png';
 import LandSky from '../assets2/Land Sky.png';
 import MeetTeam from '../assets2/MEET TEAM.png';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const AboutUs = () => {
 	return (
@@ -25,8 +20,10 @@ const AboutUs = () => {
 									<br />
 									<br />
 									<br />
-									"Everything you see exists together, in a delicate balance."
-									<br />- The Lion King
+									<Typography variant='h6' color='white'>
+										"Everything you see exists together, in a delicate balance."
+										<br />- The Lion King
+									</Typography>
 								</Typography>
 							</CardContent>
 						</Card>

@@ -1,7 +1,5 @@
-import { Box, Button, Card, CardHeader, Container, Grid, Icon, Stack, Typography } from '@mui/material';
+import { Box, Button,  Icon, Stack, Typography } from '@mui/material';
 import PicachoWhiteLogo from '../assets2/big_logo.png';
-import DeansList from '../assets2/deans_list.jpg';
-import Footer from '../components/footer/Footer';
 import UsaFlag from '../assets2/usa.png';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';

@@ -1,9 +1,8 @@
-import { Info, InfoOutlined, InfoRounded, InfoSharp, Visibility } from '@mui/icons-material';
-import { Grid, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
-import { Controller, useFormContext } from 'react-hook-form';
+import { InfoRounded } from '@mui/icons-material';
+import { Grid, InputAdornment, TextField, Tooltip } from '@mui/material';
+import { Controller } from 'react-hook-form';
 
 const FormInputText = ({ name, control, label, autoComplete, id, isRequired, multiline, alwaysFull, showErrors, type, fieldDescription }) => {
-	// console.log(fieldDescription);
 	return (
 		<Controller
 			name={name}

@@ -1,14 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-// const nullHoodie = {
-// 	size: null,
-// 	baseColor: null,
-// 	borderColor: null,
-// 	fillColor: null,
-// 	gradientColor: null,
-// 	quantity: null,
-// 	type: 'Toxic Wave Hoodie'
-// };
+import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
 	order: [],

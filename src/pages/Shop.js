@@ -1,6 +1,4 @@
-import { Construction } from '@mui/icons-material';
-import { Button, Card, CardActionArea, CardContent, CardHeader, Grid, Stack, Typography } from '@mui/material';
-import ToxicHoodie from './ToxicHoodie';
+import { Card, CardActionArea, CardContent, CardHeader, Grid } from '@mui/material';
 import HoodieThumbnail from '../assets2/models/hoodie_thumbnail.png';
 import KrownThumbnail from '../assets2/Krown-001.png';
 

@@ -1,36 +1,24 @@
-import { DarkModeOutlined, Label, LightModeOutlined, ShoppingCart, ShoppingCartCheckout } from '@mui/icons-material';
-import { AppBar, Box, Button, Container, IconButton, List, ListItem, ListItemText, Menu, MenuItem, Stack, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Container, IconButton, List, ListItem, ListItemText, Stack, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import PicachoLogo from '../../assets/picacho_logo.png';
+import PicachoLogo from '../../assets2/picacho_logo.png';
 import MyShoppingCart from '../../assets2/shopping-cart.png';
-import PicachoLogoDark from '../../assets/dark_picacho_logo.png';
 import { useState } from 'react';
-
-const pages = [
-	{ name: 'Shop', link: 'shop' },
-	{ name: 'About Us', link: 'about-us' }
-];
 
 const Navbar = ({ changeColorMode, mode }) => {
 	var orders = useSelector((state) => state.cart.order);
-	// console.log(orders);
-	const numberOfItemsInCart = orders.length;
-	// console.log(numberOfItemsInCart);
-	// const dispatch = useDispatch();
-
-	const [anchorElNav, setAnchorElNav] = useState(null);
+	const numberOfItemsInCart = orders.reduce(function (acc, obj) {
+		return acc + obj.quantity;
+	}, 0);
 
 	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
 	const handleOpenNavMenu = (event) => {
-		setAnchorElNav(event.currentTarget);
 		setIsSideNavOpen(true);
 	};
 
 	const handleCloseNavMenu = () => {
-		setAnchorElNav(null);
 		setIsSideNavOpen(false);
 	};
 

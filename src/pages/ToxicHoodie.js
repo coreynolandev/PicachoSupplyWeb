@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import HoodieBlank from '../assets/build_adventure.png';
+import HoodieBlank from '../assets2/build_adventure.png';
 import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
@@ -13,9 +13,8 @@ import { FILLS_SELECTION_LIST, GRADIENTS_SELECTION_LIST } from '../components/to
 import { Accordion } from '../components/design/Accordion';
 import { useDispatch, useSelector } from 'react-redux';
 import { addHoodie, updateHoodie } from '../features/cartSlice';
-import uuid from 'react-uuid';
-
 import { useLocation } from 'react-router-dom';
+import uuid from 'react-uuid';
 
 const hoodieSelectionList = HOODIE_SELECTION_LIST;
 const borderSelectionList = BORDERS_SELECTION_LIST;
@@ -134,11 +133,11 @@ function ToxicHoodie() {
 
 	const defaultAddOrUpdateTitle = editMode ? 'Update Item' : 'Add to Cart';
 	const defaultAddOrUpdateCompleteTitle = editMode ? 'Updated Item!' : 'Added to Cart!';
-	const [justAddedOrUpdated, setJustAddedOrUpdated] = useState(false);
+	// const [justAddedOrUpdated, setJustAddedOrUpdated] = useState(false);
 	const [addOrUpdateButtonTitle, setAddOrUpdateButtonTitle] = useState(defaultAddOrUpdateTitle);
 
 	useEffect(() => {
-		setJustAddedOrUpdated(false);
+		// setJustAddedOrUpdated(false);
 		setAddOrUpdateButtonTitle(defaultAddOrUpdateTitle);
 	}, [selectedHoodie, selectedBorder, selectedSize, selectedStitchFill, defaultAddOrUpdateTitle]);
 
@@ -179,11 +178,11 @@ function ToxicHoodie() {
 				var added = dispatch(addHoodie(hoodie));
 				console.log(added);
 			}
-			setJustAddedOrUpdated(true);
+			// setJustAddedOrUpdated(true);
 			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
 		} else {
 			setNeedMoreOptions(true);
-			setJustAddedOrUpdated(false);
+			// setJustAddedOrUpdated(false);
 		}
 	};
 

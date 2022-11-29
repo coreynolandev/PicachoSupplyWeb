@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QuantitySelector from '../components/buttons/QuantitySelector';
 import OrderItemDetail from '../components/design/OrderItemDetail';
-import { emptyCart, removeItem } from '../features/cartSlice';
+import { removeItem } from '../features/cartSlice';
 
 const ReviewOrder = () => {
 	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
@@ -171,7 +171,7 @@ const ReviewOrder = () => {
 						{OrderDetails()}
 					</>
 				) : (
-					<Card key='empty-hoodie-cart' raised>
+					<Card key='empty-hoodie-cart' raised sx={{ width: { sm: '100%', md: '820px' } }}>
 						<Stack direction='column' alignItems='center' justifyContent={'center'} m={2} spacing={2}>
 							<Typography key='no-item-text'>No Items in Cart</Typography>
 							<Button key='no-item-browseHoodieButton' m={3} variant='contained' component='a' href='/hoodies'>

@@ -12,9 +12,9 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 
 	return (
 		<Accordion
+			expanded={isSelected}
 			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
 			key='hoodieBase'
-			expanded={isSelected}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary key='hoodieaccdsummary' aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={isSelected}>
 				<Typography textAlign='left'>

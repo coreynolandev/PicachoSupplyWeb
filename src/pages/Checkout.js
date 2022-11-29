@@ -1,6 +1,6 @@
-import { Box, Button, Card, Divider, FormGroup, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Divider, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useRef } from 'react';
 import FormInputText from '../components/design/FormInputText';
@@ -16,9 +16,9 @@ const Checkout = () => {
 			<Box sx={{ border: '1px solid gray', borderRadius: '4px', alignSelf: 'center' }}>
 				<Typography variant='h4'>Order Details</Typography>
 				<Stack direction='column' justifyContent='space-between' spacing={2} m={2}>
-					{orders.map((item) => {
+					{orders.map((item, index) => {
 						return (
-							<Stack direction='row' justifyContent='space-between'>
+							<Stack key={`type-quantity-cost-checkout-${index}`} direction='row' justifyContent='space-between'>
 								<Typography sx={{ textAlign: 'left' }}>
 									{item.type} x{item.quantity}
 								</Typography>
@@ -57,7 +57,8 @@ const Checkout = () => {
 		cart: cart
 	};
 
-	const { handleSubmit, reset, control, setValue, watch, register, getValues } = useForm({ defaultValues });
+	const { handleSubmit, control } = useForm({ defaultValues });
+	// const { handleSubmit, reset, control, setValue, watch, register, getValues } = useForm({ defaultValues });
 
 	const sendEmail = (formData) => {
 		console.log(formData);
