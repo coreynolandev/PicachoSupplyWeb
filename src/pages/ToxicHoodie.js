@@ -262,7 +262,7 @@ function ToxicHoodie() {
 						{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
 					</Button>
 				) : (
-					<Button color='info' variant='outlined' sx={{ width: '50%', marginBottom: 1 }}>
+					<Button  color='inherit' variant='contained' sx={{ width: '50%', marginBottom: 1, opacity: '75%' }}>
 						Select more options
 					</Button>
 				)}

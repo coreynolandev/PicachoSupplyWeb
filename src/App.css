@@ -119,6 +119,7 @@
 }
 
 .picacho-white-logo {
+	min-width: calc(min(90vw, 300px));
 	width: 70%;
 	height: 30vh;
 	object-fit: contain;

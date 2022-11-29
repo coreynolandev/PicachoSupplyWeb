@@ -1,11 +1,28 @@
-import { Box, Button,  Icon, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, Icon, Stack, TextField, Typography } from '@mui/material';
 import PicachoWhiteLogo from '../assets2/big_logo.png';
 import UsaFlag from '../assets2/usa.png';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { useRef, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 const Home = () => {
+	const defaultValues = {
+		email: ''
+	};
+
+	const [buttonName, setButtonName] = useState('Join the Adventure!');
+	const [hasJoined, setHasJoined] = useState(false);
+	const { handleSubmit, control } = useForm({ defaultValues });
+	const myForm = useRef(null);
+
+	const sendEmail = (formData) => {
+		console.log(formData);
+		setHasJoined(true);
+		setButtonName('Subscribed!');
+	};
+
 	return (
 		<Box className='scroll-snap'>
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container  '>
@@ -16,9 +33,9 @@ const Home = () => {
 						role={'link'}
 						href='/shop'
 						variant='contained'
-						color='inherit'
+						color='primary'
 						size='large'
-						// className='animate__animated  animate__pulse animate__slow animate__delay-2s animate__infinite'
+						className='animate__animated  animate__pulse animate__slower animate__delay-2s animate__infinite'
 						sx={{ borderRadius: '24px' }}>
 						Browse our Hoodies
 					</Button>
@@ -59,7 +76,7 @@ const Home = () => {
 			{/* </Box> */}
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='flex-start' className='home-media container dark '>
 				{/* <Box className={'home-media container dark'}> */}
-				<Stack spacing={2}>
+				<Stack spacing={3} alignItems='center' m={2}>
 					<div>
 						<img className='footer-media image' src={UsaFlag} alt='USA' />
 
@@ -70,6 +87,37 @@ const Home = () => {
 						<Icon sx={{ color: 'white' }} component={CardMembershipIcon} className='footer-media image' />
 						<Typography color='white'>Adventure Awaits</Typography>
 						<Typography color='white'>Sign up to our newsletter to receive exclusive rewards.</Typography>
+
+						<form onSubmit={handleSubmit(sendEmail)} ref={myForm}>
+							<Stack direction='column' spacing={2} sx={{ width: '100%', maxWidth: '600px' }}>
+								<Controller
+									name={'email'}
+									control={control}
+									render={({ field: { onChange, value }, fieldState: { error }, formState }) => (
+										<Grid item xs={12}>
+											<TextField
+												key='email'
+												// error={false}
+												required={true}
+												onChange={onChange}
+												type='email'
+												name='email'
+												control={control}
+												label='Email'
+												autoComplete='email'
+												id='email'
+												variant='filled'
+												sx={{ background: 'white', marginTop: 1 }}
+												fullWidth
+											/>
+										</Grid>
+									)}
+								/>
+								<Button type='submit' variant='contained' color={hasJoined ? 'secondary' : 'primary'}>
+									{buttonName}
+								</Button>
+							</Stack>
+						</form>
 					</div>
 
 					<div>
