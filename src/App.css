@@ -31,6 +31,10 @@
 .row80 {
 	height: 80px;
 }
+.x-text {
+	cursor: pointer;
+	width: 50px !important;
+}
 .reststack {
 	height: calc(100vh - 80px);
 	display: flex;
@@ -78,6 +82,13 @@
 	background-color: rgba(0, 0, 0, 0.7) !important;
 
 	border-radius: 0;
+}
+
+.disabledButton {
+	background-color: #545454 !important;
+	color: #fff !important;
+	pointer-events: none;
+	opacity: 90%;
 }
 
 .shopping-cart {

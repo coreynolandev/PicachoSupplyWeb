@@ -133,13 +133,29 @@ function ToxicHoodie() {
 
 	const defaultAddOrUpdateTitle = editMode ? 'Update Item' : 'Add to Cart';
 	const defaultAddOrUpdateCompleteTitle = editMode ? 'Updated Item!' : 'Added to Cart!';
-	// const [justAddedOrUpdated, setJustAddedOrUpdated] = useState(false);
+
+	const [canAddToCart, setCanAddToCart] = useState(false);
+
 	const [addOrUpdateButtonTitle, setAddOrUpdateButtonTitle] = useState(defaultAddOrUpdateTitle);
 
 	useEffect(() => {
-		// setJustAddedOrUpdated(false);
-		setAddOrUpdateButtonTitle(defaultAddOrUpdateTitle);
-	}, [selectedHoodie, selectedBorder, selectedSize, selectedStitchFill, defaultAddOrUpdateTitle]);
+		if (!hoodieSelectionList[selectedHoodie]) {
+			setCanAddToCart(false);
+			setAddOrUpdateButtonTitle('Select a Base');
+		} else if (!borderSelectionList[selectedBorder]) {
+			setCanAddToCart(false);
+			setAddOrUpdateButtonTitle('Select a Border');
+		} else if (!stitchFillSelectionList[fillColor]) {
+			setCanAddToCart(false);
+			setAddOrUpdateButtonTitle('Select a Fill');
+		} else if (!sizeSelectionList[selectedSize]) {
+			setCanAddToCart(false);
+			setAddOrUpdateButtonTitle('Select a Size');
+		} else {
+			setCanAddToCart(true);
+			setAddOrUpdateButtonTitle(defaultAddOrUpdateTitle);
+		}
+	}, [selectedHoodie, selectedBorder, selectedSize, fillColor, selectedStitchFill, defaultAddOrUpdateTitle]);
 
 	const addToCart = () => {
 		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
@@ -178,11 +194,9 @@ function ToxicHoodie() {
 				var added = dispatch(addHoodie(hoodie));
 				console.log(added);
 			}
-			// setJustAddedOrUpdated(true);
 			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
 		} else {
 			setNeedMoreOptions(true);
-			// setJustAddedOrUpdated(false);
 		}
 	};
 
@@ -262,7 +276,7 @@ function ToxicHoodie() {
 						{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
 					</Button>
 				) : (
-					<Button  color='inherit' variant='contained' sx={{ width: '50%', marginBottom: 1, opacity: '75%' }}>
+					<Button className='disabledButton' variant='contained' sx={{ width: '50%', marginBottom: 1 }}>
 						Select more options
 					</Button>
 				)}
@@ -339,30 +353,8 @@ function ToxicHoodie() {
 						/>
 					</Stack>
 
-					{/* <Stack>
-							<Stack direction='row' justifyContent='space-between' mb={1}>
-								<FormControl fullWidth sx={{bgcolor: 'white'}}>
-									<InputLabel id='quantity-select-label'>Quantity</InputLabel>
-									<Select
-										labelId='quantity-select-label'
-										id='quantity-select'
-										value={quantity}
-										label='Quantity'
-										onChange={(event) => setQuantity(event.target.value)}>
-										<MenuItem value={1}>1</MenuItem>
-										<MenuItem value={2}>2</MenuItem>
-										<MenuItem value={3}>3</MenuItem>
-										<MenuItem value={4}>4</MenuItem>
-										<MenuItem value={5}>5</MenuItem>
-									</Select>
-								</FormControl>
-							</Stack>
-						</Stack> */}
-
 					<Stack justifyContent='space-between' spacing={1} direction='row'>
-						<Button fullWidth color={editMode ? 'secondary' : 'primary'} variant={'contained'} onClick={addToCart}>
-							{/* TODO: change it to grey and say item added to cart. switch back to add if they change something */}
-							{/* TODO: make the #1 bounce? */}
+						<Button className={canAddToCart ? '' : 'disabledButton'} fullWidth color={editMode ? 'secondary' : 'primary'} variant={'contained'} onClick={addToCart}>
 							{addOrUpdateButtonTitle}
 						</Button>
 					</Stack>
