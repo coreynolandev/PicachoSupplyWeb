@@ -5,38 +5,10 @@ import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { responsive } from './responsive';
 
 const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedHoodie, setSelectedHoodie }) => {
 	const isSelected = expanded === accordionNumber;
-
-	const responsive = {
-		superLargeDesktop: {
-			// the naming can be any, depends on you.
-			breakpoint: { max: 4000, min: 1536 },
-			items: Math.ceil(hoodieSelectionList.length / 2),
-			slidesToSlide: Math.ceil(hoodieSelectionList.length / 2) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		},
-		desktop: {
-			// the naming can be any, depends on you.
-			breakpoint: { max: 1536, min: 900 },
-			items: Math.ceil(hoodieSelectionList.length / 2),
-			slidesToSlide: Math.ceil(hoodieSelectionList.length / 2) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		},
-		tablet: {
-			breakpoint: { max: 900, min: 600 },
-			items: Math.ceil(hoodieSelectionList.length / 3),
-			slidesToSlide: Math.ceil(hoodieSelectionList.length / 3) // optional, default to 1.
-			// partialVisibilityGutter: 50
-		},
-		mobile: {
-			breakpoint: { max: 600, min: 0 },
-			items: Math.ceil(hoodieSelectionList.length / 4),
-			slidesToSlide: Math.ceil(hoodieSelectionList.length / 4) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		}
-	};
 
 	return (
 		<Accordion
@@ -55,7 +27,7 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 					draggable={true}
 					// showDots={true}
 					// renderDotsOutside={true}
-					responsive={responsive}
+					responsive={responsive(hoodieSelectionList)}
 					infinite={false}
 					autoPlay={false}
 					// renderButtonGroupOutside={true}

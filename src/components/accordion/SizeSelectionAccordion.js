@@ -5,7 +5,6 @@ import { AccordionDetails } from '../design/AccordionDetails';
 
 const SizeSelectionAccordion = ({ sizeSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedSize, setSelectedSize }) => {
 	const isSelected = expanded === accordionNumber;
-	console.log(selectedSize)
 	return (
 		<Accordion
 			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}

@@ -6,6 +6,7 @@ import Swatch from '../design/Swatch';
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { responsive } from './responsive';
 
 const StitchFillSelectionAccordion = ({
 	patternType,
@@ -28,35 +29,6 @@ const StitchFillSelectionAccordion = ({
 		}
 	}
 
-	const responsive = {
-		superLargeDesktop: {
-			// the naming can be any, depends on you.
-			breakpoint: { max: 4000, min: 1536 },
-			items: Math.ceil(stitchFillSelectionList.length / 2),
-			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 2) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		},
-		desktop: {
-			// the naming can be any, depends on you.
-			breakpoint: { max: 1536, min: 900 },
-			items: Math.ceil(stitchFillSelectionList.length / 2),
-			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 2) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		},
-		tablet: {
-			breakpoint: { max: 900, min: 600 },
-			items: Math.ceil(stitchFillSelectionList.length / 3),
-			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 3) // optional, default to 1.
-			// partialVisibilityGutter: 50
-		},
-		mobile: {
-			breakpoint: { max: 600, min: 0 },
-			items: Math.ceil(stitchFillSelectionList.length / 4),
-			slidesToSlide: Math.ceil(stitchFillSelectionList.length / 4) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		}
-	};
-
 	const colorSetList = patternType === 'fill' ? stitchFillSelectionList : stitchGradientSelectionList;
 	const currentSwatchChosen = patternType === 'fill' ? selectedStitchFill : selectedStitchGradient;
 	const isSelected = expanded === accordionNumber;
@@ -68,7 +40,7 @@ const StitchFillSelectionAccordion = ({
 			expanded={isSelected}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={isSelected}>
-				<Typography textAlign='left' >
+				<Typography textAlign='left'>
 					{accordionNumber}. Choose a Fill{name !== '' && name}
 				</Typography>
 			</AccordionSummary>
@@ -84,15 +56,19 @@ const StitchFillSelectionAccordion = ({
 					size='small'
 					aria-label='Select fill or gradient fill color options'
 					sx={{ marginBottom: 1 }}>
-					<ToggleButton sx={{fontSize: '.8rem'}} value={'fill'}>Base Color</ToggleButton>
-					<ToggleButton sx={{fontSize: '.8rem'}} value={'gradient'}>Add Gradient</ToggleButton>
+					<ToggleButton sx={{ fontSize: '.8rem' }} value={'fill'}>
+						Base Color
+					</ToggleButton>
+					<ToggleButton sx={{ fontSize: '.8rem' }} value={'gradient'}>
+						Add Gradient
+					</ToggleButton>
 				</ToggleButtonGroup>
 				<Carousel
 					swipeable={true}
 					draggable={true}
 					// showDots={true}
 					// renderDotsOutside={true}
-					responsive={responsive}
+					responsive={responsive(stitchFillSelectionList)}
 					infinite={false}
 					autoPlay={false}
 					// renderButtonGroupOutside={true}

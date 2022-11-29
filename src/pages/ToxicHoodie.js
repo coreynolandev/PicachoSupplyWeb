@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HoodieBlank from '../assets/build_adventure.png';
 import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 
@@ -132,6 +132,16 @@ function ToxicHoodie() {
 		}
 	};
 
+	const defaultAddOrUpdateTitle = editMode ? 'Update Item' : 'Add to Cart';
+	const defaultAddOrUpdateCompleteTitle = editMode ? 'Updated Item!' : 'Added to Cart!';
+	const [justAddedOrUpdated, setJustAddedOrUpdated] = useState(false);
+	const [addOrUpdateButtonTitle, setAddOrUpdateButtonTitle] = useState(defaultAddOrUpdateTitle);
+
+	useEffect(() => {
+		setJustAddedOrUpdated(false);
+		setAddOrUpdateButtonTitle(defaultAddOrUpdateTitle);
+	}, [selectedHoodie, selectedBorder, selectedSize, selectedStitchFill, defaultAddOrUpdateTitle]);
+
 	const addToCart = () => {
 		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
 		console.log('border: ' + borderSelectionList[selectedBorder]?.alt);
@@ -139,6 +149,7 @@ function ToxicHoodie() {
 		console.log('stitchGradient: ' + stitchGradientSelectionList[gradientColor]?.alt);
 		console.log('size: ' + sizeSelectionList[selectedSize]?.size);
 		if (hoodieSelectionList[selectedHoodie] && borderSelectionList[selectedBorder] && stitchFillSelectionList[fillColor] && sizeSelectionList[selectedSize]) {
+			setAddOrUpdateButtonTitle(editMode ? 'Updating...' : 'Adding...');
 			var id = editMode ? editId : uuid();
 			const hoodie = {
 				id: id,
@@ -162,13 +173,17 @@ function ToxicHoodie() {
 			};
 
 			if (editItem) {
-				dispatch(updateHoodie(hoodie));
+				var updated = dispatch(updateHoodie(hoodie));
+				console.log(updated);
 			} else {
-				dispatch(addHoodie(hoodie));
+				var added = dispatch(addHoodie(hoodie));
+				console.log(added);
 			}
+			setJustAddedOrUpdated(true);
+			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
 		} else {
-			console.log('no not done!\n\n');
 			setNeedMoreOptions(true);
+			setJustAddedOrUpdated(false);
 		}
 	};
 
@@ -197,19 +212,6 @@ function ToxicHoodie() {
 		);
 	}
 
-	const sendEmail = (formData) => {
-
-		// changeFormStep(formStep + 1);
-		console.log(formData);
-		console.log(formData);
-		// sendWithSES(formData);
-		// console.log()
-		// const templateType = isQuote ? 'template_unx8qqv' : 'template_ppm0qln';
-		// const sendEmail = false;
-		// sendEmail && sendTestEmail(formData, templateType);
-		// setNotSaved(false);
-	};
-
 	return (
 		<Stack
 			direction={{ sm: 'column', md: 'row' }}
@@ -220,7 +222,7 @@ function ToxicHoodie() {
 			mb={2}
 			spacing={2}>
 			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className=''>
-			{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}
+				{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}
 				{hoodieOrPreview === 'hoodie' ? (
 					<Box component='div' sx={{ overflow: 'hidden' }} position={'relative'} className='hoodie-stitch container'>
 						{selectedHoodie !== null && selectedBorder !== null && (
@@ -362,7 +364,7 @@ function ToxicHoodie() {
 						<Button fullWidth color={editMode ? 'secondary' : 'primary'} variant={'contained'} onClick={addToCart}>
 							{/* TODO: change it to grey and say item added to cart. switch back to add if they change something */}
 							{/* TODO: make the #1 bounce? */}
-							{editMode ? 'Update Item' : 'Add to Cart'}
+							{addOrUpdateButtonTitle}
 						</Button>
 					</Stack>
 				</Stack>

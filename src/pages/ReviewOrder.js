@@ -24,13 +24,13 @@ const ReviewOrder = () => {
 
 	const OrderDetails = () => {
 		return (
-			<Box sx={{ width: { sm: '100%', md: '33.3333%' }, marginLeft: { sm: 'inherit', md: '1rem' } }}>
+			<Box key='allOrderDetails' sx={{ width: { sm: '100%', md: '33.3333%' }, marginLeft: { sm: 'inherit', md: '1rem' } }}>
 				<Card m={1} raised>
 					<Typography variant='h4'>Order Details</Typography>
 					<Stack direction='column' justifyContent='space-between' spacing={2} m={2}>
-						{orders.map((item) => {
+						{orders.map((item, index) => {
 							return (
-								<Stack direction='row' justifyContent='space-between'>
+								<Stack key={`type-quantity-cost-${index}`} direction='row' justifyContent='space-between'>
 									<Typography>
 										{item.type} x{item.quantity}
 									</Typography>
@@ -82,7 +82,7 @@ const ReviewOrder = () => {
 
 		const ZoomedLogo = () => (
 			<>
-				<Box position={'relative'} className='hoodie-stitch container'>
+				<Box key={`zoomedLogo-${index}`} position={'relative'} className='hoodie-stitch container'>
 					{hoodie.borderColorImg && <img className='toxic-wave-logo hoodie-stitch-only outline' src={hoodie.borderColorImg} alt='Border' />}
 					{hoodie.fillColorImg && <img className='toxic-wave-logo hoodie-stitch-only stitch' src={hoodie.fillColorImg} alt='Stitch' />}
 					{hoodie.gradientColorImg && <img className='toxic-wave-logo hoodie-stitch-only stitch gradient' src={hoodie.gradientColorImg} alt='Gradient' />}
@@ -93,9 +93,10 @@ const ReviewOrder = () => {
 
 		return (
 			<Card key={`realhoodie${index}`} raised>
-				<Stack direction={{ sm: 'column', md: 'row' }} spacing={3} p={2} justifyContent='space-between' alignItems='center'>
-					<Stack direction='column' spacing={1} alignItems='center'>
+				<Stack key={`wholeOrderStack-${index}`} direction={{ sm: 'column', md: 'row' }} spacing={3} p={2} justifyContent='space-between' alignItems='center'>
+					<Stack key={`hoodieImage-${index}`} direction='column' spacing={1} alignItems='center'>
 						<Box
+							key={`fullorzoomedhoodie-${index}`}
 							component='div'
 							sx={{
 								overflow: 'hidden',
@@ -107,6 +108,7 @@ const ReviewOrder = () => {
 							{hoodieOrPreview === 'hoodie' ? FullHoodie() : ZoomedLogo()}
 						</Box>
 						<Button
+							key={`fullorzoomedhoodiebutton-${index}`}
 							color={hoodieOrPreview === 'hoodie' ? 'warning' : 'secondary'}
 							variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
 							onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
@@ -115,24 +117,30 @@ const ReviewOrder = () => {
 						</Button>
 					</Stack>
 
-					<Stack direction='column' spacing={1} alignSelf={{ sm: 'center', md: 'flex-end' }} alignItems='center' sx={{ width: '100%', maxWidth: '300px' }} mt={2}>
-						<Typography variant='h6' sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
+					<Stack
+						key={`orderItemList-${index}`}
+						direction='column'
+						spacing={1}
+						alignSelf={{ sm: 'center', md: 'flex-end' }}
+						alignItems='center'
+						sx={{ width: '100%', maxWidth: '300px' }}
+						mt={2}>
+						<Typography key={`itemtype-${index}`} variant='h6' sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
 							{hoodie.type}
 						</Typography>
-						<OrderItemDetail label='Base' value={hoodie.baseColor} />
-						<OrderItemDetail label='Border' value={hoodie.borderColor} />
-						<OrderItemDetail label='Fill' value={hoodie.fillColor} />
-						<OrderItemDetail label='Gradient' value={hoodie.gradientColor} />
-						{/* {hoodie.gradientColor && } */}
-						<OrderItemDetail label='Size' value={hoodie.size} />
-						<QuantitySelector orderItem={hoodie} />
+						<OrderItemDetail key={`orderItem-Base-${index}`} label='Base' value={hoodie.baseColor} />
+						<OrderItemDetail key={`orderItem-Border-${index}`} label='Border' value={hoodie.borderColor} />
+						<OrderItemDetail key={`orderItem-Fill-${index}`} label='Fill' value={hoodie.fillColor} />
+						<OrderItemDetail key={`orderItem-Gradient-${index}`} label='Gradient' value={hoodie.gradientColor} />
+						<OrderItemDetail key={`orderItem-Size-${index}`} label='Size' value={hoodie.size} />
+						<QuantitySelector key={`quantitySelector-${index}`} orderItem={hoodie} />
 						<Stack direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
-							<Button variant='contained'>
+							<Button key={`edithoodie-${index}`} variant='contained'>
 								<Link to={'/hoodies'} state={{ editId: hoodie.id }} style={{ textDecoration: 'none', color: 'white' }}>
 									Edit
 								</Link>
 							</Button>
-							<Button color='error' variant='outlined' onClick={() => deleteItemFromOrder(hoodie.id)}>
+							<Button key={`removehoodie-${index}`} color='error' variant='outlined' onClick={() => deleteItemFromOrder(hoodie.id)}>
 								Remove
 							</Button>
 						</Stack>
@@ -142,18 +150,20 @@ const ReviewOrder = () => {
 		);
 	};
 
-	const emptyMyCart = () => {
-		dispatch(emptyCart());
-	};
+	// const emptyMyCart = () => {
+	// 	dispatch(emptyCart());
+	// };
 
 	return (
-		<div className='checkout container'>
-			<Typography variant='h2'>Review Order</Typography>
+		<div key='checkout-container' className='checkout container'>
+			<Typography key='reviewOrder' variant='h2'>
+				Review Order
+			</Typography>
 
-			<Stack direction={{ sm: 'column', md: 'row' }} justifyContent='center'>
+			<Stack key='all-cart-items' direction={{ sm: 'column', md: 'row' }} justifyContent='center'>
 				{numberOfItemsInCart > 0 ? (
 					<>
-						<Stack direction='column' spacing={2} sx={{ width: { sm: '100%', md: '66.666%' }, height: '100%' }} mb={2}>
+						<Stack key='main-hoodie-stack-items' direction='column' spacing={2} sx={{ width: { sm: '100%', md: '66.666%' }, height: '100%' }} mb={2}>
 							{orders.map((hoodie, index) => {
 								return RealHoodie(hoodie, index);
 							})}
@@ -161,10 +171,10 @@ const ReviewOrder = () => {
 						{OrderDetails()}
 					</>
 				) : (
-					<Card raised>
+					<Card key='empty-hoodie-cart' raised>
 						<Stack direction='column' alignItems='center' justifyContent={'center'} m={2} spacing={2}>
-							<Typography>No Items in Cart</Typography>
-							<Button m={3} variant='contained' component='a' href='/hoodies'>
+							<Typography key='no-item-text'>No Items in Cart</Typography>
+							<Button key='no-item-browseHoodieButton' m={3} variant='contained' component='a' href='/hoodies'>
 								Browse Our Hoodies!
 							</Button>
 						</Stack>

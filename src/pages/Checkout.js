@@ -76,32 +76,48 @@ const Checkout = () => {
 			<Typography variant='h2'>Confirm your Order Request</Typography>
 			<Card raised sx={{ padding: '1rem', margin: '1rem auto', maxWidth: '800px', width: '100%', minWidth: '300px', alignSelf: 'center' }}>
 				<Stack direction='column' spacing={2}>
+					<Typography>We handle secure payment using Stripe. A member of our team will contact you to confirm your order details and </Typography>
 					<Typography>We handle secure payment outside of our website. We will contact you with the next steps.</Typography>
 					{OrderDetails()}
 
 					<form onSubmit={handleSubmit(sendEmail)} ref={myForm}>
-						<FormInputText
-							showErrors={false}
-							isRequired={true}
-							name='contactName'
-							type='contactName'
-							control={control}
-							label='Name'
-							autoComplete='given-name'
-							id='contactName'
-						/>
-						<FormInputText showErrors={false} isRequired={true} type='email' name='email' control={control} label='Email' autoComplete='email' id='email' />
-						<FormInputText
-							showErrors={false}
-							isRequired={true}
-							type='tel'
-							name='phoneNumber'
-							control={control}
-							label='Phone Number'
-							autoComplete='tel'
-							id='phoneNumber'
-						/>
-						<Stack direction='row' justifyContent='center' spacing={3}>
+						<Stack direction='column' spacing={2}>
+							<FormInputText
+								key='contactName'
+								showErrors={false}
+								isRequired={true}
+								name='contactName'
+								type='contactName'
+								control={control}
+								label='Name'
+								autoComplete='given-name'
+								id='contactName'
+							/>
+							<FormInputText
+								key='email'
+								showErrors={false}
+								isRequired={true}
+								type='email'
+								name='email'
+								control={control}
+								label='Email'
+								autoComplete='email'
+								id='email'
+							/>
+							<FormInputText
+								key='phoneNumber'
+								showErrors={false}
+								isRequired={true}
+								type='tel'
+								name='phoneNumber'
+								control={control}
+								label='Phone Number'
+								autoComplete='tel'
+								id='phoneNumber'
+							/>
+						</Stack>
+
+						<Stack direction='row' justifyContent='center' spacing={3} mt={2}>
 							<Button variant='contained' color='inherit'>
 								<Link to={'/review-order'} style={{ textDecoration: 'none', color: 'black' }}>
 									Back to Review Order

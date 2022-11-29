@@ -6,38 +6,11 @@ import Swatch from '../design/Swatch';
 
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { responsive } from './responsive';
 
 const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedBorder, setSelectedBorder }) => {
 	const isSelected = expanded === accordionNumber;
 
-	const responsive = {
-		superLargeDesktop: {
-			// the naming can be any, depends on you.
-			breakpoint: { max: 4000, min: 1536 },
-			items: Math.ceil(borderSelectionList.length / 2),
-			slidesToSlide: Math.ceil(borderSelectionList.length / 2) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		},
-		desktop: {
-			// the naming can be any, depends on you.
-			breakpoint: { max: 1536, min: 900 },
-			items: Math.ceil(borderSelectionList.length / 2),
-			slidesToSlide: Math.ceil(borderSelectionList.length / 2) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		},
-		tablet: {
-			breakpoint: { max: 900, min: 600 },
-			items: Math.ceil(borderSelectionList.length / 3),
-			slidesToSlide: Math.ceil(borderSelectionList.length / 3) // optional, default to 1.
-			// partialVisibilityGutter: 50
-		},
-		mobile: {
-			breakpoint: { max: 600, min: 0 },
-			items: Math.ceil(borderSelectionList.length / 4),
-			slidesToSlide: Math.ceil(borderSelectionList.length / 4) // optional, default to 1.
-			// partialVisibilityGutter: 80
-		}
-	};
 	return (
 		<Accordion
 			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
@@ -56,7 +29,7 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 					draggable={true}
 					// showDots={true}
 					// renderDotsOutside={true}
-					responsive={responsive}
+					responsive={responsive(borderSelectionList)}
 					infinite={false}
 					autoPlay={false}
 					// renderButtonGroupOutside={true}
