@@ -52,7 +52,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 				{/* <AppBar position='sticky' color='default' sx={{ background: 'transparent', boxShadow: 'none' }}> */}
 				<Container maxWidth='none' disableGutters sx={{ height: '100%' }}>
 					<Toolbar disableGutters sx={{ justifyContent: 'space-between', background: 'transparent', width: '100%', maxHeight: '80px' }}>
-						<Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+						<Box sx={{ display: { xs: 'block', sm: 'none' }, width: {xs: '48px', sm: '0px'} }}>
 							<IconButton size='small' aria-label='expand options' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
 								<MenuIcon />
 							</IconButton>

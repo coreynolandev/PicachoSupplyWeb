@@ -1,4 +1,5 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
+import SubscribeToNewsletter from '../components/design/SubscribeToNewsletter';
 
 const AboutUs = () => {
 	return (
@@ -168,7 +169,59 @@ const AboutUs = () => {
 				</svg>
 			</div>
 
-			{/* space! */}
+			<div style={{ height: '30px' }}></div>
+
+			<div className='separator top'>
+				<svg
+					className='separator__svg'
+					width='100%'
+					height='10vh'
+					viewBox='0 0 100 100'
+					preserveAspectRatio='none'
+					fill='#000000'
+					version='1.1'
+					xmlns='http://www.w3.org/2000/svg'>
+					<path d='M 100 100 V 10 L 0 100' />
+					<path d='M 0 100 L 100 30 V 0 Z' fill='#FFBD29' strokeWidth='0' />
+				</svg>
+			</div>
+
+			<Stack spacing={0} sx={{ padding: '0px !important' }} direction='column' alignItems='center' justifyContent='center' className='home-media container dark '>
+				{/* <Box className={'home-media container light  '}> */}
+				{/* <Stack direction='column' sx={{ height: 'calc(100vh - 80px - 2rem)' }}> */}
+				<div className='dontfill'>
+					<Typography color='white' variant='h3' m={1}>
+						JOIN THE ADVENTURE
+					</Typography>
+
+					<Typography color='white' variant='h5' m={3} mb={0}>
+						Follow us on <a href='https://www.instagram.com/picachosupply/'>Instagram</a>
+					</Typography>
+
+					<Typography variant='h5' color='white' m={3} mb={0}>
+						Sign up to our newsletter to receive exclusive rewards.
+					</Typography>
+
+					<Box p={3}>
+						<SubscribeToNewsletter />
+					</Box>
+				</div>
+			</Stack>
+
+			<div className='separator bottom'>
+				<svg
+					className='separator__svg'
+					width='100%'
+					height='10vh'
+					viewBox='0 0 100 100'
+					preserveAspectRatio='none'
+					fill='#000000'
+					version='1.1'
+					xmlns='http://www.w3.org/2000/svg'>
+					<path d='M 0 0 V 90 L 100 0' />
+					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
+				</svg>
+			</div>
 			<div style={{ height: '45px' }}></div>
 		</>
 	);

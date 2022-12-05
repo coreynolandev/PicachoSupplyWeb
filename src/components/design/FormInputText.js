@@ -2,17 +2,32 @@ import { InfoRounded } from '@mui/icons-material';
 import { Grid, InputAdornment, TextField, Tooltip } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
-const FormInputText = ({ name, control, label, autoComplete, id, isRequired, multiline, alwaysFull, showErrors, type, fieldDescription, variant = 'outlined' }) => {
+const FormInputText = ({
+	name,
+	control,
+	label,
+	autoComplete,
+	id,
+	isRequired,
+	multiline,
+	alwaysFull,
+	threeLine,
+	showErrors,
+	type,
+	fieldDescription,
+	variant = 'outlined',
+	placeholder
+}) => {
 	return (
 		<Controller
 			name={name}
 			control={control}
 			render={({ field: { onChange, value }, fieldState: { error }, formState }) => (
-				<Grid item xs={12} sm={alwaysFull ? 12 : 6}>
+				<Grid item xs={12} sm={alwaysFull ? 12 : threeLine ? 4 : 6}>
 					<TextField
 						name={name}
 						error={showErrors && isRequired && value.length === 0}
-						size='large'
+						size='medium'
 						type={type || 'text'}
 						inputMode={type}
 						autoComplete={autoComplete}
@@ -21,8 +36,9 @@ const FormInputText = ({ name, control, label, autoComplete, id, isRequired, mul
 						id={id}
 						required={isRequired}
 						onChange={onChange}
-						value={value}
-						fullWidth
+						value={value || ''}
+						fullWidth={true}
+						placeholder={placeholder || ''}
 						label={label}
 						variant={variant}
 						InputProps={
@@ -36,7 +52,7 @@ const FormInputText = ({ name, control, label, autoComplete, id, isRequired, mul
 											</InputAdornment>
 										)
 								  }
-								: {}
+								: { style: { minHeight: '3rem' } }
 						}
 					/>
 				</Grid>

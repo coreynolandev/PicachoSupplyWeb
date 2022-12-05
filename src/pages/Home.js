@@ -1,31 +1,13 @@
-import { Box, Button, Grid, Icon, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Icon, Stack, Typography } from '@mui/material';
 import PicachoWhiteLogo from '../assets2/big_logo.png';
 import UsaFlag from '../assets2/usa.png';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import { useRef, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 
-import SpacerT from '../assets2/spacer.svg';
 import { Landscape } from '@mui/icons-material';
+import SubscribeToNewsletter from '../components/design/SubscribeToNewsletter';
 
 const Home = () => {
-	const defaultValues = {
-		email: ''
-	};
-
-	const [buttonName, setButtonName] = useState('Join the Adventure!');
-	const [hasJoined, setHasJoined] = useState(false);
-	const { handleSubmit, control } = useForm({ defaultValues });
-	const myForm = useRef(null);
-
-	const sendEmail = (formData) => {
-		console.log(formData);
-		setHasJoined(true);
-		setButtonName('Subscribed!');
-	};
-
 	return (
 		<Box className='scroll-snap'>
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container  '>
@@ -140,36 +122,7 @@ const Home = () => {
 						<Typography color='white'>Adventure Awaits</Typography>
 						<Typography color='white'>Sign up to our newsletter to receive exclusive rewards.</Typography>
 
-						<form onSubmit={handleSubmit(sendEmail)} ref={myForm}>
-							<Stack direction='column' spacing={2} sx={{ width: '100%', maxWidth: '600px' }}>
-								<Controller
-									name={'email'}
-									control={control}
-									render={({ field: { onChange, value }, fieldState: { error }, formState }) => (
-										<Grid item xs={12}>
-											<TextField
-												key='email'
-												// error={false}
-												required={true}
-												onChange={onChange}
-												type='email'
-												name='email'
-												control={control}
-												label='Email'
-												autoComplete='email'
-												id='email'
-												variant='filled'
-												sx={{ background: 'white', marginTop: 1 }}
-												fullWidth
-											/>
-										</Grid>
-									)}
-								/>
-								<Button type='submit' variant='contained' color='edit'>
-									{buttonName}
-								</Button>
-							</Stack>
-						</form>
+						<SubscribeToNewsletter />
 					</div>
 
 					<div>
@@ -178,17 +131,36 @@ const Home = () => {
 						<Typography color='white'>At Picacho, our 100% Satistfaction Guarantee means our mission is not complete until you're happy.</Typography>
 					</div>
 
-					<Stack direction='row' justifyContent={'space-between'} sx={{ width: '100%' }}>
-						<Typography color='gray'>Picacho Supply</Typography>
-						<Landscape color='secondary' />
-						<Typography color='gray'>Denver, CO</Typography>
-						<Landscape color='secondary' />
-						<Typography color='gray'>Est. 2021</Typography>
-						<Landscape color='secondary' />
-						<Typography color='gray'>
-							Follow us on <a href='https://www.instagram.com/picachosupply/'>Instagram</a>
-						</Typography>
-					</Stack>
+					<Grid container alignItems={'center'} spacing={1} sx={{ width: '100%' }}>
+						<Grid item xs={5} sm={2}>
+							<Typography color='gray'>Picacho Supply</Typography>
+						</Grid>
+						<Grid item xs={2} sm={1}>
+							<Landscape color='secondary' />
+						</Grid>
+
+						<Grid item xs={5} sm={2}>
+							<Typography color='gray'>Denver, CO</Typography>
+						</Grid>
+
+						<Grid item xs={0} sm={1} sx={{ display: { xs: 'none', sm: 'inherit' } }}>
+							<Landscape color='secondary' />
+						</Grid>
+
+						<Grid item xs={5} sm={2}>
+							<Typography color='gray'>Est. 2021</Typography>
+						</Grid>
+
+						<Grid item xs={2} sm={1}>
+							<Landscape color='secondary' />
+						</Grid>
+
+						<Grid item xs={5} sm={2}>
+							<Typography color='gray'>
+								Follow us on <a href='https://www.instagram.com/picachosupply/'>Instagram</a>
+							</Typography>
+						</Grid>
+					</Grid>
 				</Stack>
 			</Stack>
 

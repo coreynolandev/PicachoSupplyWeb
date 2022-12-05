@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import HoodieBlank from '../assets2/build_adventure.png';
-import {  Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Snackbar, Stack, Tooltip } from '@mui/material';
+import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Snackbar, Stack, Tooltip } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
@@ -187,7 +187,7 @@ function ToxicHoodie() {
 				gradientColorImg: stitchGradientSelectionList[gradientColor]?.logo,
 				gradientColorId: gradientColor,
 				quantity: 1,
-				cost: 50.00,
+				cost: 50.0,
 				type: 'Toxic Wave Hoodie'
 			};
 
@@ -288,11 +288,11 @@ function ToxicHoodie() {
 						color={hoodieOrPreview === 'hoodie' ? 'viewEmbroidery' : 'viewHoodie'}
 						variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
 						onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
-						sx={{ width: '50%', marginBottom: 1 }}>
+						sx={{ width: '50%', marginBottom: 1, position: 'relative', top: '-30px' }}>
 						{hoodieOrPreview === 'hoodie' ? 'View Embroidery' : 'View Hoodie'}
 					</Button>
 				) : (
-					<Button className='disabledButton' variant='contained' sx={{ width: '50%', marginBottom: 1 }}>
+					<Button className='disabledButton' variant='contained' sx={{ width: '50%', marginBottom: 1, position: 'relative', top: '-30px' }}>
 						Select options
 					</Button>
 				)}
@@ -304,7 +304,13 @@ function ToxicHoodie() {
 				direction={'column'}
 				alignItems='flex-start'
 				flexShrink={0}
-				sx={{ marginRight: { sm: 'none', md: '1rem !important' }, maxWidth: { sm: '100%', md: '500px', lg: '700px' }, background: 'transparent', willChange: 'transform' }}>
+				sx={{
+					marginRight: { sm: 'none', md: '1rem !important' },
+					maxWidth: { sm: '100%', md: '500px', lg: '700px' },
+					background: 'transparent',
+					position: { xs: 'relative', sm: 'relative', md: 'initial' },
+					top: { xs: '-30px', sm: '-30px', md: '0px' }
+				}}>
 				{/* <Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}> */}
 				<Stack spacing={2} width='100%'>
 					<Stack padding={-2}>
