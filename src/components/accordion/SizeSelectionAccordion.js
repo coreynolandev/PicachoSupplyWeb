@@ -17,23 +17,23 @@ const SizeSelectionAccordion = ({ sizeSelectionList, accordionNumber, expanded, 
 				</Typography>
 			</AccordionSummary>
 			<AccordionDetails>
-				<Grid container direction='row' justifyContent='flex-start'>
+				<Grid container direction='row' justifyContent='center'>
 					{sizeSelectionList.map((size, index) => {
 						return (
-							<Grid item xs={3} sm={2} key={`sizeOption${index}`}>
+							<Grid item xs={2} sm={2} key={`sizeOption${index}`}>
 								<Button
 									sx={{
 										borderRadius: 0,
 										margin: '10px 10px 5px 10px',
 										padding: 0,
-										maxWidth: '30px',
-										minWidth: '30px',
+										maxWidth: '40px',
+										minWidth: '40px',
 										maxHeight: '30px',
 										minHeight: '30px'
 									}}
 									variant={selectedSize !== null && sizeSelectionList[selectedSize].order === index ? 'contained' : 'outlined'}
 									onClick={() => setSelectedSize(index)}
-									color='warning'>
+									color='primary'>
 									<Typography>{size.size}</Typography>
 								</Button>
 							</Grid>

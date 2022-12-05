@@ -26,7 +26,8 @@ const sizeSelectionList = [
 	{ size: 'S', order: 0 },
 	{ size: 'M', order: 1 },
 	{ size: 'L', order: 2 },
-	{ size: 'XL', order: 3 }
+	{ size: 'XL', order: 3 },
+	{ size: 'XXL', order: 4 }
 ];
 
 function ToxicHoodie() {
@@ -247,7 +248,7 @@ function ToxicHoodie() {
 			alignItems={{ sm: 'center', md: 'flex-start' }}
 			sx={{ width: '100%' }}
 			mt={2}
-			mb={2}
+			mb={6}
 			spacing={2}>
 			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className=''>
 				{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}

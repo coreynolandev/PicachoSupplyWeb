@@ -35,7 +35,7 @@ const ReviewOrder = () => {
 										{item.type} x{item.quantity}
 									</Typography>
 									<Typography>
-										${item.cost} x{item.quantity}
+										${(item.cost).toFixed(2)} x{item.quantity}
 									</Typography>
 								</Stack>
 							);
@@ -43,18 +43,18 @@ const ReviewOrder = () => {
 						<Divider />
 						<Stack direction='row' justifyContent='space-between'>
 							<Typography>Item Total</Typography>
-							<Typography>${sumOfTotalCost}</Typography>
+							<Typography>${sumOfTotalCost.toFixed(2)}</Typography>
 						</Stack>
 						<Stack direction='row' justifyContent='space-between'>
 							<Typography>Est. S+H</Typography>
-							<Typography>$12</Typography>
+							<Typography>$12.00</Typography>
 						</Stack>
 
 						<Divider />
 
 						<Stack direction='row' justifyContent='space-between'>
 							<Typography>Total</Typography>
-							<Typography>${sumOfTotalCost + 12}</Typography>
+							<Typography>${(sumOfTotalCost + 12).toFixed(2)}</Typography>
 						</Stack>
 
 						<Stack direction='row' justifyContent='center'>

@@ -21,7 +21,7 @@ const StitchFillSelectionAccordion = ({
 	changeStitchFill
 }) => {
 	var name = selectedStitchFill !== null ? ` - ${stitchFillSelectionList[selectedStitchFill].alt}` : '';
-	if (selectedStitchGradient !== null ) {
+	if (selectedStitchGradient !== null) {
 		if (name !== '') {
 			name += `/${stitchFillSelectionList[selectedStitchGradient].alt}`;
 		} else {
@@ -124,6 +124,7 @@ const StitchFillSelectionAccordion = ({
 						);
 					})}
 				</Carousel>
+				<Typography sx={{ color: 'grey !important', fontSize: '14px' }}>double click to remove color</Typography>
 			</AccordionDetails>
 		</Accordion>
 	);

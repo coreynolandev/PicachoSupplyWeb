@@ -23,26 +23,27 @@ const Checkout = () => {
 									{item.type} x{item.quantity}
 								</Typography>
 								<Typography sx={{ marginLeft: '3rem' }}>
-									${item.cost} x{item.quantity}
+									${(item.cost).toFixed(2)} x{item.quantity}
 								</Typography>
 							</Stack>
 						);
 					})}
+
 					<Divider />
 					<Stack direction='row' justifyContent='space-between'>
 						<Typography>Item Total</Typography>
-						<Typography>${sumOfTotalCost}</Typography>
+						<Typography>${sumOfTotalCost.toFixed(2)}</Typography>
 					</Stack>
 					<Stack direction='row' justifyContent='space-between'>
 						<Typography>Est. S+H</Typography>
-						<Typography>$12</Typography>
+						<Typography>$12.00</Typography>
 					</Stack>
 
 					<Divider />
 
 					<Stack direction='row' justifyContent='space-between'>
 						<Typography>Est. Total</Typography>
-						<Typography>${sumOfTotalCost + 12}</Typography>
+						<Typography>${(sumOfTotalCost + 12).toFixed(2)}</Typography>
 					</Stack>
 				</Stack>
 			</Box>
@@ -77,7 +78,7 @@ const Checkout = () => {
 			<Typography variant='h2'>Confirm your Order Request</Typography>
 			<Card raised sx={{ padding: '1rem', margin: '1rem auto', maxWidth: '800px', width: '100%', minWidth: '300px', alignSelf: 'center' }}>
 				<Stack direction='column' spacing={2}>
-					<Typography>We handle secure payment using Stripe. A team member will contact you to confirm your order details and </Typography>
+					<Typography>We handle secure payment using Stripe. A team member will contact you shortly to confirm your order!</Typography>
 					{OrderDetails()}
 
 					<form onSubmit={handleSubmit(sendEmail)} ref={myForm}>
@@ -123,6 +124,7 @@ const Checkout = () => {
 								type='text'
 								name='questions'
 								control={control}
+								multiline
 								label='Questions or Additional Requests'
 								autoComplete='tel'
 								id='questions'
