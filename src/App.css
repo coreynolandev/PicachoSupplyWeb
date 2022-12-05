@@ -1,6 +1,5 @@
-
 body:before {
-	content: "";
+	content: '';
 	display: block;
 	position: fixed;
 	left: 0;
@@ -13,7 +12,7 @@ body:before {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-  }
+}
 
 /* Toxic Wave Logo */
 .toxic-wave-logo {

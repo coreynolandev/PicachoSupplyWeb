@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Card, Divider, Snackbar, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Divider, Snackbar, Stack, Typography } from '@mui/material';
 import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -35,7 +35,7 @@ const ReviewOrder = () => {
 										{item.type} x{item.quantity}
 									</Typography>
 									<Typography>
-										${(item.cost).toFixed(2)} x{item.quantity}
+										${item.cost.toFixed(2)} x{item.quantity}
 									</Typography>
 								</Stack>
 							);
@@ -72,7 +72,6 @@ const ReviewOrder = () => {
 	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
 
 	const RealHoodie = (hoodie, index) => {
-
 		const FullHoodie = () => (
 			<>
 				{hoodie !== null && hoodie.borderColorImg && <img className='toxic-wave-logo hoodie-stitch outline' src={hoodie.borderColorImg} alt='Border' />}

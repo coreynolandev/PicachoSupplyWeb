@@ -1,5 +1,5 @@
 import './App.css';
-import { Container, createTheme, CssBaseline, responsiveFontSizes, Slide, useMediaQuery } from '@mui/material';
+import { Container, createTheme, CssBaseline, responsiveFontSizes, useMediaQuery } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import ToxicHoodie from './pages/ToxicHoodie';
 import { useState } from 'react';

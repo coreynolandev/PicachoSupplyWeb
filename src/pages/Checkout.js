@@ -23,7 +23,7 @@ const Checkout = () => {
 									{item.type} x{item.quantity}
 								</Typography>
 								<Typography sx={{ marginLeft: '3rem' }}>
-									${(item.cost).toFixed(2)} x{item.quantity}
+									${item.cost.toFixed(2)} x{item.quantity}
 								</Typography>
 							</Stack>
 						);
@@ -126,7 +126,6 @@ const Checkout = () => {
 								control={control}
 								multiline
 								label='Questions or Additional Requests'
-								autoComplete='tel'
 								id='questions'
 								variant='filled'
 							/>

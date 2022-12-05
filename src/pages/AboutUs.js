@@ -1,17 +1,6 @@
-import { Box, Button, Card, CardContent, Grid, Icon, Stack, Typography } from '@mui/material';
-import FindPeak from '../assets2/FIND PEAK.png';
-import LandSky from '../assets2/Land Sky.png';
-import MeetTeam from '../assets2/MEET TEAM.png';
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
-import ReactCardFlip from 'react-card-flip';
-import { useState } from 'react';
+import { Stack, Typography } from '@mui/material';
 
 const AboutUs = () => {
-	const [flip, setFlip] = useState(false);
-	const [flipCardOne, setFlipCardOne] = useState(false);
-	const [flipCardTwo, setFlipCardTwo] = useState(false);
-	const [flipCardThree, setFlipCardThree] = useState(false);
-
 	return (
 		<>
 			<div style={{ height: '30px' }}></div>
@@ -139,7 +128,7 @@ const AboutUs = () => {
 						MEET THE TEAM
 					</Typography>
 
-					<Stack direction='column' spacing={2} sx={{ margin: 3, marginBottom: 0}}>
+					<Stack direction='column' spacing={2} sx={{ margin: 3, marginBottom: 0 }}>
 						<div>
 							<Typography variant='h5'>Andrew Jeffries</Typography>
 							<Typography component='a' href='mailto: a@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
