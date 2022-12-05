@@ -51,7 +51,7 @@ const Home = () => {
 				</div> */}
 			</Stack>
 
-			<div className='separator'>
+			<div className='separator top'>
 			<svg
 					className='separator__svg'
 					width='100%'
@@ -92,7 +92,7 @@ const Home = () => {
 				</div>
 			</Stack>
 
-			<div className='separator'>
+			<div className='separator bottom'>
 				<svg
 					className='separator__svg'
 					width='100%'
@@ -111,7 +111,7 @@ const Home = () => {
 			<div style={{height: '30px'}}></div>
 
 
-			<div className='separator'>
+			<div className='separator top'>
 			<svg
 					className='separator__svg'
 					width='100%'
@@ -180,7 +180,7 @@ const Home = () => {
 				</Stack>
 			</Stack>
 
-			<div className='separator'>
+			<div className='separator bottom'>
 				<svg
 					className='separator__svg'
 					width='100%'

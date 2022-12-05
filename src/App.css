@@ -1,17 +1,19 @@
-html,
-body {
-	background-image: url('../public/buffalo_bg.png');
-	height: 100%;
+
+body:before {
+	content: "";
+	display: block;
+	position: fixed;
+	left: 0;
+	top: 0;
 	width: 100%;
-	background-size:  100%;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
+	height: 100%;
+	z-index: -10;
+	background: url('../public/buffalo_bg.png') no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
 	background-size: cover;
-	padding: 0;
-	margin: 0;
-	font-family: 'Raleway', sans-serif;
-}
+  }
 
 /* Toxic Wave Logo */
 .toxic-wave-logo {
@@ -160,8 +162,16 @@ body {
 }
 
 .separator {
-	
 	height: 10vh;
+	position: relative;
+}
+
+.separator.top {
+	bottom: -1px;
+}
+
+.separator.bottom {
+	top: -1px;
 }
 
 .picacho-white-logo {
