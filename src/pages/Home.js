@@ -8,6 +8,7 @@ import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import SpacerT from '../assets2/spacer.svg';
+import { Landscape } from '@mui/icons-material';
 
 const Home = () => {
 	const defaultValues = {
@@ -52,7 +53,7 @@ const Home = () => {
 			</Stack>
 
 			<div className='separator top'>
-			<svg
+				<svg
 					className='separator__svg'
 					width='100%'
 					height='10vh'
@@ -108,11 +109,10 @@ const Home = () => {
 			</div>
 
 			{/* space! */}
-			<div style={{height: '30px'}}></div>
-
+			<div style={{ height: '30px' }}></div>
 
 			<div className='separator top'>
-			<svg
+				<svg
 					className='separator__svg'
 					width='100%'
 					height='10vh'
@@ -177,6 +177,18 @@ const Home = () => {
 						<Typography color='white'>Satisfaction Guarantee</Typography>
 						<Typography color='white'>At Picacho, our 100% Satistfaction Guarantee means our mission is not complete until you're happy.</Typography>
 					</div>
+
+					<Stack direction='row' justifyContent={'space-between'} sx={{ width: '100%' }}>
+						<Typography color='gray'>Picacho Supply</Typography>
+						<Landscape color='secondary' />
+						<Typography color='gray'>Denver, CO</Typography>
+						<Landscape color='secondary' />
+						<Typography color='gray'>Est. 2021</Typography>
+						<Landscape color='secondary' />
+						<Typography color='gray'>
+							Follow us on <a href='https://www.instagram.com/picachosupply/'>Instagram</a>
+						</Typography>
+					</Stack>
 				</Stack>
 			</Stack>
 
@@ -194,8 +206,7 @@ const Home = () => {
 					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
 				</svg>
 			</div>
-			<div style={{height: '30px'}}></div>
-
+			<div style={{ height: '30px' }}></div>
 		</Box>
 	);
 };

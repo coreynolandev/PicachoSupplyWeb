@@ -1,8 +1,8 @@
-import { Box, Button, Card, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Checkbox, Divider, FormControlLabel, Stack, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import FormInputText from '../components/design/FormInputText';
 
 const Checkout = () => {
@@ -50,15 +50,19 @@ const Checkout = () => {
 		);
 	};
 
+	const [subscribe, setSubscribe] = useState(false);
+
 	const defaultValues = {
 		email: '',
 		phoneNumber: '',
 		contactName: '',
 		orders: orders,
-		cart: cart
+		cart: cart,
+		wantsToSubscribe: subscribe
 	};
 
 	const { handleSubmit, control } = useForm({ defaultValues });
+
 	// const { handleSubmit, reset, control, setValue, watch, register, getValues } = useForm({ defaultValues });
 
 	const sendEmail = (formData) => {
@@ -129,6 +133,8 @@ const Checkout = () => {
 								id='questions'
 								variant='filled'
 							/>
+
+							<FormControlLabel control={<Checkbox checked={subscribe} onClick={() => setSubscribe(!subscribe)} />} label='Subscribe to our newsletter' />
 						</Stack>
 
 						<Stack direction='row' justifyContent='center' spacing={3} mt={2}>
