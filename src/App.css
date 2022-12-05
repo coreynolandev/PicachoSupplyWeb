@@ -1,3 +1,18 @@
+html,
+body {
+	background-image: url('../public/buffalo_bg.png');
+	height: 100%;
+	width: 100%;
+	background-size:  100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	padding: 0;
+	margin: 0;
+	font-family: 'Raleway', sans-serif;
+}
+
 /* Toxic Wave Logo */
 .toxic-wave-logo {
 	/* aspect-ratio: 795/253; */
@@ -21,7 +36,7 @@
 	align-items: flex-start;
 	width: 80%;
 	height: 100%;
-	background-color: rgb(0, 0, 0);
+	background-color: #171612;
 }
 
 .left80p > * {
@@ -44,9 +59,11 @@
 	padding: 0px;
 }
 .logo.container {
-	width: 100%;
-	padding: 0.5rem 0.5rem 0 0.5rem;
+	width: auto;
+	height: auto;
+	max-width: 264px;
 	max-height: 70px;
+	padding: 0.5rem 0.5rem 0 0.5rem;
 	position: relative;
 	align-self: center;
 }
@@ -75,17 +92,25 @@
 	object-fit: contain;
 }
 
+.centered-content {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.fullcard {
+	height: 385px;
+	cursor: pointer;
+}
+
 .fullcard.navy {
-	margin-left: -16px !important;
-	margin-right: -16px !important;
 	/* background-color: rgba(0, 22, 82, 1) !important; */
 	background-color: rgba(0, 0, 0, 0.7) !important;
-
-	border-radius: 0;
 }
 
 .disabledButton {
-	background-color: #545454 !important;
+	background-color: #4a473a !important;
 	color: #fff !important;
 	pointer-events: none;
 	opacity: 90%;
@@ -129,10 +154,20 @@
 	background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
+.landing-area {
+	height: 100%;
+	min-height: 400px;
+}
+
+.separator {
+	
+	height: 10vh;
+}
+
 .picacho-white-logo {
 	min-width: calc(min(90vw, 300px));
 	width: 70%;
-	height: 30vh;
+	/* height: 30vh; */
 	object-fit: contain;
 }
 
@@ -157,15 +192,22 @@
 
 .home-media.container {
 	scroll-snap-align: start;
-	min-height: calc(100vh - 80px);
-	max-height: calc(100vh - 80px);
+	/* min-height: calc(100vh - 80px); */
+	height: 100%;
 	padding: 1rem;
 	width: 100vw;
 }
 
+.flip-card {
+	width: 100%;
+	height: 100%;
+}
+
 .checkout.container {
-	min-height: calc(100vh - 80px);
-	max-height: calc(100vh - 80px);
+	/* min-height: calc(100vh - 80px); */
+	/* height: calc(100% - 80px); */
+	height: 100%;
+	/* max-height: calc(100vh - 80px); */
 	padding: 1rem;
 	width: 100vw;
 	overflow-y: scroll;
@@ -173,8 +215,8 @@
 
 .home-media.container.light {
 	/* background-color: linear-g; */
-	background: linear-gradient(90deg, #f8f8f8 0%, #eaebea 101.99%);
-	/* background: 'linear-gradient(90deg, #F8F8F8 0%, #EAEBEA 101.99%);', */
+	/* background: linear-gradient(90deg, #f8f8f8 0%, #eaebea 101.99%); */
+	background: white;
 }
 .home-media.container.dark {
 	background-color: black;
@@ -201,12 +243,13 @@
 }
 
 .scroll-snap {
-	width: 100vw;
-	max-height: calc(100vh - 80px);
-	scroll-snap-type: y mandatory;
+	width: 100%;
+	height: 100%;
+	max-height: calc(100% - 80px);
+	/* scroll-snap-type: y mandatory; */
 	/* Reserve space for header plus some extra space for sneak peeking. */
 	/* scroll-padding-top: 3vh; */
-	scroll-behavior: smooth;
+	/* scroll-behavior: smooth; */
 	overflow-y: scroll;
 	overflow-x: visible;
 }
@@ -472,16 +515,16 @@
 	/* background-image: url('../public/mnote_bg1.png'); */
 	/* background-image: url('../public/mountain_bg.jpg'); */
 
-	background-image: url('../public/buffalo_bg.png');
-	/* background-image: url('../public/mountain_bg10.jpg'); */
+	/* background-image: url('../public/buffalo_bg.png');
 	min-height: 100vh;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
-	background-size: cover;
+	background-size: cover; */
 }
 
 .App-content {
+	/* height: calc(100%-80px); */
 	min-height: 100%;
 	display: flex;
 	flex-direction: column;

@@ -1,14 +1,13 @@
-import { Box, Button, Card, Divider, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Alert, Box, Button, Card, Divider, Snackbar, Stack, Typography } from '@mui/material';
+import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import QuantitySelector from '../components/buttons/QuantitySelector';
 import OrderItemDetail from '../components/design/OrderItemDetail';
 import { removeItem } from '../features/cartSlice';
+import MuiAlert from '@mui/material/Alert';
 
 const ReviewOrder = () => {
-	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
-
 	var cart = useSelector((state) => state.cart);
 	var orders = cart?.order;
 	const numberOfItemsInCart = orders.length;
@@ -20,6 +19,7 @@ const ReviewOrder = () => {
 
 	const deleteItemFromOrder = (id) => {
 		dispatch(removeItem(id));
+		setSnackbarOpen(true);
 	};
 
 	const OrderDetails = () => {
@@ -69,8 +69,10 @@ const ReviewOrder = () => {
 			</Box>
 		);
 	};
+	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
 
 	const RealHoodie = (hoodie, index) => {
+
 		const FullHoodie = () => (
 			<>
 				{hoodie !== null && hoodie.borderColorImg && <img className='toxic-wave-logo hoodie-stitch outline' src={hoodie.borderColorImg} alt='Border' />}
@@ -109,11 +111,11 @@ const ReviewOrder = () => {
 						</Box>
 						<Button
 							key={`fullorzoomedhoodiebutton-${index}`}
-							color={hoodieOrPreview === 'hoodie' ? 'warning' : 'secondary'}
+							color={hoodieOrPreview === 'hoodie' ? 'viewEmbroidery' : 'viewHoodie'}
 							variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
 							onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
 							sx={{ width: '200px', marginBottom: 1 }}>
-							{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
+							{hoodieOrPreview === 'hoodie' ? 'View Embroidery' : 'View Hoodie'}
 						</Button>
 					</Stack>
 
@@ -135,8 +137,8 @@ const ReviewOrder = () => {
 						<OrderItemDetail key={`orderItem-Size-${index}`} label='Size' value={hoodie.size} />
 						<QuantitySelector key={`quantitySelector-${index}`} orderItem={hoodie} />
 						<Stack direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
-							<Button key={`edithoodie-${index}`} variant='contained'>
-								<Link to={'/hoodies'} state={{ editId: hoodie.id }} style={{ textDecoration: 'none', color: 'white' }}>
+							<Button key={`edithoodie-${index}`} variant='contained' color='edit'>
+								<Link to={'/hoodies'} state={{ editId: hoodie.id }} style={{ textDecoration: 'none', color: 'black' }}>
 									Edit
 								</Link>
 							</Button>
@@ -154,8 +156,26 @@ const ReviewOrder = () => {
 	// 	dispatch(emptyCart());
 	// };
 
+	const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+	const Alert = forwardRef(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+	});
+
+	const handleSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setSnackbarOpen(false);
+	};
+
 	return (
 		<div key='checkout-container' className='checkout container'>
+			<Snackbar sx={{ marginTop: '80px' }} anchorOrigin={{ horizontal: 'center', vertical: 'top' }} open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+				<Alert onClose={handleSnackbarClose} severity='info' sx={{ width: '100%' }}>
+					Removed Item
+				</Alert>
+			</Snackbar>
 			<Typography key='reviewOrder' variant='h2'>
 				Review Order
 			</Typography>
@@ -180,18 +200,6 @@ const ReviewOrder = () => {
 						</Stack>
 					</Card>
 				)}
-				{/* {numberOfItemsInCart < 1 ? (
-					<Card raised>
-						<Stack direction='column' alignItems='center' m={2} spacing={2}>
-							<Typography>No Items in Cart</Typography>
-							<Button m={3} variant='contained' component='a' href='/hoodies'>
-								Browse Our Hoodies!
-							</Button>
-						</Stack>
-					</Card>
-				) : (
-					OrderDetails()
-				)} */}
 			</Stack>
 		</div>
 	);

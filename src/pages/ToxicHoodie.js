@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import HoodieBlank from '../assets2/build_adventure.png';
-import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Stack, Tooltip } from '@mui/material';
+import {  Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Snackbar, Stack, Tooltip } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
 import BorderSelectionAccordion from '../components/accordion/BorderSelectionAccordion';
@@ -35,6 +36,8 @@ function ToxicHoodie() {
 	const orders = useSelector((state) => state.cart.order);
 	const editItem = editId ? orders.find((item) => item.id === editId) : null;
 	const editMode = editItem !== null;
+
+	const [snackbarOpen, setSnackbarOpen] = useState(false);
 
 	const dispatch = useDispatch();
 	const [expanded, setExpanded] = useState(1);
@@ -183,7 +186,7 @@ function ToxicHoodie() {
 				gradientColorImg: stitchGradientSelectionList[gradientColor]?.logo,
 				gradientColorId: gradientColor,
 				quantity: 1,
-				cost: 50,
+				cost: 50.00,
 				type: 'Toxic Wave Hoodie'
 			};
 
@@ -195,6 +198,7 @@ function ToxicHoodie() {
 				console.log(added);
 			}
 			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
+			setSnackbarOpen(true);
 		} else {
 			setNeedMoreOptions(true);
 		}
@@ -224,6 +228,17 @@ function ToxicHoodie() {
 			</Dialog>
 		);
 	}
+
+	const Alert = forwardRef(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+	});
+
+	const handleSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setSnackbarOpen(false);
+	};
 
 	return (
 		<Stack
@@ -269,15 +284,15 @@ function ToxicHoodie() {
 				)}
 				{selectedHoodie !== null && (selectedBorder !== null || fillColor !== null || gradientColor || null) ? (
 					<Button
-						color={hoodieOrPreview === 'hoodie' ? 'warning' : 'secondary'}
+						color={hoodieOrPreview === 'hoodie' ? 'viewEmbroidery' : 'viewHoodie'}
 						variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
 						onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
 						sx={{ width: '50%', marginBottom: 1 }}>
-						{hoodieOrPreview === 'hoodie' ? 'Show Logo' : 'Show Hoodie'}
+						{hoodieOrPreview === 'hoodie' ? 'View Embroidery' : 'View Hoodie'}
 					</Button>
 				) : (
 					<Button className='disabledButton' variant='contained' sx={{ width: '50%', marginBottom: 1 }}>
-						Select more options
+						Select options
 					</Button>
 				)}
 			</Stack>
@@ -354,7 +369,7 @@ function ToxicHoodie() {
 					</Stack>
 
 					<Stack justifyContent='space-between' spacing={1} direction='row'>
-						<Button className={canAddToCart ? '' : 'disabledButton'} fullWidth color={editMode ? 'secondary' : 'primary'} variant={'contained'} onClick={addToCart}>
+						<Button className={canAddToCart ? '' : 'disabledButton'} fullWidth color={editMode ? 'edit' : 'primary'} variant={'contained'} onClick={addToCart}>
 							{addOrUpdateButtonTitle}
 						</Button>
 					</Stack>
@@ -365,6 +380,12 @@ function ToxicHoodie() {
 			{/* {needMoreOptions && selectMoreOptions} */}
 			<SelectMoreOptionsDialog open={needMoreOptions} />
 			{/* {selectMoreOptions} */}
+
+			<Snackbar sx={{ marginTop: '80px' }} anchorOrigin={{ horizontal: 'center', vertical: 'top' }} open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+				<Alert onClose={handleSnackbarClose} severity='success' sx={{ width: '100%' }}>
+					{editMode ? 'Updated Item!' : 'Added to Cart!'}
+				</Alert>
+			</Snackbar>
 		</Stack>
 	);
 }

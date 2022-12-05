@@ -21,6 +21,32 @@ function App(props) {
 			mode: 'light',
 			background: {
 				default: '#f5f5f5'
+			},
+			primary: {
+				// navy blue
+				// main: '#171612',
+				main: '#14264E'
+			},
+			secondary: {
+				main: '#FFBD29'
+			},
+			warning: {
+				main: '#171612'
+			},
+			done: {
+				main: '#000000'
+			},
+			edit: {
+				main: '#FFBD29',
+				contrastText: '#000000'
+			},
+			viewEmbroidery: {
+				main: '#171612',
+				contrastText: '#ffffff'
+			},
+			viewHoodie: {
+				main: '#4a473a',
+				contrastText: '#ffffff'
 			}
 		},
 		typography: {

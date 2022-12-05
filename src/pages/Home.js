@@ -7,6 +7,8 @@ import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrow
 import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import SpacerT from '../assets2/spacer.svg';
+
 const Home = () => {
 	const defaultValues = {
 		email: ''
@@ -26,7 +28,7 @@ const Home = () => {
 	return (
 		<Box className='scroll-snap'>
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container  '>
-				<Stack justifyContent='center' spacing={2} alignItems='center' sx={{ width: '100%', height: '70vh' }}>
+				<Stack justifyContent='center' spacing={4} alignItems='center' className='landing-area'>
 					<img className='picacho-white-logo' src={PicachoWhiteLogo} alt='Picacho' />
 
 					<Button
@@ -40,19 +42,35 @@ const Home = () => {
 						Browse our Hoodies
 					</Button>
 				</Stack>
-				<Typography color='white' m={3}>
+				{/* <Typography color='white' m={3}>
 					Scroll to find more
 				</Typography>
 
 				<div className=' animate__animated  animate__bounce animate__slow animate__delay-2s animate__infinite'>
 					<Icon sx={{ color: 'white' }} fontSize='large' component={KeyboardDoubleArrowDownIcon} />
-				</div>
+				</div> */}
 			</Stack>
+
+			<div className='separator'>
+			<svg
+					className='separator__svg'
+					width='100%'
+					height='10vh'
+					viewBox='0 0 100 100'
+					preserveAspectRatio='none'
+					fill='#ffffff'
+					version='1.1'
+					xmlns='http://www.w3.org/2000/svg'>
+					<path d='M 100 100 V 10 L 0 100' />
+					<path d='M 0 100 L 100 30 V 0 Z' fill='#14264E' strokeWidth='0' />
+				</svg>
+			</div>
+
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container light '>
 				{/* <Box className={'home-media container light  '}> */}
 				{/* <Stack direction='column' sx={{ height: 'calc(100vh - 80px - 2rem)' }}> */}
 				<div className='dontfill'>
-					<Typography variant='h2' m={3} mt={0}>
+					<Typography variant='h3' m={3} mt={0}>
 						THE DEAN'S LIST
 					</Typography>
 
@@ -73,6 +91,40 @@ const Home = () => {
 						allowFullScreen></iframe>
 				</div>
 			</Stack>
+
+			<div className='separator'>
+				<svg
+					className='separator__svg'
+					width='100%'
+					height='10vh'
+					viewBox='0 0 100 100'
+					preserveAspectRatio='none'
+					fill='#ffffff'
+					version='1.1'
+					xmlns='http://www.w3.org/2000/svg'>
+					<path d='M 0 0 V 90 L 100 0' />
+					<path d='M 100 0 L 0 70 V 100 Z' fill='#14264E' strokeWidth='0' />
+				</svg>
+			</div>
+
+			{/* space! */}
+			<div style={{height: '30px'}}></div>
+
+
+			<div className='separator'>
+			<svg
+					className='separator__svg'
+					width='100%'
+					height='10vh'
+					viewBox='0 0 100 100'
+					preserveAspectRatio='none'
+					fill='#000000'
+					version='1.1'
+					xmlns='http://www.w3.org/2000/svg'>
+					<path d='M 100 100 V 10 L 0 100' />
+					<path d='M 0 100 L 100 30 V 0 Z' fill='#FFBD29' strokeWidth='0' />
+				</svg>
+			</div>
 			{/* </Box> */}
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='flex-start' className='home-media container dark '>
 				{/* <Box className={'home-media container dark'}> */}
@@ -113,7 +165,7 @@ const Home = () => {
 										</Grid>
 									)}
 								/>
-								<Button type='submit' variant='contained' color={hasJoined ? 'secondary' : 'primary'}>
+								<Button type='submit' variant='contained' color='edit'>
 									{buttonName}
 								</Button>
 							</Stack>
@@ -127,6 +179,23 @@ const Home = () => {
 					</div>
 				</Stack>
 			</Stack>
+
+			<div className='separator'>
+				<svg
+					className='separator__svg'
+					width='100%'
+					height='10vh'
+					viewBox='0 0 100 100'
+					preserveAspectRatio='none'
+					fill='#000000'
+					version='1.1'
+					xmlns='http://www.w3.org/2000/svg'>
+					<path d='M 0 0 V 90 L 100 0' />
+					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
+				</svg>
+			</div>
+			<div style={{height: '30px'}}></div>
+
 		</Box>
 	);
 };

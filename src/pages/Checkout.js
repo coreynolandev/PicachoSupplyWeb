@@ -41,7 +41,7 @@ const Checkout = () => {
 					<Divider />
 
 					<Stack direction='row' justifyContent='space-between'>
-						<Typography>Total</Typography>
+						<Typography>Est. Total</Typography>
 						<Typography>${sumOfTotalCost + 12}</Typography>
 					</Stack>
 				</Stack>
@@ -77,8 +77,7 @@ const Checkout = () => {
 			<Typography variant='h2'>Confirm your Order Request</Typography>
 			<Card raised sx={{ padding: '1rem', margin: '1rem auto', maxWidth: '800px', width: '100%', minWidth: '300px', alignSelf: 'center' }}>
 				<Stack direction='column' spacing={2}>
-					<Typography>We handle secure payment using Stripe. A member of our team will contact you to confirm your order details and </Typography>
-					<Typography>We handle secure payment outside of our website. We will contact you with the next steps.</Typography>
+					<Typography>We handle secure payment using Stripe. A team member will contact you to confirm your order details and </Typography>
 					{OrderDetails()}
 
 					<form onSubmit={handleSubmit(sendEmail)} ref={myForm}>
@@ -115,6 +114,19 @@ const Checkout = () => {
 								label='Phone Number'
 								autoComplete='tel'
 								id='phoneNumber'
+							/>
+
+							<FormInputText
+								key='questions'
+								showErrors={false}
+								isRequired={false}
+								type='text'
+								name='questions'
+								control={control}
+								label='Questions or Additional Requests'
+								autoComplete='tel'
+								id='questions'
+								variant='filled'
 							/>
 						</Stack>
 

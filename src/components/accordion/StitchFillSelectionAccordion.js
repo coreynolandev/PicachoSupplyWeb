@@ -21,11 +21,11 @@ const StitchFillSelectionAccordion = ({
 	changeStitchFill
 }) => {
 	var name = selectedStitchFill !== null ? ` - ${stitchFillSelectionList[selectedStitchFill].alt}` : '';
-	if (selectedStitchGradient !== null) {
+	if (selectedStitchGradient !== null ) {
 		if (name !== '') {
 			name += `/${stitchFillSelectionList[selectedStitchGradient].alt}`;
 		} else {
-			name = `${stitchGradientSelectionList[selectedStitchGradient].alt}`;
+			name = ` - NA/${stitchGradientSelectionList[selectedStitchGradient].alt}`;
 		}
 	}
 

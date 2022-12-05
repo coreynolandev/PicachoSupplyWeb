@@ -2,7 +2,7 @@ import { InfoRounded } from '@mui/icons-material';
 import { Grid, InputAdornment, TextField, Tooltip } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
-const FormInputText = ({ name, control, label, autoComplete, id, isRequired, multiline, alwaysFull, showErrors, type, fieldDescription }) => {
+const FormInputText = ({ name, control, label, autoComplete, id, isRequired, multiline, alwaysFull, showErrors, type, fieldDescription, variant = 'outlined' }) => {
 	return (
 		<Controller
 			name={name}
@@ -24,7 +24,7 @@ const FormInputText = ({ name, control, label, autoComplete, id, isRequired, mul
 						value={value}
 						fullWidth
 						label={label}
-						variant='outlined'
+						variant={variant}
 						InputProps={
 							fieldDescription !== undefined
 								? {
