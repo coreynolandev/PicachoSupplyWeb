@@ -206,7 +206,7 @@ const Home = () => {
 					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
 				</svg>
 			</div>
-			<div style={{ height: '30px' }}></div>
+			<div style={{ height: '45px' }}></div>
 		</Box>
 	);
 };
