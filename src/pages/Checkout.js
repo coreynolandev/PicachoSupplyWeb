@@ -1,21 +1,31 @@
-import { Box, Button, Card, Checkbox, Divider, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Box, Button, Card, Checkbox,  Divider, FormControlLabel, Grid, Snackbar, Stack, Typography } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import FormInputText from '../components/design/FormInputText';
-import { sendTestEmail } from '../api/sendOrderEmail';
 import { AddressAutofill } from '@mapbox/search-js-react';
+import { processOrderAsync, resetSubmitOrder } from '../features/cartSlice';
+import MuiAlert from '@mui/material/Alert';
+import ProcessingTimeout from '../components/design/ProcessingTimeout';
 
 const Checkout = () => {
 	var cart = useSelector((state) => state.cart);
 	var orders = cart?.order;
 	var sumOfTotalCost = 0;
 	orders.map((item) => (sumOfTotalCost += item.quantity * item.cost));
+	const [snackbarOpen, setSnackbarOpen] = useState(false);
+	const [snackbarError, setSnackbarError] = useState(false);
+	const navigate = useNavigate();
 
+	const Alert = forwardRef(function Alert(props, ref) {
+		return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+	});
+
+	var submitStatus = cart.processOrder;
 	const OrderDetails = () => {
 		return (
-			<Box sx={{ border: '1px solid gray', borderRadius: '4px', alignSelf: 'center' }}>
+			<Box sx={{ border: '1px solid gray', borderRadius: '4px', alignSelf: 'center', width: '100%' }}>
 				<Typography variant='h4'>Order Details</Typography>
 				<Stack direction='column' justifyContent='space-between' spacing={2} m={2}>
 					{orders.map((item, index) => {
@@ -65,15 +75,16 @@ const Checkout = () => {
 		city: '',
 		state: '',
 		postcode: '',
-		wantsToSubscribe: subscribe
+		wantsToSubscribe: subscribe,
+		templateType: 'template_b78fphq'
 	};
 
+	const dispatch = useDispatch();
 	const { handleSubmit, register, control } = useForm({ defaultValues });
 	const myForm = useRef(null);
 
 	const sendEmail = async (formData) => {
-		const templateType = 'template_b78fphq';
-		const sendEmail = false;
+		const sendEmail = true;
 		// console.log(formData.orders.length);
 
 		var orderHtml = '<p>';
@@ -127,7 +138,64 @@ const Checkout = () => {
 
 		console.log(htmlFormData);
 
-		sendEmail && sendTestEmail(htmlFormData, templateType);
+		if (sendEmail) {
+			const trySubmit = await dispatch(processOrderAsync(htmlFormData));
+			console.log(trySubmit);
+			if (trySubmit.error) {
+				setSnackbarOpen(true);
+				setSnackbarError(true);
+			} else {
+				if (trySubmit.payload.status === 200) {
+					setSnackbarOpen(true);
+					setSnackbarError(false);
+				} else {
+					console.error('unknown issue....');
+				}
+			}
+		} else {
+			alert('Dev env');
+		}
+	};
+
+	useEffect(() => {
+		if (sumOfTotalCost === 0) {
+			console.log(submitStatus);
+			console.log('No items!');
+
+			if (submitStatus.success) {
+				// TODO: Navigate to a thank you for placing your order!
+				console.log(cart);
+				// should have the orevious ID
+				navigate('/completed');
+			} else {
+				navigate('/');
+			}
+		}
+	}, [navigate, sumOfTotalCost]);
+
+	const CheckoutButton = () => {
+		return submitStatus.error ? (
+			<>
+				<Button variant='contained' color='error' onClick={() => dispatch(resetSubmitOrder())}>
+					Something went wrong :' (<br />
+					Click to try again
+				</Button>
+			</>
+		) : submitStatus.processing ? (
+			<ProcessingTimeout resetSubmitOrder={resetSubmitOrder} />
+		) : (
+			<Button type='submit' variant='contained'>
+				Submit Order
+			</Button>
+		);
+	};
+
+	const handleSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setSnackbarOpen(false);
+		setSnackbarError(false);
 	};
 
 	return (
@@ -294,18 +362,33 @@ const Checkout = () => {
 							</Grid>
 						</Grid>
 
-						<Stack direction='row' justifyContent='center' spacing={3} mt={2}>
+						<Stack justifyContent='center' spacing={3} mt={2} sx={{ direction: { xs: 'column', sm: 'row' } }}>
 							<Button variant='contained' color='inherit'>
 								<Link to={'/review-order'} style={{ textDecoration: 'none', color: 'black' }}>
 									Back to Review Order
 								</Link>
 							</Button>
 
-							<Button type='submit' variant='contained'>
-								Submit Order
-							</Button>
+							{CheckoutButton()}
 						</Stack>
 					</form>
+
+					<Snackbar
+						sx={{ marginTop: '80px' }}
+						anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+						open={snackbarOpen}
+						autoHideDuration={30000}
+						onClose={handleSnackbarClose}>
+						<Alert onClose={handleSnackbarClose} severity={snackbarError ? 'error' : 'success'} sx={{ width: '100%' }}>
+							{snackbarError ? (
+								<span>
+									Error submitting Order Request. Please contact <a href='mailto:corey@picachosupply.COM'>COREY@PICACHOSUPPLY.COM</a> for support
+								</span>
+							) : (
+								<span>Success submitting Order Request! A team member will reach out to you shortly.</span>
+							)}
+						</Alert>
+					</Snackbar>
 				</Stack>
 			</Card>
 		</div>

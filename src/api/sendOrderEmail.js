@@ -1,14 +1,16 @@
 import emailjs from '@emailjs/browser';
 
-export function sendTestEmail(formData, templateType) {
-	emailjs.send('service_7axn58a', templateType, formData, 'iFrlXXd6_PKEy64Yz').then(
+export async function sendTestEmail(formData, templateType) {
+	return emailjs.send('service_7axn58a', templateType, formData, 'iFrlXXd6_PKEy64Yz').then(
 		(result) => {
 			console.log(result);
 			console.log(result.text);
+			return result;
 		},
 		(error) => {
-			console.log(error);
-			console.log(error.text);
+			console.error(error);
+			console.error(error.text);
+			return error;
 		}
 	);
 }

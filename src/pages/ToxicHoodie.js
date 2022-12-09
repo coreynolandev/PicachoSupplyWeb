@@ -188,7 +188,8 @@ function ToxicHoodie() {
 				gradientColorId: gradientColor,
 				quantity: 1,
 				cost: 50.0,
-				type: 'Toxic Wave Hoodie'
+				type: 'Toxic Wave Hoodie',
+				viewDetails: false
 			};
 
 			if (editItem) {

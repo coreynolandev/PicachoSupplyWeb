@@ -8,6 +8,9 @@ module.exports = {
         },
       ],
     },
+    resolve: {
+      fallback: { "querystring": require.resolve("querystring-es3") }
+   },
     output: {
       filename: '[name].[contenthash].bundle.js',
     }

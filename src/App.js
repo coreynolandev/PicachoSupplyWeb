@@ -11,10 +11,14 @@ import AboutUs from './pages/AboutUs';
 import Shop from './pages/Shop';
 import ReviewOrder from './pages/ReviewOrder';
 import Checkout from './pages/Checkout';
+import Completed from './pages/Completed';
+// import { getLists } from './api/mailchimpActions';
 
 function App(props) {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const [colorMode, setColorMode] = useState(prefersDarkMode ? 'dark' : 'light');
+
+	// getLists();
 
 	let theme = createTheme({
 		palette: {
@@ -92,6 +96,10 @@ function App(props) {
 		{
 			path: 'checkout',
 			element: <Checkout />
+		},
+		{
+			path: 'completed',
+			element: <Completed />
 		}
 	]);
 
