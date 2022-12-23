@@ -16,7 +16,6 @@ const SubscribeToNewsletter = () => {
 			console.log(formData);
 			setHasJoined(true);
 			setButtonName('Subscribed!');
-			// TODO: dispatch action to add email to mailchimp list
 		}
 	};
 

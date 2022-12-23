@@ -13,20 +13,17 @@ const Completed = () => {
 				<Stack spacing={0} direction='column' alignItems='center' justifyContent='center'>
 					<Stack justifyContent='center' spacing={4} alignItems='center' className='landing-area'>
 						<Typography variant='h3'>Thank you for choosing Picacho Supply!</Typography>
-						<Typography variant='h5'>Your order reference number is {refNum}</Typography>
-						<Typography variant='h3'>A team member will be reaching out shortly to confirm your order details and create an invoice on Stripe.</Typography>
+						<Typography variant='h5'>
+							You should receive a receipt of your order request from sales@picachosupply.com. If you don't receive an email soon, reach out to
+							{' '}<Typography component='a' href='mailto: sales@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
+								sales@picachosupply.com
+							</Typography>{' '}
+							with your reference number: <h6>{refNum}</h6>
+						</Typography>
+						<Typography variant='h5'>
+							Additionally, a team member will be reaching out shortly to confirm your order details and create an invoice on Stripe.
+						</Typography>
 						<Stack sx={{ direction: { xs: 'column', sm: 'row' } }} spacing={3} justifyContent='space-between'>
-							<Button
-								role={'link'}
-								href='/shop'
-								variant='contained'
-								color='primary'
-								size='large'
-								className='animate__animated  animate__pulse animate__slower animate__delay-2s '
-								sx={{ borderRadius: '24px' }}>
-								Return to Home
-							</Button>
-
 							<Button
 								role={'link'}
 								href='/shop'

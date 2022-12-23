@@ -1,15 +1,21 @@
-import { Box, Button, Card, Checkbox,  Divider, FormControlLabel, Grid, Snackbar, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Checkbox, Divider, FormControlLabel, Grid, Snackbar, Stack, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import FormInputText from '../components/design/FormInputText';
 import { AddressAutofill } from '@mapbox/search-js-react';
-import { processOrderAsync, resetSubmitOrder } from '../features/cartSlice';
+import { addToSubscription, processOrderAsync, resetSubmitOrder, sendCustomerOrderReceipt } from '../features/cartSlice';
 import MuiAlert from '@mui/material/Alert';
 import ProcessingTimeout from '../components/design/ProcessingTimeout';
 
 const Checkout = () => {
+	const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+	let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+	let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
+	let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+	const formatYYYYMMDD = `${ye}-${mo}-${da}`;
+
 	var cart = useSelector((state) => state.cart);
 	var orders = cart?.order;
 	var sumOfTotalCost = 0;
@@ -76,18 +82,22 @@ const Checkout = () => {
 		state: '',
 		postcode: '',
 		wantsToSubscribe: subscribe,
-		templateType: 'template_b78fphq'
+		templateType: process.env.REACT_APP_TEMPLATE_PICACHO_ORDER,
+		orderId: cart.orderId,
+		instaFollow: `<a href='https://www.instagram.com/picachosupply/'>on Instagram</a>`
 	};
 
 	const dispatch = useDispatch();
 	const { handleSubmit, register, control } = useForm({ defaultValues });
 	const myForm = useRef(null);
 
+	dispatch(addToSubscription(defaultValues));
+
 	const sendEmail = async (formData) => {
 		const sendEmail = true;
-		// console.log(formData.orders.length);
 
-		var orderHtml = '<p>';
+		var orderHtml = '';
+		// var orderHtml = '<p>';
 		formData.orders.map(
 			(order, index) =>
 				(orderHtml += `<br/>Item # ${index + 1} - ${order.type}
@@ -102,7 +112,7 @@ const Checkout = () => {
 
 `)
 		);
-		orderHtml += '</p>';
+		orderHtml += '';
 
 		let emailHtml = `<a href='mailto: ${formData.email}?subject=Picacho%20Order%20Confirmation'>${formData.email}</a>`;
 		let phoneHtml = `<a href='tel:${formData.phoneNumber}'>${formData.phoneNumber}</a>`;
@@ -128,12 +138,19 @@ const Checkout = () => {
 
 		let addressHtml = `<a href='http://maps.google.com/maps?q=${formAddressQuery}'>View Address</a>`;
 
+		console.log(formData.name);
+		const replyEmail = `<a href='mailto:sales@picachosupply.com?subject=Order%20Issue'>sales@picachosupply.com</a>`;
+		const subscribeToNewsletterEmailHtml = `<a href='https://picachosupply.com/subscribe'>subscribe to our newsletter</a>`;
 		let htmlFormData = {
 			...formData,
 			orderDetailsHtml: orderHtml,
 			emailHtml: emailHtml,
 			phoneHtml: phoneHtml,
-			addressHtml: addressHtml
+			addressHtml: addressHtml,
+			replyEmailAddressHtml: replyEmail,
+			subscribeToNewsletterEmailHtml: subscribeToNewsletterEmailHtml,
+			templateTypeCustomer: process.env.REACT_APP_TEMPLATE_CUSTOMER,
+			reply_to: 'sales@picachosupply.com'
 		};
 
 		console.log(htmlFormData);
@@ -148,11 +165,18 @@ const Checkout = () => {
 				if (trySubmit.payload.status === 200) {
 					setSnackbarOpen(true);
 					setSnackbarError(false);
+					const newres = await dispatch(sendCustomerOrderReceipt(htmlFormData));
+					console.log(newres);
+
+					const newestres = await dispatch(addToSubscription(htmlFormData));
+					console.log(newestres);
 				} else {
 					console.error('unknown issue....');
 				}
 			}
 		} else {
+			const newestres = await dispatch(addToSubscription(htmlFormData));
+			console.log(newestres);
 			alert('Dev env');
 		}
 	};
@@ -163,9 +187,7 @@ const Checkout = () => {
 			console.log('No items!');
 
 			if (submitStatus.success) {
-				// TODO: Navigate to a thank you for placing your order!
 				console.log(cart);
-				// should have the orevious ID
 				navigate('/completed');
 			} else {
 				navigate('/');
@@ -351,6 +373,8 @@ const Checkout = () => {
 									day: '2-digit'
 								})}
 							/>
+
+							<input readOnly hidden {...register('subjectRequestDate')} value={formatYYYYMMDD} />
 
 							<input readOnly hidden {...register('totalCostMinusSandH')} value={sumOfTotalCost} />
 

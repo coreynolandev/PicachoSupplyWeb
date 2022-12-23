@@ -12,6 +12,7 @@ import Shop from './pages/Shop';
 import ReviewOrder from './pages/ReviewOrder';
 import Checkout from './pages/Checkout';
 import Completed from './pages/Completed';
+import Subscribe from './pages/Subscribe';
 // import { getLists } from './api/mailchimpActions';
 
 function App(props) {
@@ -100,7 +101,11 @@ function App(props) {
 		{
 			path: 'completed',
 			element: <Completed />
+		},{
+			path: 'subscribe',
+			element: <Subscribe />
 		}
+
 	]);
 
 	return (

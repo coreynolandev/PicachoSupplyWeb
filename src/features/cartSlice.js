@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { sendTestEmail } from '../api/sendOrderEmail';
 import uuid from 'react-uuid';
+import { subscribeToMailchimp } from '../api/addToNewsletter';
 
 export const initialState = {
 	order: [],
@@ -14,7 +15,36 @@ export const initialState = {
 };
 
 export const processOrderAsync = createAsyncThunk('cart/processOrderAsync', async (order, thunkAPI) => {
+	console.log(order);
 	const templateType = order.templateType;
+
+	const response = await sendTestEmail(order, templateType);
+	console.log(response);
+	if (response.status !== 200) {
+		console.log(response.error);
+		return thunkAPI.rejectWithValue(response.error);
+	} else {
+		return response;
+	}
+});
+
+export const addToSubscription = createAsyncThunk('cart/addToSubscription', async (order, thunkAPI) => {
+	if (order.wantsToSubscribe) {
+		const params = new URLSearchParams({
+			MERGE0: order.email,
+			MERGE1: order.name
+		});
+		console.log(params.toString());
+	
+		return subscribeToMailchimp(params.toString());
+	
+	}
+
+	return "didn't want added";
+});
+
+export const sendCustomerOrderReceipt = createAsyncThunk('cart/sendCustomerOrderReceipt', async (order, thunkAPI) => {
+	const templateType = order.templateTypeCustomer;
 
 	const response = await sendTestEmail(order, templateType);
 	console.log(response);
@@ -65,7 +95,7 @@ const cartSlice = createSlice({
 				index.quantity -= 1;
 			} else console.log('didnt decrease amount');
 		},
-		resetSubmitOrder: (state, {payload}) => {
+		resetSubmitOrder: (state, { payload }) => {
 			state.processOrder = { processing: false, error: false, success: false };
 			state.numberOfResets += 1;
 		},

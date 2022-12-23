@@ -14,12 +14,12 @@ body:before {
 	background-size: cover;
 }
 
-/* Toxic Wave Logo */
-.toxic-wave-logo {
-	/* aspect-ratio: 795/253; */
-	/* height: 60px; */
-	/* opacity: 70%; */
+.g-recaptcha {
+	width: 304px;
+	margin: auto;
 }
+
+/* Toxic Wave Logo */
 
 .newsidebar {
 	position: absolute;

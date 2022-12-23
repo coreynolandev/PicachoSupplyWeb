@@ -1,5 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
-import SubscribeToNewsletter from '../components/design/SubscribeToNewsletter';
+import MailchimpForm from '../components/form/MailchimpForm';
 
 const AboutUs = () => {
 	return (
@@ -126,7 +126,7 @@ const AboutUs = () => {
 				{/* <Stack direction='column' sx={{ height: 'calc(100vh - 80px - 2rem)' }}> */}
 				<div className='dontfill'>
 					<Typography variant='h3' m={1}>
-						MEET THE TEAM
+						THE TEAM
 					</Typography>
 
 					<Stack direction='column' spacing={2} sx={{ margin: 3, marginBottom: 0 }}>
@@ -203,7 +203,7 @@ const AboutUs = () => {
 					</Typography>
 
 					<Box p={3}>
-						<SubscribeToNewsletter />
+						<MailchimpForm />
 					</Box>
 				</div>
 			</Stack>
