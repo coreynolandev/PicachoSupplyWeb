@@ -1,4 +1,4 @@
-import { IconButton, Tooltip, Typography } from '@mui/material';
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
 import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
@@ -21,33 +21,15 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 					{accordionNumber}. Choose a Base{selectedHoodie !== null && ` - ${hoodieSelectionList[selectedHoodie].alt}`}
 				</Typography>
 			</AccordionSummary>
-			<AccordionDetails key='hoodiedetails1' sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
-				<Carousel
-					swipeable={true}
-					draggable={true}
-					// showDots={true}
-					// renderDotsOutside={true}
-					responsive={responsive(hoodieSelectionList)}
-					infinite={false}
-					autoPlay={false}
-					// renderButtonGroupOutside={true}
-					// centerMode={true}
-					// partialVisbile={true}
-					// focusOnSelect={true}
-					// keyBoardControl={true}
-					// transitionDuration={300}
-					containerClass='carousel-container'
-					// removeArrowOnDeviceType={['tablet', 'mobile']}
-					// dotListClass='custom-dot-list-style'
-					// itemClass='swatch-carousel item'
-					key='hoodiecarousel'>
+			<AccordionDetails key='hoodiedetails1'>
+				<Grid container>
 					{hoodieSelectionList.map((swatch, index) => {
 						return (
-							<div key={`hoodieswatchcaro${index}`}>
+							<Grid item xs={1.5} sm={1} key={`hoodieswatchcaro${index}`}>
 								<Tooltip
 									title={swatch.alt}
-									enterDelay={1000}
-									enterNextDelay={1000}
+									enterDelay={0}
+									enterNextDelay={0}
 									disableInteractive={true}
 									PopperProps={{
 										modifiers: [
@@ -81,10 +63,10 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 										/>
 									</IconButton>
 								</Tooltip>
-							</div>
+							</Grid>
 						);
 					})}
-				</Carousel>
+				</Grid>
 			</AccordionDetails>
 		</Accordion>
 	);

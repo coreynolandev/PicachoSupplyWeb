@@ -22,8 +22,8 @@ export function responsive(borderSelectionList) {
 		},
 		mobile: {
 			breakpoint: { max: 600, min: 0 },
-			items: Math.ceil(borderSelectionList.length / 4),
-			slidesToSlide: Math.ceil(borderSelectionList.length / 4) // optional, default to 1.
+			items: Math.ceil(borderSelectionList.length /2.5),
+			slidesToSlide: Math.ceil(borderSelectionList.length /2.5) // optional, default to 1.
 			// partialVisibilityGutter: 80
 		}
 	};

@@ -1,4 +1,4 @@
-import { IconButton, Tooltip, Typography } from '@mui/material';
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
 import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
@@ -23,33 +23,15 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 				</Typography>
 			</AccordionSummary>
 
-			<AccordionDetails sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
-				<Carousel
-					swipeable={true}
-					draggable={true}
-					// showDots={true}
-					// renderDotsOutside={true}
-					responsive={responsive(borderSelectionList)}
-					infinite={false}
-					autoPlay={false}
-					// renderButtonGroupOutside={true}
-					// centerMode={true}
-					// partialVisbile={true}
-					// focusOnSelect={true}
-					// keyBoardControl={true}
-					// transitionDuration={300}
-					containerClass='carousel-container'
-					// removeArrowOnDeviceType={['tablet', 'mobile']}
-					// dotListClass='custom-dot-list-style'
-					// itemClass='swatch-carousel item'
-				>
+			<AccordionDetails>
+				<Grid container>
 					{borderSelectionList.map((border, index) => {
 						return (
-							<div key={`borderselectioncaro${index}`}>
+							<Grid item xs={1.5} sm={1} key={`borderselectioncaro${index}`}>
 								<Tooltip
 									title={border.alt}
-									enterDelay={1000}
-									enterNextDelay={1000}
+									enterDelay={0}
+									enterNextDelay={0}
 									disableInteractive={true}
 									PopperProps={{
 										modifiers: [
@@ -81,10 +63,10 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 										/>
 									</IconButton>
 								</Tooltip>
-							</div>
+							</Grid>
 						);
 					})}
-				</Carousel>
+				</Grid>
 			</AccordionDetails>
 		</Accordion>
 	);

@@ -7,7 +7,8 @@ body:before {
 	width: 100%;
 	height: 100vh;
 	z-index: -10;
-	background: url('../public/buffalo_bg.png') no-repeat center center;
+	/* background: url('../public/buffalo_bg.png') no-repeat center center; */
+	background-color: lime;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

@@ -259,7 +259,7 @@ function LifestyleHoodie() {
 			mt={2}
 			mb={6}
 			spacing={2}>
-			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className=''>
+			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='messingup'>
 				{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}
 				{hoodieOrPreview === 'hoodie' ? (
 					<Box component='div' sx={{ overflow: 'hidden' }} position={'relative'} className='hoodie-stitch container'>
@@ -297,7 +297,7 @@ function LifestyleHoodie() {
 						color={hoodieOrPreview === 'hoodie' ? 'viewEmbroidery' : 'viewHoodie'}
 						variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
 						onClick={(event) => (hoodieOrPreview === 'hoodie' ? setHoodieOrPreview('preview') : setHoodieOrPreview('hoodie'))}
-						sx={{ width: '50%', marginBottom: 1, position: 'relative', top: '-30px' }}>
+						sx={{ width: '50%', marginBottom: 1, position: 'relative', top: { xs: '-110px', md: '-30px' } }}>
 						{hoodieOrPreview === 'hoodie' ? 'View Embroidery' : 'View Hoodie'}
 					</Button>
 				) : (
@@ -317,14 +317,14 @@ function LifestyleHoodie() {
 					maxWidth: { sm: '100%', md: '500px', lg: '700px' },
 					background: 'transparent',
 					position: { xs: 'relative', sm: 'relative', md: 'initial' },
-					top: { xs: '-30px', sm: '-30px', md: '0px' }
+					top: { xs: '-80px', sm: '-97px', md: '0px' }
 				}}>
 				<Stack spacing={2} width='100%'>
 					<Stack padding={-2}>
 						<Accordion>
 							<Grid container bgcolor={'white'} alignItems='center' border={'1px solid rgba(0, 0, 0, 0.03)'} sx={{ borderBottom: 'none' }}>
 								<Grid item xs={2}>
-									<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+									<Tooltip title={'Reset All Selections'} enterDelay={0} enterNextDelay={0} disableInteractive={true}>
 										<IconButton onClick={() => resetAllSelections()}>
 											<Refresh />
 										</IconButton>
@@ -334,7 +334,7 @@ function LifestyleHoodie() {
 									<CardHeader title='Lifestyle Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
 								</Grid>
 								<Grid item xs={2}>
-									<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
+									<Tooltip title={'Randomize Hoodie'} enterDelay={0} enterNextDelay={0} disableInteractive={true}>
 										<IconButton onClick={() => randomizeSelections()} sx={{ padding: 0 }}>
 											<Shuffle />
 										</IconButton>

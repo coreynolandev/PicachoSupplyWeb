@@ -120,7 +120,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 							<Box className='logo container' component='img' src={mode === 'dark' ? PicachoLogo : PicachoLogo} alt='Picacho Logo' />
 						</a>
 
-						<Stack justifyContent={'space-between'} alignItems='center' direction='row' sx={{ display: { xs: 'none', sm: 'flex' } }} spacing={2}>
+						<Stack justifyContent={'space-between'} alignItems='center' direction='row' sx={{ display: { xs: 'none', sm: 'flex' }, marginRight: '9px' }} spacing={2}>
 							<Typography className='navlink' component='a' href={`/shop`} key={`navbarLink-full-shop`}>
 								Shop
 							</Typography>
@@ -137,7 +137,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 							</a>
 						</Stack>
 
-						<Box sx={{ justifyContent: 'flex-end', alignItems: 'center', display: { xs: 'block', sm: 'none' } }}>
+						<Box sx={{ justifyContent: 'flex-end', alignItems: 'center', display: { xs: 'block', sm: 'none' }, marginRight: '6px' }}>
 							<a className={`shopping-cart ${animationRubberClass}`} onAnimationEnd={() => setAnimateQuantity(false)} href='/review-order'>
 								<IconButton color='inherit'>
 									<Box component='img' src={MyShoppingCart} alt='Cart' />

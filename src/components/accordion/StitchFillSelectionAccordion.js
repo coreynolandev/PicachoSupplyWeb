@@ -1,4 +1,4 @@
-import { IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
+import { Grid, IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
 import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
@@ -63,32 +63,14 @@ const StitchFillSelectionAccordion = ({
 						Add Gradient
 					</ToggleButton>
 				</ToggleButtonGroup>
-				<Carousel
-					swipeable={true}
-					draggable={true}
-					// showDots={true}
-					// renderDotsOutside={true}
-					responsive={responsive(stitchFillSelectionList)}
-					infinite={false}
-					autoPlay={false}
-					// renderButtonGroupOutside={true}
-					// centerMode={true}
-					// partialVisbile={true}
-					// focusOnSelect={true}
-					// keyBoardControl={true}
-					// transitionDuration={300}
-					containerClass='carousel-container'
-					// removeArrowOnDeviceType={['tablet', 'mobile']}
-					// dotListClass='custom-dot-list-style'
-					// itemClass='swatch-carousel item'
-				>
+				<Grid container>
 					{colorSetList.map((stitchFill, index) => {
 						return (
-							<div key={`colorsetlistcarousel${index}`}>
+							<Grid item xs={1.5} sm={1} key={`colorsetlistcarousel${index}`}>
 								<Tooltip
 									title={stitchFill.alt}
-									enterDelay={1000}
-									enterNextDelay={1000}
+									enterDelay={0}
+									enterNextDelay={0}
 									disableInteractive={true}
 									PopperProps={{
 										modifiers: [
@@ -120,11 +102,12 @@ const StitchFillSelectionAccordion = ({
 										/>
 									</IconButton>
 								</Tooltip>
-							</div>
+							</Grid>
 						);
 					})}
-				</Carousel>
-				<Typography sx={{ color: 'grey !important', fontSize: '14px' }}>double click to remove color</Typography>
+				</Grid>
+
+				<Typography sx={{ color: 'grey !important', fontSize: '14px !important' }}>click again to remove color</Typography>
 			</AccordionDetails>
 		</Accordion>
 	);

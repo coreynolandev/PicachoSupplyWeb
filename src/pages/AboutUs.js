@@ -30,8 +30,9 @@ const AboutUs = () => {
 					</Typography>
 
 					<Typography variant='h5' m={3} mb={0}>
-						The apex of the peak is where the land meets the sky. We believe that once you have found your peak, you will find balance yourself.
-						<br />
+						The apex of the peak is where the land meets the sky. We believe that once you have found your peak, you will find inner balance. Mastering the flip you've
+						been hung up on, shredding a wave you thought might wipe you out, or just literally reaching the peak of a mountain as mighty as you are, is what it's all
+						about.
 						<br />
 						<br />
 						<Typography variant='h6' color=''>
@@ -82,10 +83,9 @@ const AboutUs = () => {
 						FIND YOUR PEAK
 					</Typography>
 
-					<Typography color='white' variant='h5' m={3} mb={0}>
-						The peak represents an outdoor experience that gives you innermost joy. Whether it's doing a double cork on skis, hucking a 50-foot cliff, kickflipping a 5
-						stair, or riding a tube on your surfboard, the PICACHO lifestyle strives to help everyone find their peak. Our mission is to encourage people to go outside
-						and to see what the natural world has in store.
+					<Typography color='white' variant='h5' m={3} mb={2}>
+						The peak represents an outdoor experience that gives you innermost joy. Whether it's doing a cork on skis, hucking a 50 foot cliff, or riding a tube on your
+						surfboard, the Picacho lifestyle is about finding your peak.
 					</Typography>
 				</div>
 			</Stack>
