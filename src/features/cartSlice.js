@@ -11,6 +11,7 @@ export const initialState = {
 	numberOfResets: 0,
 	orderId: uuid(),
 	previousOrderId: null,
+	justUpdated: false,
 	processOrder: { processing: false, error: false, success: false }
 };
 
@@ -35,9 +36,8 @@ export const addToSubscription = createAsyncThunk('cart/addToSubscription', asyn
 			MERGE1: order.name
 		});
 		console.log(params.toString());
-	
+
 		return subscribeToMailchimp(params.toString());
-	
 	}
 
 	return "didn't want added";
@@ -67,6 +67,9 @@ const cartSlice = createSlice({
 		emptyCart: (state) => {
 			state.order = [];
 		},
+		removeJustUpdated: (state) => {
+			state.justUpdated = false;
+		},
 		removeItem: (state, { payload }) => {
 			// Payload is ID
 			const index = state.order.find((item) => item.id === payload);
@@ -79,6 +82,7 @@ const cartSlice = createSlice({
 			var index = state.order.findIndex((item) => item.id === payload.id);
 			if (index !== -1) {
 				state.order[index] = payload;
+				state.justUpdated = true;
 			} else console.error('didnt update hoodie');
 		},
 		incrementQuantity: (state, { payload }) => {
@@ -135,5 +139,5 @@ const cartSlice = createSlice({
 	}
 });
 
-export const { addHoodie, emptyCart, removeItem, updateHoodie, resetSubmitOrder, incrementQuantity, decreaseQuantity, switchViewDetails } = cartSlice.actions;
+export const { addHoodie, emptyCart, removeItem, updateHoodie, resetSubmitOrder, incrementQuantity, decreaseQuantity, switchViewDetails, removeJustUpdated } = cartSlice.actions;
 export default cartSlice.reducer;

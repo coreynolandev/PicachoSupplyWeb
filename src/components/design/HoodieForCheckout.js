@@ -15,23 +15,21 @@ const HoodieForCheckout = ({ hoodie, index, setSnackbarOpen }) => {
 	};
 	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
 	const FullHoodie = () => (
-		<>
-			{hoodie !== null && hoodie.borderColorImg && <img className='toxic-wave-logo hoodie-stitch outline' src={hoodie.borderColorImg} alt='Border' />}
-			{hoodie !== null && hoodie.fillColorImg && <img className='toxic-wave-logo hoodie-stitch stitch' src={hoodie.fillColorImg} alt='Stitch' />}
-			{hoodie !== null && hoodie.gradientColorImg && <img className='toxic-wave-logo hoodie-stitch stitch gradient' src={hoodie.gradientColorImg} alt='Gradient' />}
-			{hoodie !== null && hoodie.baseColorImg && <img className='hoodie-base hoodie-stitch hoodie' src={hoodie.baseColorImg} alt='Hoodie' />}
-		</>
+		<Box key={`unzoomed-hoodie-${index}`}>
+			{hoodie !== null && hoodie.borderColorImg && <img key='border-color-img' className='toxic-wave-logo hoodie-stitch outline' src={hoodie.borderColorImg} alt='Border' />}
+			{hoodie !== null && hoodie.fillColorImg && <img key='fill-color-img' className='toxic-wave-logo hoodie-stitch stitch' src={hoodie.fillColorImg} alt='Stitch' />}
+			{hoodie !== null && hoodie.gradientColorImg && <img key='gradient-color-img' className='toxic-wave-logo hoodie-stitch stitch gradient' src={hoodie.gradientColorImg} alt='Gradient' />}
+			{hoodie !== null && hoodie.baseColorImg && <img key='base-color-img' className='hoodie-base hoodie-stitch hoodie' src={hoodie.baseColorImg} alt='Hoodie' />}
+		</Box>
 	);
 
 	const ZoomedLogo = () => (
-		<>
 			<Box key={`zoomedLogo-${index}`} position={'relative'} className='hoodie-stitch container'>
-				{hoodie.borderColorImg && <img className='toxic-wave-logo hoodie-stitch-only outline' src={hoodie.borderColorImg} alt='Border' />}
-				{hoodie.fillColorImg && <img className='toxic-wave-logo hoodie-stitch-only stitch' src={hoodie.fillColorImg} alt='Stitch' />}
-				{hoodie.gradientColorImg && <img className='toxic-wave-logo hoodie-stitch-only stitch gradient' src={hoodie.gradientColorImg} alt='Gradient' />}
-				{hoodie.baseColorImg && <img className='hoodie-base hoodie-stitch-only hoodie' src={hoodie.baseColorImg} alt='Hoodie' />}
+				{hoodie.borderColorImg && <img key='border-color-zoom-img' className='toxic-wave-logo hoodie-stitch-only outline' src={hoodie.borderColorImg} alt='Border' />}
+				{hoodie.fillColorImg && <img key='fill-color-zoom-img' className='toxic-wave-logo hoodie-stitch-only stitch' src={hoodie.fillColorImg} alt='Stitch' />}
+				{hoodie.gradientColorImg && <img key='gradient-color-zoom-img' className='toxic-wave-logo hoodie-stitch-only stitch gradient' src={hoodie.gradientColorImg} alt='Gradient' />}
+				{hoodie.baseColorImg && <img key='base-color-zoom-img' className='hoodie-base hoodie-stitch-only hoodie' src={hoodie.baseColorImg} alt='Hoodie' />}
 			</Box>
-		</>
 	);
 
 	return (
@@ -77,7 +75,7 @@ const HoodieForCheckout = ({ hoodie, index, setSnackbarOpen }) => {
 					<OrderItemDetail key={`orderItem-Gradient-${index}`} label='Gradient' value={hoodie.gradientColor} />
 					<OrderItemDetail key={`orderItem-Size-${index}`} label='Size' value={hoodie.size} />
 					<QuantitySelector key={`quantitySelector-${index}`} orderItem={hoodie} />
-					<Stack direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
+					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
 						<Button key={`edithoodie-${index}`} variant='contained' color='edit'>
 							<Link to={'/hoodies'} state={{ editId: hoodie.id }} style={{ textDecoration: 'none', color: 'black' }}>
 								Edit

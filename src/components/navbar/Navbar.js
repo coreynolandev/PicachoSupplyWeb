@@ -18,7 +18,6 @@ const Navbar = ({ changeColorMode, mode }) => {
 
 	useEffect(() => {
 		numberOfItemsInCart !== 0 && setAnimateQuantity(true);
-		window.scrollBy(0, -1);
 	}, [numberOfItemsInCart]);
 
 	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
@@ -52,7 +51,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 				{/* <AppBar position='sticky' color='default' sx={{ background: 'transparent', boxShadow: 'none' }}> */}
 				<Container maxWidth='none' disableGutters sx={{ height: '100%' }}>
 					<Toolbar disableGutters sx={{ justifyContent: 'space-between', background: 'transparent', width: '100%', maxHeight: '80px' }}>
-						<Box sx={{ display: { xs: 'block', sm: 'none' }, width: {xs: '48px', sm: '0px'} }}>
+						<Box sx={{ display: { xs: 'block', sm: 'none' }, width: { xs: '48px', sm: '0px' } }}>
 							<IconButton size='small' aria-label='expand options' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
 								<MenuIcon />
 							</IconButton>
@@ -98,6 +97,16 @@ const Navbar = ({ changeColorMode, mode }) => {
 												primary={
 													<Typography component='a' href='/about-us' style={{ color: '#FFFFFF' }}>
 														About Us
+													</Typography>
+												}
+											/>
+										</ListItem>
+										<ListItem key='About Us-item'>
+											<ListItemText
+												disableTypography
+												primary={
+													<Typography component='a' href='/subscribe' style={{ color: '#FFFFFF' }}>
+														Subscribe to Newsletter
 													</Typography>
 												}
 											/>

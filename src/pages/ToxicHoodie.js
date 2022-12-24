@@ -14,7 +14,7 @@ import { FILLS_SELECTION_LIST, GRADIENTS_SELECTION_LIST } from '../components/to
 import { Accordion } from '../components/design/Accordion';
 import { useDispatch, useSelector } from 'react-redux';
 import { addHoodie, updateHoodie } from '../features/cartSlice';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
 
 const hoodieSelectionList = HOODIE_SELECTION_LIST;
@@ -161,7 +161,10 @@ function ToxicHoodie() {
 		}
 	}, [selectedHoodie, selectedBorder, selectedSize, fillColor, selectedStitchFill, defaultAddOrUpdateTitle]);
 
+	const navigate = useNavigate();
+
 	const addToCart = () => {
+		window.scrollBy(0, -1);
 		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
 		console.log('border: ' + borderSelectionList[selectedBorder]?.alt);
 		console.log('stitchFill: ' + stitchFillSelectionList[fillColor]?.alt);
@@ -193,8 +196,13 @@ function ToxicHoodie() {
 			};
 
 			if (editItem) {
+				const oldHoodie = orders.find((it) => it.id === id);
+				if (oldHoodie) {
+					hoodie.quantity = oldHoodie.quantity;
+				}
 				var updated = dispatch(updateHoodie(hoodie));
 				console.log(updated);
+				navigate('/review-order');
 			} else {
 				var added = dispatch(addHoodie(hoodie));
 				console.log(added);
@@ -301,7 +309,6 @@ function ToxicHoodie() {
 
 			<Stack
 				className=' '
-				// className='animate__animated animate__slideInRight '
 				direction={'column'}
 				alignItems='flex-start'
 				flexShrink={0}
@@ -312,7 +319,6 @@ function ToxicHoodie() {
 					position: { xs: 'relative', sm: 'relative', md: 'initial' },
 					top: { xs: '-30px', sm: '-30px', md: '0px' }
 				}}>
-				{/* <Card raised sx={{ width: '100%', padding: 2 }} className={mode === 'dark' ? 'darkcard' : 'lightcard'}> */}
 				<Stack spacing={2} width='100%'>
 					<Stack padding={-2}>
 						<Accordion>
@@ -320,7 +326,6 @@ function ToxicHoodie() {
 								<Grid item xs={2}>
 									<Tooltip title={'Reset All Selections'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
 										<IconButton onClick={() => resetAllSelections()}>
-											{/* <Clear /> */}
 											<Refresh />
 										</IconButton>
 									</Tooltip>
@@ -382,14 +387,16 @@ function ToxicHoodie() {
 						</Button>
 					</Stack>
 				</Stack>
-				{/* </Card> */}
 			</Stack>
 
-			{/* {needMoreOptions && selectMoreOptions} */}
 			<SelectMoreOptionsDialog open={needMoreOptions} />
-			{/* {selectMoreOptions} */}
 
-			<Snackbar sx={{ marginTop: '80px' }} anchorOrigin={{ horizontal: 'center', vertical: 'top' }} open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+			<Snackbar
+				sx={{ marginTop: { xs: '80px', sm: '64px' } }}
+				anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+				open={snackbarOpen}
+				autoHideDuration={5000}
+				onClose={handleSnackbarClose}>
 				<Alert onClose={handleSnackbarClose} severity='success' sx={{ width: '100%' }}>
 					{editMode ? 'Updated Item!' : 'Added to Cart!'}
 				</Alert>
