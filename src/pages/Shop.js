@@ -9,7 +9,7 @@ const Shop = () => {
 				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInLeft shop-card'> */}
 				<Card raised>
 					<CardActionArea disableRipple href='/hoodies'>
-						<CardHeader title='Toxic Wave Hoodie' sx={{ paddingBottom: 0 }} />
+						<CardHeader title='Lifestyle Hoodie' sx={{ paddingBottom: 0 }} />
 						<CardContent className='shop-card-content'>
 							<img src={HoodieThumbnail} alt='Hoodie Thumbnail' className='shop-card-content thumbnail' />
 						</CardContent>

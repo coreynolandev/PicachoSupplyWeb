@@ -30,7 +30,7 @@ const sizeSelectionList = [
 	{ size: 'XXL', order: 4 }
 ];
 
-function ToxicHoodie() {
+function LifestyleHoodie() {
 	// console.log();
 	const location = useLocation();
 	const { editId } = location.state || { editId: null };
@@ -191,7 +191,7 @@ function ToxicHoodie() {
 				gradientColorId: gradientColor,
 				quantity: 1,
 				cost: 50.0,
-				type: 'Toxic Wave Hoodie',
+				type: 'Lifestyle Hoodie',
 				viewDetails: false
 			};
 
@@ -331,7 +331,7 @@ function ToxicHoodie() {
 									</Tooltip>
 								</Grid>
 								<Grid item xs={8}>
-									<CardHeader title='Toxic Wave Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
+									<CardHeader title='Lifestyle Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
 								</Grid>
 								<Grid item xs={2}>
 									<Tooltip title={'Randomize Hoodie'} enterDelay={1000} enterNextDelay={1000} disableInteractive={true}>
@@ -392,7 +392,7 @@ function ToxicHoodie() {
 			<SelectMoreOptionsDialog open={needMoreOptions} />
 
 			<Snackbar
-				sx={{ marginTop: { xs: '80px', sm: '64px' } }}
+				sx={{ marginTop: { xs: '80px !important', sm: '64px !important' } }}
 				anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
 				open={snackbarOpen}
 				autoHideDuration={5000}
@@ -405,4 +405,4 @@ function ToxicHoodie() {
 	);
 }
 
-export default ToxicHoodie;
+export default LifestyleHoodie;

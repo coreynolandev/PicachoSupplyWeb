@@ -1,7 +1,7 @@
 import './App.css';
 import { Container, createTheme, CssBaseline, responsiveFontSizes, useMediaQuery } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import ToxicHoodie from './pages/ToxicHoodie';
+import LifestyleHoodie from './pages/LifestyleHoodie';
 import { useState } from 'react';
 import Navbar from './components/navbar/Navbar';
 import Home from './pages/Home';
@@ -88,7 +88,7 @@ function App(props) {
 		},
 		{
 			path: 'hoodies',
-			element: <ToxicHoodie />
+			element: <LifestyleHoodie />
 		},
 		{
 			path: 'review-order',

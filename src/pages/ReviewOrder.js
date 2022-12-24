@@ -90,7 +90,7 @@ const ReviewOrder = () => {
 	return (
 		<div key='checkout-container' className='checkout container'>
 			<Snackbar
-				sx={{ marginTop: { xs: '80px', sm: '64px' } }}
+				sx={{ marginTop: { xs: '80px !important', sm: '64px !important' } }}
 				anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
 				open={snackbarOpen}
 				autoHideDuration={5000}
@@ -101,7 +101,7 @@ const ReviewOrder = () => {
 			</Snackbar>
 			{justUpdated && (
 				<Snackbar
-					sx={{ marginTop: { xs: '80px', sm: '64px' } }}
+					sx={{ marginTop: { xs: '80px !important', sm: '64px !important' } }}
 					anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
 					open={true}
 					autoHideDuration={5000}

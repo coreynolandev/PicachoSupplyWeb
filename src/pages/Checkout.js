@@ -398,7 +398,7 @@ const Checkout = () => {
 					</form>
 
 					<Snackbar
-						sx={{ marginTop: { xs: '80px', sm: '64px' } }}
+						sx={{ marginTop: { xs: '80px !important', sm: '64px !important' } }}
 						anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
 						open={snackbarOpen}
 						autoHideDuration={30000}
