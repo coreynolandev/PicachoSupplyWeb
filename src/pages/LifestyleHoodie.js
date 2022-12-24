@@ -1,6 +1,24 @@
 import { forwardRef, useEffect, useState } from 'react';
 import HoodieBlank from '../assets2/build_adventure.png';
-import { Box, Button, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, IconButton, Snackbar, Stack, Tooltip } from '@mui/material';
+import {
+	AccordionDetails,
+	AccordionSummary,
+	Box,
+	Button,
+	Card,
+	CardContent,
+	CardHeader,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	Grid,
+	IconButton,
+	Snackbar,
+	Stack,
+	Tooltip
+} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
@@ -28,6 +46,81 @@ const sizeSelectionList = [
 	{ size: 'L', order: 2 },
 	{ size: 'XL', order: 3 },
 	{ size: 'XXL', order: 4 }
+];
+const picachoFavorites = [
+	{
+		baseColorNum: 10,
+		borderColorNum: 5,
+		fillColorNum: 12,
+		gradientColorNum: 14
+	},
+	{
+		baseColorNum: 7,
+		borderColorNum: 0,
+		fillColorNum: 1,
+		gradientColorNum: null
+	},
+	{
+		baseColorNum: 1,
+		borderColorNum: 18,
+		fillColorNum: 0,
+		gradientColorNum: null
+	},
+	{
+		baseColorNum: 13, //yellow/bklack.white
+		borderColorNum: 0,
+		fillColorNum: 18,
+		gradientColorNum: null
+	},
+	{
+		baseColorNum: 9, //purple/white/leafgreen/forrest
+		borderColorNum: 18,
+		fillColorNum: 10,
+		gradientColorNum: 5
+	},
+	{
+		baseColorNum: 11, //smoke/blak/bluesky/jetblue
+		borderColorNum: 0,
+		fillColorNum: 15,
+		gradientColorNum: 8
+	},
+
+	{
+		baseColorNum: 9, //plum/black/yellow
+		borderColorNum: 0,
+		fillColorNum: 12,
+		gradientColorNum: null
+	},
+	{
+		baseColorNum: 16, // cardinal/black/white
+		borderColorNum: 0,
+		fillColorNum: 18,
+		gradientColorNum: null
+	},
+	{
+		baseColorNum: 12, // stormblue/nblack/white/cherryred
+		borderColorNum: 0,
+		fillColorNum: 18,
+		gradientColorNum: 1
+	},
+	{
+		baseColorNum: 3, // bone/black/tangerine/yellow
+		borderColorNum: 0,
+		fillColorNum: 16,
+		gradientColorNum: 12
+	},
+	{
+		baseColorNum: 3, // bone/coffee/choclate
+		borderColorNum: 3,
+		fillColorNum: 2,
+		gradientColorNum: null
+	},
+	{
+		baseColorNum: 14, // black-grey/black/grey
+		borderColorNum: 0,
+		fillColorNum: 6,
+		gradientColorNum: null
+	}
 ];
 
 function LifestyleHoodie() {
@@ -163,6 +256,14 @@ function LifestyleHoodie() {
 
 	const navigate = useNavigate();
 
+	const fillFromCollection = (hoodie) => {
+		setSelectedHoodie(hoodie.baseColorNum);
+		setSelectedBorder(hoodie.borderColorNum);
+		setFillColor(hoodie.fillColorNum);
+		setGradientColor(hoodie.gradientColorNum);
+		window.scroll(0, 0);
+	};
+
 	const addToCart = () => {
 		window.scrollBy(0, -1);
 		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
@@ -257,7 +358,7 @@ function LifestyleHoodie() {
 			alignItems={{ sm: 'center', md: 'flex-start' }}
 			sx={{ width: '100%' }}
 			mt={2}
-			mb={6}
+			mb={2}
 			spacing={2}>
 			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='messingup'>
 				{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}
@@ -386,6 +487,42 @@ function LifestyleHoodie() {
 							{addOrUpdateButtonTitle}
 						</Button>
 					</Stack>
+
+					<Card bgcolor={'white'}>
+						<CardHeader title={`Picacho Collection Favorites`} sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
+						<CardContent>
+							<Stack key='main-hoodie-stack-items' direction='row' overflow='scroll'>
+								{picachoFavorites.map((hoodie, index) => {
+									return (
+										<Box
+											key={`unzoomed-hoodie-${index}`}
+											sx={{ minWidth: '200px', position: 'relative' }}
+											className='hovercollection'
+											onClick={() => fillFromCollection(hoodie)}>
+											<img key='border-color-img' className=' collection' src={borderSelectionList[hoodie.borderColorNum].logo} alt='Border' />
+											<img key='fill-color-img' className=' collection' src={stitchFillSelectionList[hoodie.fillColorNum].logo} alt='Stitch' />
+											{hoodie.gradientColorNum == null ? (
+												<></>
+											) : (
+												<img
+													key='gradient-color-img'
+													className='  collection'
+													src={stitchGradientSelectionList[hoodie.gradientColorNum].logo}
+													alt='Gradient'
+												/>
+											)}
+											<img
+												key='base-color-img'
+												className='hoodie-base hoodie-stitch hoodie'
+												src={hoodieSelectionList[hoodie.baseColorNum].logo}
+												alt='Hoodie'
+											/>
+										</Box>
+									);
+								})}
+							</Stack>
+						</CardContent>
+					</Card>
 				</Stack>
 			</Stack>
 
