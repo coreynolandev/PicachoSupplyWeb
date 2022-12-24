@@ -5,6 +5,15 @@ import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
 
 const FillSelectionAccordion = ({ fillSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedFill, setSelectedFill }) => {
+	const changeOrRemove = (newColorId) => {
+		console.log(selectedFill);
+		console.log(newColorId);
+		if (selectedFill === newColorId) {
+			setSelectedFill(null);
+		} else {
+			setSelectedFill(newColorId);
+		}
+	};
 	return (
 		<Accordion
 			sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }}
@@ -53,7 +62,7 @@ const FillSelectionAccordion = ({ fillSelectionList, accordionNumber, expanded, 
 											alt={stitchFill.alt}
 											number={stitchFill.order}
 											selectedSwatch={selectedFill}
-											setSelectedSwatch={setSelectedFill}
+											setSelectedSwatch={changeOrRemove}
 										/>
 									</IconButton>
 								</Tooltip>

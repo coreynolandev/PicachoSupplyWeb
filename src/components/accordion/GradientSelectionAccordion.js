@@ -5,6 +5,15 @@ import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
 
 const GradientSelectionAccordion = ({ gradientSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedGradient, setSelectedGradient }) => {
+	const changeOrRemove = (newColorId) => {
+		console.log(selectedGradient);
+		console.log(newColorId);
+		if (selectedGradient === newColorId) {
+			setSelectedGradient(null);
+		} else {
+			setSelectedGradient(newColorId);
+		}
+	};
 	return (
 		<Accordion
 			sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }}
@@ -53,7 +62,7 @@ const GradientSelectionAccordion = ({ gradientSelectionList, accordionNumber, ex
 											alt={stitchFill.alt}
 											number={stitchFill.order}
 											selectedSwatch={selectedGradient}
-											setSelectedSwatch={setSelectedGradient}
+											setSelectedSwatch={changeOrRemove}
 										/>
 									</IconButton>
 								</Tooltip>
