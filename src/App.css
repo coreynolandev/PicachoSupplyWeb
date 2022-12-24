@@ -16,14 +16,19 @@ body:before {
 }
 .collection {
 	position: absolute;
-	width: 80px;
-	top: 80px !important;
+	width: 78px;
+	top: 75px !important;
 	left: 60px !important;
 }
 
 .hovercollection:hover {
 	cursor: pointer;
 	background-color: rgb(210, 210, 210);
+}
+
+.color-swatch-accordion-details {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
 }
 
 .g-recaptcha {

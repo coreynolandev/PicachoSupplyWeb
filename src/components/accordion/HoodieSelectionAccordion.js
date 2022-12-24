@@ -3,25 +3,16 @@ import { Accordion } from '../design/Accordion';
 import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import { responsive } from './responsive';
 
 const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedHoodie, setSelectedHoodie }) => {
-	const isSelected = expanded === accordionNumber;
-
 	return (
-		<Accordion
-			expanded={isSelected}
-			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
-			key='hoodieBase'
-			onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary key='hoodieaccdsummary' aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={isSelected}>
+		<Accordion expanded={expanded} sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }} key='hoodieBase' onChange={() => changeExpandedAccordion(accordionNumber)}>
+			<AccordionSummary key='hoodieaccdsummary' aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
 					{accordionNumber}. Choose a Base{selectedHoodie !== null && ` - ${hoodieSelectionList[selectedHoodie].alt}`}
 				</Typography>
 			</AccordionSummary>
-			<AccordionDetails key='hoodiedetails1'>
+			<AccordionDetails key='hoodie-selection-accordion-details' className='color-swatch-accordion-details'>
 				<Grid container>
 					{hoodieSelectionList.map((swatch, index) => {
 						return (

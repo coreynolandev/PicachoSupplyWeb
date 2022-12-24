@@ -101,7 +101,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 												}
 											/>
 										</ListItem>
-										<ListItem key='About Us-item'>
+										<ListItem key='Subscribe to Newsletter-item'>
 											<ListItemText
 												disableTypography
 												primary={

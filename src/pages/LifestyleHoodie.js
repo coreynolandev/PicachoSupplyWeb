@@ -1,8 +1,6 @@
 import { forwardRef, useEffect, useState } from 'react';
 import HoodieBlank from '../assets2/build_adventure.png';
 import {
-	AccordionDetails,
-	AccordionSummary,
 	Box,
 	Button,
 	Card,
@@ -23,7 +21,6 @@ import MuiAlert from '@mui/material/Alert';
 
 import HoodieSelectionAccordion from '../components/accordion/HoodieSelectionAccordion';
 import BorderSelectionAccordion from '../components/accordion/BorderSelectionAccordion';
-import StitchFillSelectionAccordion from '../components/accordion/StitchFillSelectionAccordion';
 import SizeSelectionAccordion from '../components/accordion/SizeSelectionAccordion';
 import { Refresh, Shuffle } from '@mui/icons-material';
 import { HOODIE_SELECTION_LIST } from '../components/toxic-build/Hoodies';
@@ -34,11 +31,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addHoodie, updateHoodie } from '../features/cartSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
+import FillSelectionAccordion from '../components/accordion/FillSelectionAccordion';
+import GradientSelectionAccordion from '../components/accordion/GradientSelectionAccordion';
 
 const hoodieSelectionList = HOODIE_SELECTION_LIST;
 const borderSelectionList = BORDERS_SELECTION_LIST;
-const stitchFillSelectionList = FILLS_SELECTION_LIST;
-const stitchGradientSelectionList = GRADIENTS_SELECTION_LIST;
+const fillSelectionList = FILLS_SELECTION_LIST;
+const gradientSelectionList = GRADIENTS_SELECTION_LIST;
 
 const sizeSelectionList = [
 	{ size: 'S', order: 0 },
@@ -124,29 +123,25 @@ const picachoFavorites = [
 ];
 
 function LifestyleHoodie() {
-	// console.log();
 	const location = useLocation();
-	const { editId } = location.state || { editId: null };
+	const dispatch = useDispatch();
 	const orders = useSelector((state) => state.cart.order);
+
+	const { editId } = location.state || { editId: null };
 	const editItem = editId ? orders.find((item) => item.id === editId) : null;
 	const editMode = editItem !== null;
 
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-	const dispatch = useDispatch();
 	const [expanded, setExpanded] = useState(1);
 	const [selectedHoodie, setSelectedHoodie] = useState(editItem !== null && editItem?.baseColorId !== null ? editItem?.baseColorId : null);
 	const [selectedBorder, setSelectedBorder] = useState(editItem !== null && editItem?.borderColorId !== null ? editItem?.borderColorId : null);
-	const [selectedStitchFill, setSelectedStitchFill] = useState({
-		fill: editItem !== null && editItem?.fillColorId !== null ? editItem?.fillColorId : null,
-		gradient: editItem !== null && editItem?.gradientColorId !== null ? editItem?.gradientColorId : null
-	});
-	const [patternType, setPatternType] = useState('fill');
+	const [selectedFill, setSelectedFill] = useState(editItem !== null && editItem?.fillColorId !== null ? editItem?.fillColorId : null);
+	const [selectedGradient, setSelectedGradient] = useState(editItem !== null && editItem?.gradientColorId !== null ? editItem?.gradientColorId : null);
+
 	const [selectedSize, setSelectedSize] = useState(editItem !== null && editItem?.sizeId !== null ? editItem.sizeId : null);
-	const [orderMaterials, setOrderMaterials] = useState({ hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill });
+	const [orderMaterials, setOrderMaterials] = useState({ hoodie: selectedHoodie, border: selectedBorder, fill: selectedFill, gradient: selectedGradient });
 	const [hoodieOrPreview, setHoodieOrPreview] = useState('hoodie');
-	const [fillColor, setFillColor] = useState(editItem !== null && editItem?.fillColorId !== null ? editItem?.fillColorId : null);
-	const [gradientColor, setGradientColor] = useState(editItem !== null && editItem?.gradientColorId !== null ? editItem?.gradientColorId : null);
 
 	const changeExpandedAccordion = (accordionNumber) => {
 		if (accordionNumber === expanded) {
@@ -156,31 +151,31 @@ function LifestyleHoodie() {
 		}
 	};
 
-	const changeStitchFill = (newColor) => {
-		if (patternType === 'fill') {
-			if (fillColor === newColor) {
-				console.log('null fill');
-				setFillColor(null);
-				setSelectedStitchFill({ ...selectedStitchFill, fill: null });
-			} else {
-				console.log('new fill');
-				setFillColor(newColor);
-				setSelectedStitchFill({ ...selectedStitchFill, fill: newColor });
-			}
-		} else if (gradientColor === newColor) {
-			setGradientColor(null);
-			console.log('null gradient');
-			setSelectedStitchFill({ ...selectedStitchFill, gradient: null });
-		} else {
-			setGradientColor(newColor);
-			console.log('new gradient');
-			setSelectedStitchFill({ ...selectedStitchFill, gradient: newColor });
-		}
-	};
+	// const changeStitchFill = (newColor) => {
+	// 	if (patternType === 'fill') {
+	// 		if (fillColor === newColor) {
+	// 			console.log('null fill');
+	// 			setFillColor(null);
+	// 			setSelectedStitchFill({ ...selectedStitchFill, fill: null });
+	// 		} else {
+	// 			console.log('new fill');
+	// 			setFillColor(newColor);
+	// 			setSelectedStitchFill({ ...selectedStitchFill, fill: newColor });
+	// 		}
+	// 	} else if (gradientColor === newColor) {
+	// 		setGradientColor(null);
+	// 		console.log('null gradient');
+	// 		setSelectedStitchFill({ ...selectedStitchFill, gradient: null });
+	// 	} else {
+	// 		setGradientColor(newColor);
+	// 		console.log('new gradient');
+	// 		setSelectedStitchFill({ ...selectedStitchFill, gradient: newColor });
+	// 	}
+	// };
 
-	const changePatternType = (newPatternType) => {
-		setPatternType(newPatternType);
-	};
+	// const changePatternType = (newPatternType) => {
+	// 	setPatternType(newPatternType);
+	// };
 
 	const resetAllSelections = () => {
 		var confirmReset = window.confirm('Reset all Selections?');
@@ -188,43 +183,76 @@ function LifestyleHoodie() {
 			setHoodieOrPreview('hoodie');
 			setSelectedHoodie(null);
 			setSelectedBorder(null);
-			setFillColor(null);
-			setGradientColor(null);
-			setSelectedStitchFill({ fill: null, gradient: null });
-			setPatternType('fill');
+			setSelectedFill(null);
+			setSelectedGradient(null);
+			// setSelectedStitchFill({ fill: null, gradient: null });
+			// setPatternType('fill');
 			setSelectedSize(null);
 		}
 	};
 
 	function areMaterialsEqual(newMaterials) {
-		return newMaterials.hoodie === orderMaterials.hoodie && newMaterials.border === orderMaterials.border && newMaterials.stitchFill === orderMaterials.stitchFill;
+		console.log(newMaterials);
+		console.log(orderMaterials);
+		return (
+			newMaterials.hoodie === orderMaterials.hoodie &&
+			newMaterials.border === orderMaterials.border &&
+			newMaterials.fill === orderMaterials.fill &&
+			newMaterials.gradient === orderMaterials.gradient
+		);
 	}
+
+	const [lastThreeRandom, setLastThreeRandom] = useState([]);
+	const [fullRandom, setFullRandom] = useState([]);
 
 	const randomizeSelections = () => {
 		var confirmRandomize = true;
-		const lastSelections = { hoodie: selectedHoodie, border: selectedBorder, stitchFill: selectedStitchFill };
+		const lastSelections = { hoodie: selectedHoodie, border: selectedBorder, fill: selectedFill, gradient: selectedGradient };
 
-		if (!areMaterialsEqual(lastSelections) && (selectedHoodie !== null || selectedBorder !== null || selectedStitchFill !== null)) {
+		if (!areMaterialsEqual(lastSelections) && (selectedHoodie !== null || selectedBorder !== null || selectedFill !== null)) {
 			confirmRandomize = window.confirm('Let the Great Hawk randomize your hoodie? All current selections will be lost.');
 		}
 		if (confirmRandomize) {
 			const hoodieRandom = Math.floor(Math.random() * hoodieSelectionList.length);
 			const borderRandom = Math.floor(Math.random() * borderSelectionList.length);
-			const stitchFillRandom = Math.floor(Math.random() * stitchFillSelectionList.length);
-			const shouldSetGradient = Math.random() >= 0.5;
-			var stitchGradientRandom = null;
+			const fillRandom = Math.floor(Math.random() * fillSelectionList.length);
+			var shouldSetGradient = Math.random() >= 0.5;
+			var gradientRandom = null;
+			if (lastThreeRandom.length < 3) {
+				lastThreeRandom.push(shouldSetGradient ? 1 : 0);
+				fullRandom.push(shouldSetGradient ? 1 : 0);
+				setLastThreeRandom(lastThreeRandom);
+				setFullRandom(fullRandom);
+			} else {
+				console.log(lastThreeRandom);
+				console.log(fullRandom);
+				const sum = lastThreeRandom.reduce((partialSum, a) => partialSum + a, 0);
+				if (sum === 0) shouldSetGradient = true;
+				if (sum === 3) shouldSetGradient = false;
+				lastThreeRandom.shift();
+				lastThreeRandom.push(shouldSetGradient ? 1 : 0);
+
+				fullRandom.push(shouldSetGradient ? 1 : 0);
+				const sum2 = fullRandom.reduce((partialSum, a) => partialSum + a, 0);
+				console.log(sum2 / fullRandom.length);
+
+				setFullRandom(fullRandom);
+
+				setLastThreeRandom(lastThreeRandom);
+			}
+
 			if (shouldSetGradient) {
-				stitchGradientRandom = Math.floor(Math.random() * stitchFillSelectionList.length);
+				gradientRandom = Math.floor(Math.random() * fillSelectionList.length);
 			}
 
 			setSelectedHoodie(hoodieRandom);
 			setSelectedBorder(borderRandom);
-			setFillColor(stitchFillRandom);
-			setGradientColor(stitchGradientRandom);
-			const newStitchFillObject = { fill: stitchFillRandom, gradient: stitchGradientRandom };
-			setSelectedStitchFill(newStitchFillObject);
+			setSelectedFill(fillRandom);
+			setSelectedGradient(gradientRandom);
+			// const newStitchFillObject = { fill: fillRandom, gradient: gradientRandom };
+			// setSelectedStitchFill(newStitchFillObject);
 			// setPatternType('');
-			setOrderMaterials({ hoodie: hoodieRandom, border: borderRandom, stitchFill: newStitchFillObject });
+			setOrderMaterials({ hoodie: hoodieRandom, border: borderRandom, fill: fillRandom, gradient: gradientRandom });
 		}
 	};
 
@@ -242,9 +270,6 @@ function LifestyleHoodie() {
 		} else if (!borderSelectionList[selectedBorder]) {
 			setCanAddToCart(false);
 			setAddOrUpdateButtonTitle('Select a Border');
-		} else if (!stitchFillSelectionList[fillColor]) {
-			setCanAddToCart(false);
-			setAddOrUpdateButtonTitle('Select a Fill');
 		} else if (!sizeSelectionList[selectedSize]) {
 			setCanAddToCart(false);
 			setAddOrUpdateButtonTitle('Select a Size');
@@ -252,15 +277,15 @@ function LifestyleHoodie() {
 			setCanAddToCart(true);
 			setAddOrUpdateButtonTitle(defaultAddOrUpdateTitle);
 		}
-	}, [selectedHoodie, selectedBorder, selectedSize, fillColor, selectedStitchFill, defaultAddOrUpdateTitle]);
+	}, [selectedHoodie, selectedBorder, selectedSize, selectedFill, selectedGradient, defaultAddOrUpdateTitle]);
 
 	const navigate = useNavigate();
 
 	const fillFromCollection = (hoodie) => {
 		setSelectedHoodie(hoodie.baseColorNum);
 		setSelectedBorder(hoodie.borderColorNum);
-		setFillColor(hoodie.fillColorNum);
-		setGradientColor(hoodie.gradientColorNum);
+		setSelectedFill(hoodie.fillColorNum);
+		setSelectedGradient(hoodie.gradientColorNum);
 		window.scroll(0, 0);
 	};
 
@@ -268,10 +293,11 @@ function LifestyleHoodie() {
 		window.scrollBy(0, -1);
 		console.log('hoodie: ' + hoodieSelectionList[selectedHoodie]?.alt);
 		console.log('border: ' + borderSelectionList[selectedBorder]?.alt);
-		console.log('stitchFill: ' + stitchFillSelectionList[fillColor]?.alt);
-		console.log('stitchGradient: ' + stitchGradientSelectionList[gradientColor]?.alt);
+		console.log('stitchFill: ' + fillSelectionList[selectedFill]?.alt);
+		console.log('stitchGradient: ' + gradientSelectionList[selectedGradient]?.alt);
 		console.log('size: ' + sizeSelectionList[selectedSize]?.size);
-		if (hoodieSelectionList[selectedHoodie] && borderSelectionList[selectedBorder] && stitchFillSelectionList[fillColor] && sizeSelectionList[selectedSize]) {
+		// Need a hoodie base, border color, and size to be able to add
+		if (hoodieSelectionList[selectedHoodie] && borderSelectionList[selectedBorder] && sizeSelectionList[selectedSize]) {
 			setAddOrUpdateButtonTitle(editMode ? 'Updating...' : 'Adding...');
 			var id = editMode ? editId : uuid();
 			const hoodie = {
@@ -284,12 +310,12 @@ function LifestyleHoodie() {
 				borderColor: borderSelectionList[selectedBorder]?.alt,
 				borderColorImg: borderSelectionList[selectedBorder]?.logo,
 				borderColorId: selectedBorder,
-				fillColor: stitchFillSelectionList[fillColor]?.alt,
-				fillColorImg: stitchFillSelectionList[fillColor]?.logo,
-				fillColorId: fillColor,
-				gradientColor: stitchGradientSelectionList[gradientColor]?.alt,
-				gradientColorImg: stitchGradientSelectionList[gradientColor]?.logo,
-				gradientColorId: gradientColor,
+				fillColor: fillSelectionList[selectedFill]?.alt,
+				fillColorImg: fillSelectionList[selectedFill]?.logo,
+				fillColorId: selectedFill,
+				gradientColor: gradientSelectionList[selectedGradient]?.alt,
+				gradientColorImg: gradientSelectionList[selectedGradient]?.logo,
+				gradientColorId: selectedGradient,
 				quantity: 1,
 				cost: 50.0,
 				type: 'Lifestyle Hoodie',
@@ -298,6 +324,7 @@ function LifestyleHoodie() {
 
 			if (editItem) {
 				const oldHoodie = orders.find((it) => it.id === id);
+				// Keep quantity if in edit mode
 				if (oldHoodie) {
 					hoodie.quantity = oldHoodie.quantity;
 				}
@@ -311,6 +338,7 @@ function LifestyleHoodie() {
 			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
 			setSnackbarOpen(true);
 		} else {
+			// If they don't have appropriate options selected, open dialog. This is no longer used.
 			setNeedMoreOptions(true);
 		}
 	};
@@ -367,11 +395,11 @@ function LifestyleHoodie() {
 						{selectedHoodie !== null && selectedBorder !== null && (
 							<img className='toxic-wave-logo hoodie-stitch outline' src={borderSelectionList[selectedBorder]?.logo} alt='Border' />
 						)}
-						{selectedHoodie !== null && fillColor !== null && (
-							<img className='toxic-wave-logo hoodie-stitch stitch' src={stitchFillSelectionList[fillColor]?.logo} alt='Stitch' />
+						{selectedHoodie !== null && selectedFill !== null && (
+							<img className='toxic-wave-logo hoodie-stitch stitch' src={fillSelectionList[selectedFill]?.logo} alt='Stitch' />
 						)}
-						{selectedHoodie !== null && gradientColor !== null && (
-							<img className='toxic-wave-logo hoodie-stitch stitch gradient' src={stitchGradientSelectionList[gradientColor]?.logo} alt='Stitch' />
+						{selectedHoodie !== null && selectedGradient !== null && (
+							<img className='toxic-wave-logo hoodie-stitch stitch gradient' src={gradientSelectionList[selectedGradient]?.logo} alt='Stitch' />
 						)}
 						{selectedHoodie !== null ? (
 							<img className='hoodie-base hoodie-stitch hoodie' src={hoodieSelectionList[selectedHoodie]?.logo} alt='Hoodie' />
@@ -382,9 +410,9 @@ function LifestyleHoodie() {
 				) : (
 					<Box position={'relative'} className='hoodie-stitch container'>
 						{selectedBorder !== null && <img className='toxic-wave-logo hoodie-stitch-only outline' src={borderSelectionList[selectedBorder]?.logo} alt='Border' />}
-						{fillColor !== null && <img className='toxic-wave-logo hoodie-stitch-only stitch' src={stitchFillSelectionList[fillColor]?.logo} alt='Stitch' />}
-						{gradientColor !== null && (
-							<img className='toxic-wave-logo hoodie-stitch-only stitch gradient' src={stitchGradientSelectionList[gradientColor]?.logo} alt='Stitch' />
+						{selectedFill !== null && <img className='toxic-wave-logo hoodie-stitch-only stitch' src={fillSelectionList[selectedFill]?.logo} alt='Stitch' />}
+						{selectedGradient !== null && (
+							<img className='toxic-wave-logo hoodie-stitch-only stitch gradient' src={gradientSelectionList[selectedGradient]?.logo} alt='Stitch' />
 						)}
 						<img
 							className='hoodie-base hoodie-stitch-only hoodie'
@@ -393,7 +421,7 @@ function LifestyleHoodie() {
 						/>
 					</Box>
 				)}
-				{selectedHoodie !== null && (selectedBorder !== null || fillColor !== null || gradientColor || null) ? (
+				{selectedHoodie !== null && (selectedBorder !== null || selectedFill !== null || selectedGradient || null) ? (
 					<Button
 						color={hoodieOrPreview === 'hoodie' ? 'viewEmbroidery' : 'viewHoodie'}
 						variant={hoodieOrPreview === 'hoodie' ? 'contained' : 'contained'}
@@ -447,7 +475,7 @@ function LifestyleHoodie() {
 						<HoodieSelectionAccordion
 							hoodieSelectionList={hoodieSelectionList}
 							accordionNumber={1}
-							expanded={expanded}
+							expanded={expanded === 1}
 							changeExpandedAccordion={changeExpandedAccordion}
 							selectedHoodie={selectedHoodie}
 							setSelectedHoodie={setSelectedHoodie}
@@ -455,27 +483,31 @@ function LifestyleHoodie() {
 						<BorderSelectionAccordion
 							borderSelectionList={borderSelectionList}
 							accordionNumber={2}
-							expanded={expanded}
+							expanded={expanded === 2}
 							changeExpandedAccordion={changeExpandedAccordion}
 							selectedBorder={selectedBorder}
 							setSelectedBorder={setSelectedBorder}
 						/>
-						<StitchFillSelectionAccordion
-							patternType={patternType}
-							changePatternType={changePatternType}
-							stitchFillSelectionList={stitchFillSelectionList}
-							stitchGradientSelectionList={stitchGradientSelectionList}
+						<FillSelectionAccordion
+							fillSelectionList={fillSelectionList}
 							accordionNumber={3}
-							expanded={expanded}
+							expanded={expanded === 3}
 							changeExpandedAccordion={changeExpandedAccordion}
-							selectedStitchFill={fillColor}
-							selectedStitchGradient={gradientColor}
-							changeStitchFill={changeStitchFill}
+							selectedFill={selectedFill}
+							setSelectedFill={setSelectedFill}
+						/>
+						<GradientSelectionAccordion
+							gradientSelectionList={gradientSelectionList}
+							accordionNumber={4}
+							expanded={expanded === 4}
+							changeExpandedAccordion={changeExpandedAccordion}
+							selectedGradient={selectedGradient}
+							setSelectedGradient={setSelectedGradient}
 						/>
 						<SizeSelectionAccordion
 							sizeSelectionList={sizeSelectionList}
-							accordionNumber={4}
-							expanded={expanded}
+							accordionNumber={5}
+							expanded={expanded === 5}
 							changeExpandedAccordion={changeExpandedAccordion}
 							selectedSize={selectedSize}
 							setSelectedSize={setSelectedSize}
@@ -500,16 +532,11 @@ function LifestyleHoodie() {
 											className='hovercollection'
 											onClick={() => fillFromCollection(hoodie)}>
 											<img key='border-color-img' className=' collection' src={borderSelectionList[hoodie.borderColorNum].logo} alt='Border' />
-											<img key='fill-color-img' className=' collection' src={stitchFillSelectionList[hoodie.fillColorNum].logo} alt='Stitch' />
+											<img key='fill-color-img' className=' collection' src={fillSelectionList[hoodie.fillColorNum].logo} alt='Stitch' />
 											{hoodie.gradientColorNum == null ? (
 												<></>
 											) : (
-												<img
-													key='gradient-color-img'
-													className='  collection'
-													src={stitchGradientSelectionList[hoodie.gradientColorNum].logo}
-													alt='Gradient'
-												/>
+												<img key='gradient-color-img' className='  collection' src={gradientSelectionList[hoodie.gradientColorNum].logo} alt='Gradient' />
 											)}
 											<img
 												key='base-color-img'

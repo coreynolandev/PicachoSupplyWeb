@@ -4,26 +4,16 @@ import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
 
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import { responsive } from './responsive';
-
 const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedBorder, setSelectedBorder }) => {
-	const isSelected = expanded === accordionNumber;
-
 	return (
-		<Accordion
-			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
-			key='borderBase'
-			expanded={isSelected}
-			onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='border-color' id='select-border-color-header' expanded={isSelected}>
+		<Accordion sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }} key='borderBase' expanded={expanded} onChange={() => changeExpandedAccordion(accordionNumber)}>
+			<AccordionSummary aria-controls='border-color' id='select-border-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
 					{accordionNumber}. Choose a Border{selectedBorder !== null && ` - ${borderSelectionList[selectedBorder].alt}`}
 				</Typography>
 			</AccordionSummary>
 
-			<AccordionDetails>
+			<AccordionDetails key='border-selection-accordion-details' className='color-swatch-accordion-details'>
 				<Grid container>
 					{borderSelectionList.map((border, index) => {
 						return (

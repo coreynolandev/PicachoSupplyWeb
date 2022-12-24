@@ -1,66 +1,25 @@
-import { Grid, IconButton, ToggleButton, ToggleButtonGroup, Tooltip, Typography } from '@mui/material';
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { Accordion } from '../design/Accordion';
 import { AccordionSummary } from '../design/AccordionSummary';
 import { AccordionDetails } from '../design/AccordionDetails';
 import Swatch from '../design/Swatch';
 
-const FillSelectionAccordion = (
-	patternType,
-	changePatternType,
-	stitchFillSelectionList,
-	stitchGradientSelectionList,
-	accordionNumber,
-	expanded,
-	changeExpandedAccordion,
-	selectedStitchFill,
-	selectedStitchGradient,
-	changeStitchFill
-) => {
-	var name = selectedStitchFill !== null ? ` - ${stitchFillSelectionList[selectedStitchFill].alt}` : '';
-	if (selectedStitchGradient !== null) {
-		if (name !== '') {
-			name += `/${stitchFillSelectionList[selectedStitchGradient].alt}`;
-		} else {
-			name = ` - NA/${stitchGradientSelectionList[selectedStitchGradient].alt}`;
-		}
-	}
-
-	const colorSetList = patternType === 'fill' ? stitchFillSelectionList : stitchGradientSelectionList;
-	const currentSwatchChosen = patternType === 'fill' ? selectedStitchFill : selectedStitchGradient;
-	const isSelected = expanded === accordionNumber;
-
+const FillSelectionAccordion = ({ fillSelectionList, accordionNumber, expanded, changeExpandedAccordion, selectedFill, setSelectedFill }) => {
 	return (
 		<Accordion
-			sx={{ bgcolor: isSelected ? 'white' : 'rgba(255,255,255,0.8)' }}
+			sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }}
 			key='stitchFillBase'
-			expanded={isSelected}
+			expanded={expanded}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={isSelected}>
+			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Fill{name !== '' && name}
+					{accordionNumber}. Choose a Fill{selectedFill !== null && ` - ${fillSelectionList[selectedFill].alt}`}
 				</Typography>
 			</AccordionSummary>
 
-			<AccordionDetails sx={{ position: 'relative', padding: '10px 50px  10px 50px' }}>
-				<ToggleButtonGroup
-					name='patternType'
-					value={patternType}
-					fullWidth
-					onChange={(event) => changePatternType(event.target.value.toLowerCase())}
-					color='warning'
-					exclusive
-					size='small'
-					aria-label='Select fill or gradient fill color options'
-					sx={{ marginBottom: 1 }}>
-					<ToggleButton sx={{ fontSize: '.8rem' }} value={'fill'}>
-						Base Color
-					</ToggleButton>
-					<ToggleButton sx={{ fontSize: '.8rem' }} value={'gradient'}>
-						Add Gradient
-					</ToggleButton>
-				</ToggleButtonGroup>
+			<AccordionDetails key='fill-selection-accordion' className='color-swatch-accordion-details'>
 				<Grid container>
-					{colorSetList.map((stitchFill, index) => {
+					{fillSelectionList.map((stitchFill, index) => {
 						return (
 							<Grid item xs={1.5} sm={1} key={`colorsetlistcarousel${index}`}>
 								<Tooltip
@@ -93,8 +52,8 @@ const FillSelectionAccordion = (
 											type='color-swatch'
 											alt={stitchFill.alt}
 											number={stitchFill.order}
-											selectedSwatch={currentSwatchChosen}
-											setSelectedSwatch={changeStitchFill}
+											selectedSwatch={selectedFill}
+											setSelectedSwatch={setSelectedFill}
 										/>
 									</IconButton>
 								</Tooltip>

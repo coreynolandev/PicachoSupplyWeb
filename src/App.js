@@ -101,11 +101,12 @@ function App(props) {
 		{
 			path: 'completed',
 			element: <Completed />
-		},{
+		},
+		{
 			path: 'subscribe',
 			element: <Subscribe />
 		}
-
+		//TODO: provide default error element
 	]);
 
 	return (
