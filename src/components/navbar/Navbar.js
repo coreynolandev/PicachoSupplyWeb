@@ -3,8 +3,34 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
 
 import PicachoLogo from '../../assets2/picacho_logo.png';
-import MyShoppingCart from '../../assets2/shopping-cart.png';
 import { useEffect, useState } from 'react';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+
+function useWindowSize() {
+	// Initialize state with undefined width/height so server and client renders match
+	// Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+	const [windowSize, setWindowSize] = useState({
+		width: undefined,
+		height: undefined
+	});
+	useEffect(() => {
+		// Handler to call on window resize
+		function handleResize() {
+			// Set window width/height to state
+			setWindowSize({
+				width: window.innerWidth,
+				height: window.innerHeight
+			});
+		}
+		// Add event listener
+		window.addEventListener('resize', handleResize);
+		// Call handler right away so state gets updated with initial window size
+		handleResize();
+		// Remove event listener on cleanup
+		return () => window.removeEventListener('resize', handleResize);
+	}, []); // Empty array ensures that effect is only run on mount
+	return windowSize;
+}
 
 const Navbar = ({ changeColorMode, mode }) => {
 	var orders = useSelector((state) => state.cart.order);
@@ -14,13 +40,18 @@ const Navbar = ({ changeColorMode, mode }) => {
 
 	const [animateQuantity, setAnimateQuantity] = useState(false);
 
-	var trigger = useScrollTrigger({ threshold: 16 });
-
 	useEffect(() => {
 		numberOfItemsInCart !== 0 && setAnimateQuantity(true);
 	}, [numberOfItemsInCart]);
 
 	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
+	var trigger = useScrollTrigger({ threshold: isSideNavOpen ? 10000 : 16 });
+
+	const size = useWindowSize();
+
+	useEffect(() => {
+		if (size.width >= 600) setIsSideNavOpen(false);
+	}, [size]);
 
 	const handleOpenNavMenu = (event) => {
 		setIsSideNavOpen(true);
@@ -48,12 +79,23 @@ const Navbar = ({ changeColorMode, mode }) => {
 	return (
 		<Slide appear={true} direction='down' in={!trigger}>
 			<AppBar position='sticky' color='default' className='topnav' sx={{ boxShadow: 'none' }}>
-				{/* <AppBar position='sticky' color='default' sx={{ background: 'transparent', boxShadow: 'none' }}> */}
 				<Container maxWidth='none' disableGutters sx={{ height: '100%' }}>
-					<Toolbar disableGutters sx={{ justifyContent: 'space-between', background: 'transparent', width: '100%', maxHeight: '80px' }}>
-						<Box sx={{ display: { xs: 'block', sm: 'none' }, width: { xs: '48px', sm: '0px' } }}>
-							<IconButton size='small' aria-label='expand options' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
-								<MenuIcon />
+					<Toolbar
+						disableGutters
+						sx={{
+							justifyContent: 'space-between',
+							background: 'transparent',
+							width: '100%',
+							maxHeight: '80px',
+							minHeight: '80px !important'
+						}}>
+						<Box
+							sx={{
+								display: { xs: 'block', sm: 'none' },
+								marginLeft: 1
+							}}>
+							<IconButton aria-label='expand options' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
+								<MenuIcon sx={{ fontSize: '30px' }} />
 							</IconButton>
 							<section className='newsidebar ' hidden={!isSideNavOpen} onClick={(event) => stopProp(event)}>
 								<div className='left80p animate__animated animate__slideInLeft animate__faster' onClick={(event) => doProp(event)}>
@@ -116,11 +158,15 @@ const Navbar = ({ changeColorMode, mode }) => {
 							</section>
 						</Box>
 
-						<a href='/'>
-							<Box className='logo container' component='img' src={mode === 'dark' ? PicachoLogo : PicachoLogo} alt='Picacho Logo' />
-						</a>
+						{/* Logo */}
+						<Box className='logo container' sx={{ display: 'flex', alignItems: 'center', paddingLeft: { sm: '11px' } }}>
+							<a href='/' style={{ width: '100%', height: '100%', lineHeight: 0 }}>
+								<Box className=' navbar-image' component='img' src={mode === 'dark' ? PicachoLogo : PicachoLogo} alt='Picacho Logo' />
+							</a>
+						</Box>
 
-						<Stack justifyContent={'space-between'} alignItems='center' direction='row' sx={{ display: { xs: 'none', sm: 'flex' }, marginRight: '9px' }} spacing={2}>
+						{/* SM+ Links */}
+						<Stack justifyContent={'space-between'} alignItems='center' direction='row' sx={{ display: { xs: 'none', sm: 'flex' }, marginRight: '10px' }} spacing={2}>
 							<Typography className='navlink' component='a' href={`/shop`} key={`navbarLink-full-shop`}>
 								Shop
 							</Typography>
@@ -128,23 +174,32 @@ const Navbar = ({ changeColorMode, mode }) => {
 								About Us
 							</Typography>
 							<a className={`shopping-cart ${animationRubberClass}`} onAnimationEnd={() => setAnimateQuantity(false)} href='/review-order'>
-								<IconButton color='inherit'>
-									<Box component='img' src={MyShoppingCart} alt='Cart' />
+								<IconButton color='primary'>
+									<ShoppingBagIcon sx={{ fontSize: '30px' }} />
 								</IconButton>
-								<Typography className={`icon ${animationBounceClass}`} onAnimationEnd={() => setAnimateQuantity(false)} sx={{ fontFamily: 'sans-serif' }}>
-									{numberOfItemsInCart}
-								</Typography>
+								{numberOfItemsInCart !== null && numberOfItemsInCart > 0 && (
+									<Typography className={`icon ${animationBounceClass}`} onAnimationEnd={() => setAnimateQuantity(false)}>
+										{numberOfItemsInCart}
+									</Typography>
+								)}
 							</a>
 						</Stack>
 
-						<Box sx={{ justifyContent: 'flex-end', alignItems: 'center', display: { xs: 'block', sm: 'none' }, marginRight: '6px' }}>
+						{/* XS Cart */}
+						<Box
+							sx={{
+								display: { xs: 'block', sm: 'none' },
+								marginRight: 1
+							}}>
 							<a className={`shopping-cart ${animationRubberClass}`} onAnimationEnd={() => setAnimateQuantity(false)} href='/review-order'>
-								<IconButton color='inherit'>
-									<Box component='img' src={MyShoppingCart} alt='Cart' />
+								<IconButton color='primary'>
+									<ShoppingBagIcon sx={{ fontSize: '30px' }} />
 								</IconButton>
-								<Typography className={`icon ${animationBounceClass}`} sx={{ fontFamily: 'sans-serif' }}>
-									{numberOfItemsInCart}
-								</Typography>
+								{numberOfItemsInCart !== null && numberOfItemsInCart > 0 && (
+									<Typography className={`icon ${animationBounceClass}`} onAnimationEnd={() => setAnimateQuantity(false)}>
+										{numberOfItemsInCart}
+									</Typography>
+								)}
 							</a>
 						</Box>
 					</Toolbar>

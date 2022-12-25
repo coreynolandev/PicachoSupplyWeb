@@ -8,6 +8,7 @@ import { AddressAutofill } from '@mapbox/search-js-react';
 import { addToSubscription, processOrderAsync, resetSubmitOrder, sendCustomerOrderReceipt } from '../features/cartSlice';
 import MuiAlert from '@mui/material/Alert';
 import ProcessingTimeout from '../components/design/ProcessingTimeout';
+import Reaptcha from 'reaptcha';
 
 const Checkout = () => {
 	const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
@@ -69,6 +70,19 @@ const Checkout = () => {
 	};
 
 	const [subscribe, setSubscribe] = useState(true);
+
+	const [captchaToken, setCaptchaToken] = useState(null);
+	const captchaRef = useRef(null);
+
+	const verify = () => {
+		captchaRef.current.getResponse().then((res) => {
+			setCaptchaToken(res);
+		});
+	};
+
+	const handleErrorOrExpire = () => {
+		setCaptchaToken(null);
+	};
 
 	const defaultValues = {
 		email: '',
@@ -206,8 +220,8 @@ const Checkout = () => {
 		) : submitStatus.processing ? (
 			<ProcessingTimeout resetSubmitOrder={resetSubmitOrder} />
 		) : (
-			<Button type='submit' variant='contained'>
-				Submit Order
+			<Button type={captchaToken && 'submit'} variant={captchaToken ? 'contained' : 'outlined'}>
+				{captchaToken ? 'Submit Order' : 'Validate Captcha'}
 			</Button>
 		);
 	};
@@ -382,6 +396,17 @@ const Checkout = () => {
 								<FormControlLabel
 									control={<Checkbox checked={subscribe} {...register('wantsToSubscribe')} onClick={() => setSubscribe(!subscribe)} />}
 									label='Subscribe to our newsletter'
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<Reaptcha
+									sx={{ width: '500px !important' }}
+									theme='light'
+									ref={captchaRef}
+									sitekey={process.env.REACT_APP_RECAPTCHA_SECRET_KEY}
+									onVerify={verify}
+									onError={handleErrorOrExpire}
+									onExpire={handleErrorOrExpire}
 								/>
 							</Grid>
 						</Grid>

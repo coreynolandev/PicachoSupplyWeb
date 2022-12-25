@@ -5,6 +5,7 @@ import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { Landscape } from '@mui/icons-material';
 import MailchimpForm from '../components/form/MailchimpForm';
+import { DarkSeparatorBottom, DarkSeparatorTop, LightSeparatorBottom, LightSeparatorTop } from '../components/design/Separators';
 
 const Home = () => {
 	return (
@@ -26,20 +27,7 @@ const Home = () => {
 				</Stack>
 			</Stack>
 
-			<div className='separator top'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#ffffff'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 100 100 V 10 L 0 100' />
-					<path d='M 0 100 L 100 30 V 0 Z' fill='#14264E' strokeWidth='0' />
-				</svg>
-			</div>
+			<LightSeparatorTop />
 
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container light '>
 				{/* <Box className={'home-media container light  '}> */}
@@ -67,41 +55,12 @@ const Home = () => {
 				</div>
 			</Stack>
 
-			<div className='separator bottom'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#ffffff'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 0 0 V 90 L 100 0' />
-					<path d='M 100 0 L 0 70 V 100 Z' fill='#14264E' strokeWidth='0' />
-				</svg>
-			</div>
+			<LightSeparatorBottom />
 
-			{/* space! */}
 			<div style={{ height: '30px' }}></div>
 
-			<div className='separator top'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#000000'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 100 100 V 10 L 0 100' />
-					<path d='M 0 100 L 100 30 V 0 Z' fill='#FFBD29' strokeWidth='0' />
-				</svg>
-			</div>
-			{/* </Box> */}
+			<DarkSeparatorTop />
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='flex-start' className='home-media container dark '>
-				{/* <Box className={'home-media container dark'}> */}
 				<Stack spacing={6} alignItems='center' m={2}>
 					<div>
 						<img className='footer-media image' src={UsaFlag} alt='USA' />
@@ -155,20 +114,7 @@ const Home = () => {
 				</Stack>
 			</Stack>
 
-			<div className='separator bottom'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#000000'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 0 0 V 90 L 100 0' />
-					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
-				</svg>
-			</div>
+			<DarkSeparatorBottom />
 			<div style={{ height: '45px' }}></div>
 		</Box>
 	);

@@ -1,4 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
+import { DarkSeparatorBottom, DarkSeparatorTop, LightSeparatorBottom, LightSeparatorTop } from '../components/design/Separators';
 import MailchimpForm from '../components/form/MailchimpForm';
 
 const AboutUs = () => {
@@ -6,20 +7,7 @@ const AboutUs = () => {
 		<>
 			<div style={{ height: '30px' }}></div>
 
-			<div className='separator top'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#ffffff'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 100 100 V 10 L 0 100' />
-					<path d='M 0 100 L 100 30 V 0 Z' fill='#14264E' strokeWidth='0' />
-				</svg>
-			</div>
+			<LightSeparatorTop />
 
 			<Stack spacing={0} sx={{ padding: '0px !important' }} direction='column' alignItems='center' justifyContent='center' className='home-media container light '>
 				{/* <Box className={'home-media container light  '}> */}
@@ -43,37 +31,11 @@ const AboutUs = () => {
 				</div>
 			</Stack>
 
-			<div className='separator bottom'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#ffffff'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 0 0 V 90 L 100 0' />
-					<path d='M 100 0 L 0 70 V 100 Z' fill='#14264E' strokeWidth='0' />
-				</svg>
-			</div>
+			<LightSeparatorBottom />
 
 			<div style={{ height: '30px' }}></div>
 
-			<div className='separator top'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#000000'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 100 100 V 10 L 0 100' />
-					<path d='M 0 100 L 100 30 V 0 Z' fill='#FFBD29' strokeWidth='0' />
-				</svg>
-			</div>
+			<DarkSeparatorTop />
 
 			<Stack spacing={0} sx={{ padding: '0px !important' }} direction='column' alignItems='center' justifyContent='center' className='home-media container dark '>
 				{/* <Box className={'home-media container light  '}> */}
@@ -90,36 +52,10 @@ const AboutUs = () => {
 				</div>
 			</Stack>
 
-			<div className='separator bottom'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#000000'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 0 0 V 90 L 100 0' />
-					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
-				</svg>
-			</div>
+			<DarkSeparatorBottom />
 			<div style={{ height: '30px' }}></div>
 
-			<div className='separator top'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#ffffff'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 100 100 V 10 L 0 100' />
-					<path d='M 0 100 L 100 30 V 0 Z' fill='#14264E' strokeWidth='0' />
-				</svg>
-			</div>
+			<LightSeparatorTop />
 
 			<Stack spacing={0} sx={{ padding: '0px !important' }} direction='column' alignItems='center' justifyContent='center' className='home-media container light '>
 				{/* <Box className={'home-media container light  '}> */}
@@ -132,21 +68,21 @@ const AboutUs = () => {
 					<Stack direction='column' spacing={2} sx={{ margin: 3, marginBottom: 0 }}>
 						<div>
 							<Typography variant='h5'>Andrew Jeffries</Typography>
-							<Typography component='a' href='mailto: a@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
+							<Typography component='a' href='mailto: a@picachosupply.com?subject=Picacho%20Supply%20Inquiry' className='on-light-bg'>
 								a@picachosupply.com
 							</Typography>
 						</div>
 
 						<div>
 							<Typography variant='h5'>Peter Jeffries</Typography>
-							<Typography component='a' href='mailto: peter@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
+							<Typography component='a' href='mailto: peter@picachosupply.com?subject=Picacho%20Supply%20Inquiry' className='on-light-bg'>
 								peter@picachosupply.com
 							</Typography>
 						</div>
 
 						<div>
 							<Typography variant='h5'>Corey Nolan</Typography>
-							<Typography component='a' href='mailto: corey@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
+							<Typography component='a' href='mailto: corey@picachosupply.com?subject=Picacho%20Supply%20Inquiry' className='on-light-bg'>
 								corey@picachosupply.com
 							</Typography>
 						</div>
@@ -154,37 +90,11 @@ const AboutUs = () => {
 				</div>
 			</Stack>
 
-			<div className='separator bottom'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#ffffff'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 0 0 V 90 L 100 0' />
-					<path d='M 100 0 L 0 70 V 100 Z' fill='#14264E' strokeWidth='0' />
-				</svg>
-			</div>
+			<LightSeparatorBottom />
 
 			<div style={{ height: '30px' }}></div>
 
-			<div className='separator top'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#000000'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 100 100 V 10 L 0 100' />
-					<path d='M 0 100 L 100 30 V 0 Z' fill='#FFBD29' strokeWidth='0' />
-				</svg>
-			</div>
+			<DarkSeparatorTop />
 
 			<Stack spacing={0} sx={{ padding: '0px !important' }} direction='column' alignItems='center' justifyContent='center' className='home-media container dark '>
 				{/* <Box className={'home-media container light  '}> */}
@@ -208,20 +118,7 @@ const AboutUs = () => {
 				</div>
 			</Stack>
 
-			<div className='separator bottom'>
-				<svg
-					className='separator__svg'
-					width='100%'
-					height='10vh'
-					viewBox='0 0 100 100'
-					preserveAspectRatio='none'
-					fill='#000000'
-					version='1.1'
-					xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 0 0 V 90 L 100 0' />
-					<path d='M 100 0 L 0 70 V 100 Z' fill='#FFBD29' strokeWidth='0' />
-				</svg>
-			</div>
+			<DarkSeparatorBottom />
 			<div style={{ height: '45px' }}></div>
 		</>
 	);

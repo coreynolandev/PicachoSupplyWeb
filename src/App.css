@@ -8,7 +8,6 @@ body:before {
 	height: 100vh;
 	z-index: -10;
 	background: url('../public/buffalo_bg.png') no-repeat center center;
-	/* background-color: lime; */
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -17,7 +16,7 @@ body:before {
 .collection {
 	position: absolute;
 	width: 78px;
-	top: 75px !important;
+	top: 72px !important;
 	left: 60px !important;
 }
 
@@ -35,8 +34,6 @@ body:before {
 	width: 304px;
 	margin: auto;
 }
-
-/* Toxic Wave Logo */
 
 .newsidebar {
 	position: absolute;
@@ -68,22 +65,22 @@ body:before {
 	cursor: pointer;
 	width: 50px !important;
 }
-.reststack {
-	height: calc(100vh - 80px);
-	display: flex;
-}
 
-.nospace-link {
-	padding: 0px;
-}
 .logo.container {
 	width: auto;
+	flex-shrink: 2;
 	height: auto;
 	max-width: 264px;
-	max-height: 70px;
-	padding: 0.5rem 0.5rem 0 0.5rem;
+	min-height: 80px;
+	margin: 0 8px;
+	/* padding: 0 8px; */
 	position: relative;
 	align-self: center;
+}
+
+.navbar-image {
+	width: 100%;
+	height: 100%;
 }
 
 .shop-card {
@@ -117,15 +114,6 @@ body:before {
 	justify-content: center;
 	align-items: center;
 }
-.fullcard {
-	height: 385px;
-	cursor: pointer;
-}
-
-.fullcard.navy {
-	/* background-color: rgba(0, 22, 82, 1) !important; */
-	background-color: rgba(0, 0, 0, 0.7) !important;
-}
 
 .disabledButton {
 	background-color: #4a473a !important;
@@ -141,19 +129,22 @@ body:before {
 }
 
 .shopping-cart > .icon {
+	background-color: #fa4616;
+	border-radius: 20px;
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 600;
+	height: 20px;
+	line-height: 20px;
 	position: absolute;
-	left: -5px;
-	right: 0;
-	top: 4px;
-	margin-left: auto;
-	margin-right: auto;
-	/* font-size: larger; */
-	line-height: 1;
-	color: black;
+	right: 0px;
+	text-align: center;
+	top: 1px;
+	width: 20px;
 }
 @media (max-width: 600px) {
 	.shopping-cart > .icon {
-		top: -4px;
+		top: -10px;
 	}
 }
 
@@ -193,7 +184,6 @@ body:before {
 .picacho-white-logo {
 	min-width: calc(min(90vw, 300px));
 	width: 70%;
-	/* height: 30vh; */
 	object-fit: contain;
 }
 
@@ -208,7 +198,6 @@ body:before {
 	object-fit: contain;
 }
 .stroke-text {
-	/* font-size:100px; */
 	text-align: center;
 	text-anchor: middle;
 	stroke: black;
@@ -218,7 +207,6 @@ body:before {
 
 .home-media.container {
 	scroll-snap-align: start;
-	/* min-height: calc(100vh - 80px); */
 	height: 100%;
 	padding: 1rem;
 	width: 100vw;
@@ -230,22 +218,49 @@ body:before {
 }
 
 .checkout.container {
-	/* min-height: calc(100vh - 80px); */
-	/* height: calc(100% - 80px); */
 	height: 100%;
-	/* max-height: calc(100vh - 80px); */
 	padding: 1rem;
 	width: 100vw;
 	overflow-y: scroll;
 }
 
 .home-media.container.light {
-	/* background-color: linear-g; */
-	/* background: linear-gradient(90deg, #f8f8f8 0%, #eaebea 101.99%); */
 	background: white;
 }
 .home-media.container.dark {
-	background-color: black;
+	background-color: #14274e;
+}
+a {
+	color: #ffbd29;
+}
+a.on-light-bg {
+	color: #14274e;
+}
+
+.scrollArrows {
+	width: 20px;
+	height: 240.54px;
+	z-index: 10;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	top: 0;
+	cursor: pointer;
+}
+
+.scrollArrows:hover {
+	background-color: #c7c7c7;
+}
+.scrollArrows.right {
+	right: 0;
+}
+.scrollArrows.left {
+	left: 0;
+}
+.scrollArrows.left > * {
+	rotate: 180deg;
 }
 
 .home-media.image {
@@ -272,10 +287,6 @@ body:before {
 	width: 100%;
 	height: 100%;
 	max-height: calc(100% - 80px);
-	/* scroll-snap-type: y mandatory; */
-	/* Reserve space for header plus some extra space for sneak peeking. */
-	/* scroll-padding-top: 3vh; */
-	/* scroll-behavior: smooth; */
 	overflow-y: scroll;
 	overflow-x: visible;
 }
@@ -292,22 +303,6 @@ body:before {
 	height: 50px;
 }
 
-.moonsun {
-	cursor: pointer;
-	width: 90%;
-	aspect-ratio: 1;
-}
-
-.moonsun.container {
-	min-height: 94vh;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
-.profile-picture {
-	width: 240px;
-	aspect-ratio: 1;
-}
 .aboutus {
 	display: flex;
 	flex-direction: column;
@@ -316,53 +311,6 @@ body:before {
 	background: transparent;
 	justify-content: center;
 	min-height: 91vh;
-}
-
-.landmeetssky {
-	text-align: left;
-	font-weight: 600;
-	background-color: #fed782 !important;
-	/* background-color: #fdf9d5 !important; */
-	/* background-image: url('../public/mountain_bg10.jpg'); */
-	background: transparent;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
-	background-size: cover;
-}
-
-.airski {
-	text-align: right;
-	font-weight: 600;
-	background-color: #14264e !important;
-	/* background-color: rgb(0, 0, 0) !important; */
-	margin-top: -10px;
-	/* background-image: url('../src/assets2/air_ski.jpg'); */
-}
-
-.airski > * {
-	color: white;
-}
-
-.custom-shape-divider-top-1668472425 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	overflow: hidden;
-	line-height: 0;
-}
-
-.custom-shape-divider-top-1668472425 svg {
-	position: relative;
-	display: block;
-	width: calc(100% + 1.3px);
-	height: 199px;
-	transform: rotateY(180deg);
-}
-
-.custom-shape-divider-top-1668472425 .shape-fill {
-	fill: #ffffff;
 }
 
 .hoodie-stitch.container {
@@ -378,13 +326,6 @@ body:before {
 	transform: scale(3) translateY(50px);
 	/* transform: translateY(-50); */
 }
-
-/* .hoodie-stitch.container:hover {
-	overflow: hidden;
-	transform-origin: 10 0 100 0;
-	transition: transform .25s, visibility .25s ease-in;
-	transform: scale(2);
-} */
 
 .hoodie-stitch-only.stitch {
 	position: absolute;
@@ -519,38 +460,11 @@ body:before {
 	text-decoration: underline;
 }
 
-@keyframes slideInFromLeft {
-	0% {
-		transform: translateY(100%);
-	}
-	100% {
-		transform: translateX(0);
-	}
-}
-
-.movein {
-	/* This section calls the slideInFromLeft animation we defined above */
-	animation: 1s ease-in-out 0s 1 slideInFromLeft;
-
-	/* background: #333; */
-	/* padding: 30px; */
-}
-
 .App {
 	text-align: center;
-	/* background-image: url('../public/mnote_bg1.png'); */
-	/* background-image: url('../public/mountain_bg.jpg'); */
-
-	/* background-image: url('../public/buffalo_bg.png');
-	min-height: 100vh;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
-	background-size: cover; */
 }
 
 .App-content {
-	/* height: calc(100%-80px); */
 	min-height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -572,40 +486,5 @@ body:before {
 	.App-content {
 		align-items: flex-end;
 		justify-content: center;
-	}
-}
-
-.App-logo {
-	height: 40vmin;
-	pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-	.App-logo {
-		animation: App-logo-spin infinite 20s linear;
-	}
-}
-
-.App-header {
-	/* background-color: #282c34; */
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	color: white;
-}
-
-.App-link {
-	color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
 	}
 }

@@ -15,7 +15,8 @@ import {
 	IconButton,
 	Snackbar,
 	Stack,
-	Tooltip
+	Tooltip,
+	Typography
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
@@ -379,6 +380,11 @@ function LifestyleHoodie() {
 		setSnackbarOpen(false);
 	};
 
+	const scrollOver = (shouldScrollRight) => {
+		const scrollTarget = document.getElementById('scroll-collection');
+		scrollTarget.scrollBy(shouldScrollRight ? 200 : -200, 0);
+	};
+
 	return (
 		<Stack
 			direction={{ sm: 'column', md: 'row' }}
@@ -386,9 +392,9 @@ function LifestyleHoodie() {
 			alignItems={{ sm: 'center', md: 'flex-start' }}
 			sx={{ width: '100%' }}
 			mt={2}
-			mb={2}
+			mb={0}
 			spacing={2}>
-			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='messingup'>
+			<Stack alignItems={'center'} sx={{ overflow: 'hidden' }}>
 				{/* <Stack alignItems={'center'} sx={{ overflow: 'hidden' }} className='animate__animated animate__slideInLeft'> */}
 				{hoodieOrPreview === 'hoodie' ? (
 					<Box component='div' sx={{ overflow: 'hidden' }} position={'relative'} className='hoodie-stitch container'>
@@ -430,7 +436,7 @@ function LifestyleHoodie() {
 						{hoodieOrPreview === 'hoodie' ? 'View Embroidery' : 'View Hoodie'}
 					</Button>
 				) : (
-					<Button className='disabledButton' variant='contained' sx={{ width: '50%', marginBottom: 1, position: 'relative', top: '-30px' }}>
+					<Button className='disabledButton' variant='contained' sx={{ width: '50%', marginBottom: 1, position: 'relative', top: { xs: '-110px', md: '-30px' } }}>
 						Select options
 					</Button>
 				)}
@@ -454,10 +460,11 @@ function LifestyleHoodie() {
 							<Grid container bgcolor={'white'} alignItems='center' border={'1px solid rgba(0, 0, 0, 0.03)'} sx={{ borderBottom: 'none' }}>
 								<Grid item xs={2}>
 									<Tooltip title={'Reset All Selections'} enterDelay={0} enterNextDelay={0} disableInteractive={true}>
-										<IconButton onClick={() => resetAllSelections()}>
+										<IconButton onClick={() => resetAllSelections()} sx={{ padding: 0 }}>
 											<Refresh />
 										</IconButton>
 									</Tooltip>
+									<Typography fontSize={'10px !important'}>reset</Typography>
 								</Grid>
 								<Grid item xs={8}>
 									<CardHeader title='Lifestyle Hoodie' sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
@@ -465,9 +472,10 @@ function LifestyleHoodie() {
 								<Grid item xs={2}>
 									<Tooltip title={'Randomize Hoodie'} enterDelay={0} enterNextDelay={0} disableInteractive={true}>
 										<IconButton onClick={() => randomizeSelections()} sx={{ padding: 0 }}>
-											<Shuffle />
+											<Shuffle className='animate__animated  animate__swing animate__delay-2s animate__repeat-3 ' />
 										</IconButton>
 									</Tooltip>
+									<Typography fontSize={'10px !important'}>randomize</Typography>
 								</Grid>
 							</Grid>
 						</Accordion>
@@ -522,31 +530,49 @@ function LifestyleHoodie() {
 
 					<Card bgcolor={'white'}>
 						<CardHeader title={`Picacho Collection Favorites`} sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
-						<CardContent>
-							<Stack key='main-hoodie-stack-items' direction='row' overflow='scroll'>
-								{picachoFavorites.map((hoodie, index) => {
-									return (
-										<Box
-											key={`unzoomed-hoodie-${index}`}
-											sx={{ minWidth: '200px', position: 'relative' }}
-											className='hovercollection'
-											onClick={() => fillFromCollection(hoodie)}>
-											<img key='border-color-img' className=' collection' src={borderSelectionList[hoodie.borderColorNum].logo} alt='Border' />
-											<img key='fill-color-img' className=' collection' src={fillSelectionList[hoodie.fillColorNum].logo} alt='Stitch' />
-											{hoodie.gradientColorNum == null ? (
-												<></>
-											) : (
-												<img key='gradient-color-img' className='  collection' src={gradientSelectionList[hoodie.gradientColorNum].logo} alt='Gradient' />
-											)}
-											<img
-												key='base-color-img'
-												className='hoodie-base hoodie-stitch hoodie'
-												src={hoodieSelectionList[hoodie.baseColorNum].logo}
-												alt='Hoodie'
-											/>
-										</Box>
-									);
-								})}
+						<CardContent sx={{ position: 'relative', padding: '1rem 0 0 0' }}>
+							<Stack direction='row' position={'relative'} pr={2.5} pl={2.5}>
+								<div className='scrollArrows left' onClick={() => scrollOver(false)}>
+									<svg width='9' height='12' viewBox='0 0 9 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
+										<path opacity='0.9' d='M9 6L0 11.1962V0.803848L9 6Z' fill='#4a473a' />
+									</svg>
+								</div>
+
+								<Stack id='scroll-collection' key='main-hoodie-stack-items' direction='row' overflow='scroll' sx={{ overflowX: 'scroll' }}>
+									{picachoFavorites.map((hoodie, index) => {
+										return (
+											<Box
+												key={`unzoomed-hoodie-${index}`}
+												sx={{ minWidth: '200px', position: 'relative' }}
+												className='hovercollection'
+												onClick={() => fillFromCollection(hoodie)}>
+												<img key='border-color-img' className=' collection' src={borderSelectionList[hoodie.borderColorNum].logo} alt='Border' />
+												<img key='fill-color-img' className=' collection' src={fillSelectionList[hoodie.fillColorNum].logo} alt='Stitch' />
+												{hoodie.gradientColorNum == null ? (
+													<></>
+												) : (
+													<img
+														key='gradient-color-img'
+														className='  collection'
+														src={gradientSelectionList[hoodie.gradientColorNum].logo}
+														alt='Gradient'
+													/>
+												)}
+												<img
+													key='base-color-img'
+													className='hoodie-base hoodie-stitch hoodie'
+													src={hoodieSelectionList[hoodie.baseColorNum].logo}
+													alt='Hoodie'
+												/>
+											</Box>
+										);
+									})}
+								</Stack>
+								<div className='scrollArrows right' onClick={() => scrollOver(true)}>
+									<svg width='9' height='12' viewBox='0 0 9 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
+										<path opacity='0.9' d='M9 6L0 11.1962V0.803848L9 6Z' fill='#4a473a' />
+									</svg>
+								</div>
 							</Stack>
 						</CardContent>
 					</Card>
