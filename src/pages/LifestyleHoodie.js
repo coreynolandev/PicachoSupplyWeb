@@ -538,7 +538,7 @@ function LifestyleHoodie() {
 									</svg>
 								</div>
 
-								<Stack id='scroll-collection' key='main-hoodie-stack-items' direction='row' overflow='scroll' sx={{ overflowX: 'scroll' }}>
+								<Stack id='scroll-collection' key='main-hoodie-stack-items' direction='row' sx={{ overflowX: 'scroll' }}>
 									{picachoFavorites.map((hoodie, index) => {
 										return (
 											<Box

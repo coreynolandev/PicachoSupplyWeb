@@ -292,7 +292,7 @@ a.on-light-bg {
 	height: 100%;
 	max-height: calc(100% - 80px);
 	overflow-y: scroll;
-	overflow-x: visible;
+	/* overflow-x: visible; */
 }
 
 .topnav {
