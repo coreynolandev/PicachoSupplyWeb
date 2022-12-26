@@ -1,7 +1,6 @@
 import { AppBar, Box, Container, IconButton, List, ListItem, ListItemText, Slide, Stack, Toolbar, Typography, useScrollTrigger } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useSelector } from 'react-redux';
-
 import PicachoLogo from '../../assets2/picacho_logo.png';
 import { useEffect, useState } from 'react';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
@@ -161,7 +160,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 						{/* Logo */}
 						<Box className='logo container' sx={{ display: 'flex', alignItems: 'center', paddingLeft: { sm: '11px' } }}>
 							<a href='/' style={{ width: '100%', height: '100%', lineHeight: 0 }}>
-								<Box className=' navbar-image' component='img' src={mode === 'dark' ? PicachoLogo : PicachoLogo} alt='Picacho Logo' />
+								<Box className=' navbar-image' component='img' src={PicachoLogo} alt='Picacho Logo' />
 							</a>
 						</Box>
 
