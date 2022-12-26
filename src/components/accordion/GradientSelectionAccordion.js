@@ -22,7 +22,7 @@ const GradientSelectionAccordion = ({ gradientSelectionList, accordionNumber, ex
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='stitch-gradient-color' id='select-stitch-gradient-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Gradient{selectedGradient !== null && ` - ${gradientSelectionList[selectedGradient].alt}`}
+					{accordionNumber}. Choose a Stitch Gradient{selectedGradient !== null && ` - ${gradientSelectionList[selectedGradient].alt}`}
 				</Typography>
 			</AccordionSummary>
 

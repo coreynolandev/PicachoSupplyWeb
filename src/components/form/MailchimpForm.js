@@ -84,7 +84,7 @@ const CustomForm = ({ status, message, onValidated }) => {
 				/>
 				<div style={{ maxWidth: '600px' }}>
 					<Reaptcha
-						theme='dark'
+						theme='light'
 						ref={captchaRef}
 						sitekey={process.env.REACT_APP_RECAPTCHA_SECRET_KEY}
 						onVerify={verify}

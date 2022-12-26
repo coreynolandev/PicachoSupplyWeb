@@ -14,8 +14,8 @@ const Completed = () => {
 					<Stack justifyContent='center' spacing={4} alignItems='center' className='landing-area'>
 						<Typography variant='h3'>Thank you for choosing Picacho Supply!</Typography>
 						<Typography variant='h5'>
-							You should receive a receipt of your order request from sales@picachosupply.com. If you don't receive an email soon, reach out to
-							{' '}<Typography component='a' href='mailto: sales@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
+							You should receive a receipt of your order request from sales@picachosupply.com. If you don't receive an email soon, reach out to{' '}
+							<Typography className='on-light-bg' component='a' href='mailto: sales@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
 								sales@picachosupply.com
 							</Typography>{' '}
 							with your reference number: <h6>{refNum}</h6>

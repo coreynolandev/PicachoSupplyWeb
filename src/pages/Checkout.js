@@ -70,12 +70,13 @@ const Checkout = () => {
 	};
 
 	const [subscribe, setSubscribe] = useState(true);
-
+	const [needRecaptcha, setNeedRecaptcha] = useState(false);
 	const [captchaToken, setCaptchaToken] = useState(null);
 	const captchaRef = useRef(null);
 
 	const verify = () => {
 		captchaRef.current.getResponse().then((res) => {
+			setNeedRecaptcha(false);
 			setCaptchaToken(res);
 		});
 	};
@@ -109,6 +110,11 @@ const Checkout = () => {
 
 	const sendEmail = async (formData) => {
 		const sendEmail = true;
+
+		if (captchaToken == null) {
+			setNeedRecaptcha(true);
+			return;
+		}
 
 		var orderHtml = '';
 		// var orderHtml = '<p>';
@@ -408,6 +414,11 @@ const Checkout = () => {
 									onError={handleErrorOrExpire}
 									onExpire={handleErrorOrExpire}
 								/>
+								{needRecaptcha && (
+									<Box sx={{ marginTop: 2 }}>
+										<Alert severity='error'>Please verify Recaptcha</Alert>
+									</Box>
+								)}
 							</Grid>
 						</Grid>
 

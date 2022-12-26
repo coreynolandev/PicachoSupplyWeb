@@ -1,19 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Picacho Supply",
+  "name": "Picacho Supply Clothing & GearF",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "picacho_mini.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "picacho_mini.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "picacho_mini.png",
       "type": "image/png",
       "sizes": "512x512"
     }
