@@ -54,6 +54,10 @@ body:before {
 	background-color: #171612;
 }
 
+.error-gif {
+	width: 175px !important;
+}
+
 .left80p > * {
 	width: 100%;
 }

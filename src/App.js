@@ -13,6 +13,7 @@ import ReviewOrder from './pages/ReviewOrder';
 import Checkout from './pages/Checkout';
 import Completed from './pages/Completed';
 import Subscribe from './pages/Subscribe';
+import ErrorPage from './pages/ErrorPage';
 // import { getLists } from './api/mailchimpActions';
 
 function App(props) {
@@ -76,7 +77,8 @@ function App(props) {
 	const router = createBrowserRouter([
 		{
 			path: '/',
-			element: <Home />
+			element: <Home />,
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'shop',
