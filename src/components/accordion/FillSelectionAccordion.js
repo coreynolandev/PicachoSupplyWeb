@@ -22,7 +22,7 @@ const FillSelectionAccordion = ({ fillSelectionList, accordionNumber, expanded, 
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='stitch-fill-color' id='select-stitch-fill-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Stitch Fill{selectedFill !== null && ` - ${fillSelectionList[selectedFill].alt}`}
+					{accordionNumber}. Stitch Fill (optional){selectedFill !== null && ` - ${fillSelectionList[selectedFill].alt}`}
 				</Typography>
 			</AccordionSummary>
 

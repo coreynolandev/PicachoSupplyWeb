@@ -152,32 +152,6 @@ function LifestyleHoodie() {
 		}
 	};
 
-	// const changeStitchFill = (newColor) => {
-	// 	if (patternType === 'fill') {
-	// 		if (fillColor === newColor) {
-	// 			console.log('null fill');
-	// 			setFillColor(null);
-	// 			setSelectedStitchFill({ ...selectedStitchFill, fill: null });
-	// 		} else {
-	// 			console.log('new fill');
-	// 			setFillColor(newColor);
-	// 			setSelectedStitchFill({ ...selectedStitchFill, fill: newColor });
-	// 		}
-	// 	} else if (gradientColor === newColor) {
-	// 		setGradientColor(null);
-	// 		console.log('null gradient');
-	// 		setSelectedStitchFill({ ...selectedStitchFill, gradient: null });
-	// 	} else {
-	// 		setGradientColor(newColor);
-	// 		console.log('new gradient');
-	// 		setSelectedStitchFill({ ...selectedStitchFill, gradient: newColor });
-	// 	}
-	// };
-
-	// const changePatternType = (newPatternType) => {
-	// 	setPatternType(newPatternType);
-	// };
-
 	const resetAllSelections = () => {
 		var confirmReset = window.confirm('Reset all Selections?');
 		if (confirmReset) {
@@ -186,8 +160,6 @@ function LifestyleHoodie() {
 			setSelectedBorder(null);
 			setSelectedFill(null);
 			setSelectedGradient(null);
-			// setSelectedStitchFill({ fill: null, gradient: null });
-			// setPatternType('fill');
 			setSelectedSize(null);
 		}
 	};
@@ -250,9 +222,6 @@ function LifestyleHoodie() {
 			setSelectedBorder(borderRandom);
 			setSelectedFill(fillRandom);
 			setSelectedGradient(gradientRandom);
-			// const newStitchFillObject = { fill: fillRandom, gradient: gradientRandom };
-			// setSelectedStitchFill(newStitchFillObject);
-			// setPatternType('');
 			setOrderMaterials({ hoodie: hoodieRandom, border: borderRandom, fill: fillRandom, gradient: gradientRandom });
 		}
 	};
@@ -380,7 +349,18 @@ function LifestyleHoodie() {
 		setSnackbarOpen(false);
 	};
 
-	const scrollOver = (shouldScrollRight) => {
+	const scrollOver = (e, shouldScrollRight) => {
+		if (!e) e = window.event;
+
+		//IE9 & Other Browsers
+		if (e.stopPropagation) {
+			e.stopPropagation();
+		}
+		//IE8 and Lower
+		else {
+			e.cancelBubble = true;
+		}
+
 		const scrollTarget = document.getElementById('scroll-collection');
 		scrollTarget.scrollBy(shouldScrollRight ? 200 : -200, 0);
 	};
@@ -529,14 +509,14 @@ function LifestyleHoodie() {
 					</Stack>
 
 					<Card bgcolor={'white'}>
-						<CardHeader title={`Picacho Collection Favorites`} sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
+						<CardHeader className='hovercollectiontitle' title={`Picacho Collection Favorites`} sx={{ fontWeight: 600, padding: 0, margin: 0 }} />
 						<CardContent sx={{ position: 'relative', padding: '1rem 0 0 0' }}>
 							<Stack direction='row' position={'relative'} pr={2.5} pl={2.5}>
-								<div className='scrollArrows left' onClick={() => scrollOver(false)}>
+								<button className='scrollArrows left' onClick={(e) => scrollOver(e, false)}>
 									<svg width='9' height='12' viewBox='0 0 9 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
 										<path opacity='0.9' d='M9 6L0 11.1962V0.803848L9 6Z' fill='#4a473a' />
 									</svg>
-								</div>
+								</button>
 
 								<Stack id='scroll-collection' key='main-hoodie-stack-items' direction='row' sx={{ overflowX: 'scroll' }}>
 									{picachoFavorites.map((hoodie, index) => {
@@ -568,11 +548,11 @@ function LifestyleHoodie() {
 										);
 									})}
 								</Stack>
-								<div className='scrollArrows right' onClick={() => scrollOver(true)}>
+								<button className='scrollArrows right' onClick={(e) => scrollOver(e, true)}>
 									<svg width='9' height='12' viewBox='0 0 9 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
 										<path opacity='0.9' d='M9 6L0 11.1962V0.803848L9 6Z' fill='#4a473a' />
 									</svg>
-								</div>
+								</button>
 							</Stack>
 						</CardContent>
 					</Card>

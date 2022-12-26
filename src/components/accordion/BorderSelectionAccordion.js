@@ -9,7 +9,7 @@ const BorderSelectionAccordion = ({ borderSelectionList, accordionNumber, expand
 		<Accordion sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }} key='borderBase' expanded={expanded} onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='border-color' id='select-border-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Border{selectedBorder !== null && ` - ${borderSelectionList[selectedBorder].alt}`}
+					{accordionNumber}. Border*{selectedBorder !== null && ` - ${borderSelectionList[selectedBorder].alt}`}
 				</Typography>
 			</AccordionSummary>
 

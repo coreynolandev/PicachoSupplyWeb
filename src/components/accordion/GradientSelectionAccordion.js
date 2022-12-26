@@ -20,9 +20,9 @@ const GradientSelectionAccordion = ({ gradientSelectionList, accordionNumber, ex
 			key='stitchFillBase'
 			expanded={expanded}
 			onChange={() => changeExpandedAccordion(accordionNumber)}>
-			<AccordionSummary aria-controls='stitch-gradient-color' id='select-stitch-gradient-color-header' expanded={expanded}>
+			<AccordionSummary aria-controls='stitch-gradient-color' id='select-stitch-gradient-color-header' expanded={expanded} sx={{marginLeft: 0}}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Stitch Gradient{selectedGradient !== null && ` - ${gradientSelectionList[selectedGradient].alt}`}
+					{accordionNumber}. Stitch Gradient (optional){selectedGradient !== null && ` - ${gradientSelectionList[selectedGradient].alt}`}
 				</Typography>
 			</AccordionSummary>
 

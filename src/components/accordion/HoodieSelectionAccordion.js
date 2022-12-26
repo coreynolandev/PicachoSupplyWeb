@@ -9,7 +9,7 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 		<Accordion expanded={expanded} sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }} key='hoodieBase' onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary key='hoodieaccdsummary' aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Base{selectedHoodie !== null && ` - ${hoodieSelectionList[selectedHoodie].alt}`}
+					{accordionNumber}. Base*{selectedHoodie !== null && ` - ${hoodieSelectionList[selectedHoodie].alt} `}
 				</Typography>
 			</AccordionSummary>
 			<AccordionDetails key='hoodie-selection-accordion-details' className='color-swatch-accordion-details'>

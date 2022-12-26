@@ -8,7 +8,7 @@ const SizeSelectionAccordion = ({ sizeSelectionList, accordionNumber, expanded, 
 		<Accordion sx={{ bgcolor: expanded ? 'white' : 'rgba(255,255,255,0.8)' }} key='hoodieBase' expanded={expanded} onChange={() => changeExpandedAccordion(accordionNumber)}>
 			<AccordionSummary aria-controls='hoodie-color' id='select-hoodie-color-header' expanded={expanded}>
 				<Typography textAlign='left'>
-					{accordionNumber}. Choose a Size{selectedSize !== null && ` - ${sizeSelectionList[selectedSize].size}`}
+					{accordionNumber}. Size*{selectedSize !== null && ` - ${sizeSelectionList[selectedSize].size}`}
 				</Typography>
 			</AccordionSummary>
 			<AccordionDetails>

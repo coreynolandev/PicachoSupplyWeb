@@ -76,7 +76,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 	var animationBounceClass = animateQuantity ? 'animate__animated animate__bounce' : '';
 
 	return (
-		<Slide appear={true} direction='down' in={!trigger}>
+		<Slide appear={false} in={!trigger}>
 			<AppBar position='sticky' color='default' className='topnav' sx={{ boxShadow: 'none' }}>
 				<Container maxWidth='none' disableGutters sx={{ height: '100%' }}>
 					<Toolbar
@@ -93,7 +93,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 								display: { xs: 'block', sm: 'none' },
 								marginLeft: 1
 							}}>
-							<IconButton aria-label='expand options' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='inherit'>
+							<IconButton aria-label='expand options' aria-controls='menu-appbar' aria-haspopup='true' onClick={handleOpenNavMenu} color='primary'>
 								<MenuIcon sx={{ fontSize: '30px' }} />
 							</IconButton>
 							<section className='newsidebar ' hidden={!isSideNavOpen} onClick={(event) => stopProp(event)}>
@@ -103,7 +103,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 											<ListItemText
 												disableTypography
 												primary={
-													<Typography className='x-text' style={{ color: '#FFFFFF' }}>
+													<Typography component='a' className='x-text'>
 														X
 													</Typography>
 												}
@@ -114,7 +114,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 											<ListItemText
 												disableTypography
 												primary={
-													<Typography component='a' href='/' style={{ color: '#FFFFFF' }}>
+													<Typography component='a' href='/'>
 														Home
 													</Typography>
 												}
@@ -125,7 +125,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 											<ListItemText
 												disableTypography
 												primary={
-													<Typography component='a' href='/shop' style={{ color: '#FFFFFF' }}>
+													<Typography component='a' href='/shop'>
 														Shop
 													</Typography>
 												}
@@ -136,7 +136,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 											<ListItemText
 												disableTypography
 												primary={
-													<Typography component='a' href='/about-us' style={{ color: '#FFFFFF' }}>
+													<Typography component='a' href='/about-us'>
 														About Us
 													</Typography>
 												}
@@ -146,7 +146,7 @@ const Navbar = ({ changeColorMode, mode }) => {
 											<ListItemText
 												disableTypography
 												primary={
-													<Typography component='a' href='/subscribe' style={{ color: '#FFFFFF' }}>
+													<Typography component='a' href='/subscribe'>
 														Subscribe to Newsletter
 													</Typography>
 												}

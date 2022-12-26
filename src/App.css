@@ -20,6 +20,12 @@ body:before {
 	left: 60px !important;
 }
 
+.hovercollection,
+.hovercollectiontitle {
+	user-select: none;
+	-webkit-user-select: none;
+}
+
 .hovercollection:hover {
 	cursor: pointer;
 	background-color: rgb(210, 210, 210);
@@ -42,7 +48,8 @@ body:before {
 	top: 0;
 	height: 100vh;
 	width: 100%;
-	background-color: rgba(0, 0, 0, 0.65);
+	background-color: rgba(20, 39, 78, 0.65);
+	/* background-color: rgb(20, 39, 78); */
 }
 
 .left80p {
@@ -51,7 +58,8 @@ body:before {
 	align-items: flex-start;
 	width: 80%;
 	height: 100%;
-	background-color: #171612;
+	background-color: rgb(20, 39, 78);
+	/* background-color: #171612; */
 }
 
 .error-gif {
@@ -242,6 +250,7 @@ a.on-light-bg {
 }
 
 .scrollArrows {
+	border: none;
 	width: 20px;
 	height: 240.54px;
 	z-index: 10;
