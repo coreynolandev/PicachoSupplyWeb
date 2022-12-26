@@ -86,6 +86,10 @@ const AboutUs = () => {
 								corey@picachosupply.com
 							</Typography>
 						</div>
+
+						<div>
+							<Typography variant='h5'>Cavin Winfrey</Typography>
+						</div>
 					</Stack>
 				</div>
 			</Stack>
