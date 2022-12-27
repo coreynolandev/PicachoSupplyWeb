@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Icon, Stack, Typography } from '@mui/material';
+import PicachoWhiteLogo from '../assets2/big_logo.png';
 import UsaFlag from '../assets2/usa.png';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
@@ -11,11 +12,10 @@ const Home = () => {
 		<Box className='scroll-snap'>
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container  '>
 				<Stack justifyContent='center' spacing={4} alignItems='center' className='landing-area'>
-					<Typography component='h1' variant='h1' sx={{ WebkitTextStroke: { xs: '3px black', sm: '5px black' }, color: 'white', fontWeight: '800', letterSpacing: 1.1 }}>
-						PICACHO SUPPLY
-					</Typography>
-					<Typography component='h4' variant='h4' sx={{ WebkitTextStroke: '1.5px black', color: 'white', fontWeight: '800' }}>
-						Outdoor clothing and gear for all sports and lifestyles. Based in Denver, Colorado.
+					<img className='picacho-white-logo' src={PicachoWhiteLogo} alt='Picacho' />
+					
+					<Typography component='h1' variant='h5' sx={{ WebkitTextStroke: '1px black', color: 'white', fontWeight: '800' }}>
+						Outdoor clothing and gear for all sports and lifestyles. Picacho Supply is based in Denver, Colorado.
 					</Typography>
 
 					<Button
