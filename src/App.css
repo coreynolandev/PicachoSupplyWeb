@@ -501,3 +501,15 @@ a.on-light-bg {
 		justify-content: center;
 	}
 }
+
+.test-small-pic {
+	width: 150px;
+}
+
+.explorer-hat-container {
+	background: linear-gradient(90deg, #f8f8f8 0%, #eaebea 101.99%);
+	margin: 0;
+	padding: 1rem;
+	width: 100%;
+	height: 100%;
+}

@@ -14,6 +14,7 @@ import Checkout from './pages/Checkout';
 import Completed from './pages/Completed';
 import Subscribe from './pages/Subscribe';
 import ErrorPage from './pages/ErrorPage';
+import ExplorerHat from './pages/ExplorerHat';
 // import { getLists } from './api/mailchimpActions';
 
 function App(props) {
@@ -91,6 +92,10 @@ function App(props) {
 		{
 			path: 'hoodies',
 			element: <LifestyleHoodie />
+		},
+		{
+			path: 'explorer-hat',
+			element: <ExplorerHat />
 		},
 		{
 			path: 'review-order',

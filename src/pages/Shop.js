@@ -1,6 +1,7 @@
 import { Card, CardActionArea, CardContent, CardHeader, Grid } from '@mui/material';
 import HoodieThumbnail from '../assets2/models/hoodie_thumbnail.png';
 import KrownThumbnail from '../assets2/Krown-001.png';
+import ExplorerHatThumbnail from '../assets2/explorer-hat/ExplorerHatThumbnail.png';
 
 const Shop = () => {
 	return (
@@ -12,6 +13,18 @@ const Shop = () => {
 						<CardHeader title='Lifestyle Hoodie' sx={{ paddingBottom: 0 }} />
 						<CardContent className='shop-card-content'>
 							<img src={HoodieThumbnail} alt='Hoodie Thumbnail' className='shop-card-content thumbnail' />
+						</CardContent>
+					</CardActionArea>
+				</Card>
+			</Grid>
+
+			<Grid item sm={12} md={6} className=' shop-card'>
+				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInLeft shop-card'> */}
+				<Card raised>
+					<CardActionArea disableRipple href='/explorer-hat'>
+						<CardHeader title='Explorer Hat' sx={{ paddingBottom: 0 }} />
+						<CardContent className='shop-card-content'>
+							<img src={ExplorerHatThumbnail} alt='Explorer Hat Thumbnail' className='shop-card-content thumbnail' />
 						</CardContent>
 					</CardActionArea>
 				</Card>
