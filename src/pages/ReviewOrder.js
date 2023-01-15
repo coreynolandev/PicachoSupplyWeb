@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 import HoodieForCheckout from '../components/design/HoodieForCheckout';
 import { removeJustUpdated } from '../features/cartSlice';
+import HatForCheckout from '../components/design/HatForCheckout';
 
 const ReviewOrder = () => {
 	var orders = useSelector((state) => state.cart.order);
@@ -120,7 +121,17 @@ const ReviewOrder = () => {
 					<>
 						<Stack key='main-hoodie-stack-items' direction='column' spacing={2} sx={{ width: { sm: '100%', md: '66.666%' }, height: '100%' }} mb={2}>
 							{orders.map((hoodie, index) => {
-								return <HoodieForCheckout key={`hoodie-for-checkout-${index}`} hoodie={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
+								console.log(hoodie);
+								if (hoodie.type.includes('Hoodie')) {
+									console.log('hoodie!');
+									return <HoodieForCheckout key={`hoodie-for-checkout-${index}`} hoodie={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
+								}
+								if (hoodie.type.includes('Hat')) {
+									console.log('hat!');
+									return <HatForCheckout key={`hat-for-checkout-${index}`} hat={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
+								} else {
+									return <HoodieForCheckout key={`hoodie-for-checkout-${index}`} hoodie={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
+								}
 							})}
 						</Stack>
 						{OrderDetails()}

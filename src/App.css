@@ -13,6 +13,11 @@ body:before {
 	-o-background-size: cover;
 	background-size: cover;
 }
+
+.cord-hat-image-ratio {
+	aspect-ratio: 1.7979;
+}
+
 .collection {
 	position: absolute;
 	width: 78px;

@@ -2,7 +2,8 @@ import { Box, Button, Grid, Snackbar, Stack, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import uuid from 'react-uuid';
 import CC_BACK from '../assets2/explorer-hat/CC_BACK.jpg';
 import CC_FRONT from '../assets2/explorer-hat/CC_FRONT.jpg';
 import CC_INNER from '../assets2/explorer-hat/CC_INNER.jpg';
@@ -15,6 +16,7 @@ import PBC_BACK from '../assets2/explorer-hat/PBC_BACK.jpg';
 import PBC_FRONT from '../assets2/explorer-hat/PBC_FRONT.jpg';
 import PBC_INNER from '../assets2/explorer-hat/PBC_INNER.jpg';
 import PBC_SIDE from '../assets2/explorer-hat/PBC_SIDE.jpg';
+import { addHoodie, updateHoodie } from '../features/cartSlice';
 
 export const EXPLORER_HATS = [
 	{ colorName: 'Cream & Chocolate', mainPic: CC_FRONT, sidePic: CC_SIDE, backPic: CC_BACK, innerPic: CC_INNER, order: 0, cost: 32.95 },
@@ -25,6 +27,7 @@ export const EXPLORER_HATS = [
 const ExplorerHat = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const orders = useSelector((state) => state.cart.order);
 	const { editId } = location.state || { editId: null };
 	const editItem = editId ? orders.find((item) => item.id === editId) : null;
@@ -46,6 +49,7 @@ const ExplorerHat = () => {
 
 	const defaultAddOrUpdateTitle = editMode ? 'Update Item' : 'Add to Cart';
 	const [addOrUpdateButtonTitle, setAddOrUpdateButtonTitle] = useState(defaultAddOrUpdateTitle);
+	const defaultAddOrUpdateCompleteTitle = editMode ? 'Updated Item!' : 'Added to Cart!';
 
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
 
@@ -60,7 +64,38 @@ const ExplorerHat = () => {
 	});
 
 	const addToCart = () => {
-		console.log('you would have added 1 of the ' + previewedHat.colorName + ' hats');
+		window.scrollBy(0, -1);
+		console.log('hat: ' + EXPLORER_HATS[selectedHat].colorName);
+		// Need a hoodie base, border color, and size to be able to add
+		if (selectedHat !== null && selectedHat >= 0 && selectedHat <= 3) {
+			// TODO: FINISH
+			setAddOrUpdateButtonTitle(editMode ? 'Updating...' : 'Adding...');
+			var id = editMode ? editId : uuid();
+			const hat = {
+				id: id,
+				colorName: EXPLORER_HATS[selectedHat].colorName,
+				quantity: 1,
+				cost: 32.5,
+				type: 'Explorer Hat',
+				viewDetails: false
+			};
+
+			if (editItem) {
+				const oldHat = orders.find((it) => it.id === id);
+				// Keep quantity if in edit mode
+				if (oldHat) {
+					hat.quantity = oldHat.quantity;
+				}
+				var updated = dispatch(updateHoodie(oldHat));
+				console.log(updated);
+				navigate('/review-order');
+			} else {
+				var added = dispatch(addHoodie(hat));
+				console.log(added);
+			}
+			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
+			setSnackbarOpen(true);
+		}
 	};
 
 	return (
@@ -91,7 +126,7 @@ const ExplorerHat = () => {
 				</Grid>
 				<Grid item xs={12} sm={9} md={8} sx={{ display: { xs: 'none', sm: 'inherit' } }}>
 					<Box alignSelf={'center'} sx={{ width: '100%', maxWidth: '650px' }}>
-						<img style={{ width: '100%' }} src={previewedImage} alt={`${previewedHat.colorName} Preview`} />
+						<img className='cord-hat-image-ratio' style={{ width: '100%' }} src={previewedImage} alt={`${previewedHat.colorName} Preview`} />
 					</Box>
 				</Grid>
 			</Grid>
@@ -103,7 +138,13 @@ const ExplorerHat = () => {
 				{EXPLORER_HATS.map((hat, index) => {
 					return (
 						<div>
-							<img style={{ width: '100%' }} onClick={() => setSelectedHat(index)} src={hat.mainPic} alt={`${hat.colorName} Main`} />
+							<img
+								className='cord-hat-image-ratio'
+								style={{ height: 'auto', width: '100%' }}
+								onClick={() => setSelectedHat(index)}
+								src={hat.mainPic}
+								alt={`${hat.colorName} Main`}
+							/>
 							<Typography>{hat.colorName}</Typography>
 						</div>
 					);
