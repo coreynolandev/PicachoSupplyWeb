@@ -51,7 +51,7 @@ const HatForCheckout = ({ hat, index, setSnackbarOpen }) => {
 						}}
 						position={'relative'}
 						className='hoodie-stitch container '>
-						<Box key={`unzoomed-hoodie-${index}`} className='hoodie-stitch container'>
+						<Box key={`unzoomed-hoodie-${index}`} className='hoodie-stitch container' sx={{display: 'flex', alignItems: 'center'}}>
 							<img key='base-color-img' className=' hoodie-stitch-only hoodie' src={selectedHat.mainPic} alt='Hoodie' />
 						</Box>
 					</Box>
@@ -64,12 +64,12 @@ const HatForCheckout = ({ hat, index, setSnackbarOpen }) => {
 					alignSelf={{ sm: 'center', md: 'flex-end' }}
 					alignItems='center'
 					sx={{ width: '100%', maxWidth: '300px' }}
-					mt={2}>
+					m={'auto !important'}>
 					<Typography key={`itemtype-${index}`} variant='h6' sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
 						{hat.type}
 					</Typography>
 					<OrderItemDetail key={`orderItem-Hat-Base-${index}`} label='Color' value={hat.colorName} />
-					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
+					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{  marginTop: '2rem !important' }}>
 						<Button key={`edithoodie-${index}`} variant='contained' color='edit'>
 							<Link to={'/hoodies'} state={{ editId: hat.id }} style={{ textDecoration: 'none', color: 'black' }}>
 								Edit

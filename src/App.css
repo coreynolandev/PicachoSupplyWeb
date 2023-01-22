@@ -508,7 +508,8 @@ a.on-light-bg {
 }
 
 .test-small-pic {
-	width: 150px;
+	min-width: 140px;
+	width: 90%
 }
 
 .explorer-hat-container {

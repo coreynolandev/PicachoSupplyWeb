@@ -65,7 +65,7 @@ const HoodieForCheckout = ({ hoodie, index, setSnackbarOpen }) => {
 					alignSelf={{ sm: 'center', md: 'flex-end' }}
 					alignItems='center'
 					sx={{ width: '100%', maxWidth: '300px' }}
-					mt={2}>
+					m={'auto !important'}>
 					<Typography key={`itemtype-${index}`} variant='h6' sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
 						{hoodie.type}
 					</Typography>
@@ -75,7 +75,7 @@ const HoodieForCheckout = ({ hoodie, index, setSnackbarOpen }) => {
 					<OrderItemDetail key={`orderItem-Gradient-${index}`} label='Gradient' value={hoodie.gradientColor} />
 					<OrderItemDetail key={`orderItem-Size-${index}`} label='Size' value={hoodie.size} />
 					<QuantitySelector key={`quantitySelector-${index}`} orderItem={hoodie} />
-					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
+					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{ margin: '2rem !important' }}>
 						<Button key={`edithoodie-${index}`} variant='contained' color='edit'>
 							<Link to={'/hoodies'} state={{ editId: hoodie.id }} style={{ textDecoration: 'none', color: 'black' }}>
 								Edit
