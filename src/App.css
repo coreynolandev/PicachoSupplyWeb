@@ -490,12 +490,6 @@ a.on-light-bg {
 	align-items: center;
 }
 
-@media (max-width: 900px) {
-	.swatch-carousel.container {
-		max-width: 500px;
-	}
-}
-
 @media (min-width: 650px) {
 	.App {
 		background-position: center center;
