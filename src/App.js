@@ -122,7 +122,7 @@ function App(props) {
 			<div className='App'>
 				<Navbar changeColorMode={changeColorMode} mode={colorMode} />
 				<div className='App-content'>
-					<Container disableGutters maxWidth='false' sx={{ minHeight: '100%' }}>
+					<Container disableGutters maxWidth='false' sx={{ minHeight: '100%', display: 'flex', justifyContent: 'center' }}>
 						{/* <Container disableGutters maxWidth='xl' sx={{ minHeight: '100%' }}> */}
 						<RouterProvider router={router} />
 					</Container>

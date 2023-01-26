@@ -16,6 +16,15 @@ body:before {
 
 .cord-hat-image-ratio {
 	aspect-ratio: 1.7979;
+	border: 1px solid black;
+}
+.cord-hat-image-ratio.selected {
+	border: 4px solid black;
+	/* border: 4px solid black; */
+}
+
+.cord-hat-scroll {
+	min-width: 200px;
 }
 
 .collection {
@@ -102,8 +111,8 @@ body:before {
 
 .shop-card {
 	max-width: 700px !important;
-	will-change: transform;
 }
+
 .shop-card-content {
 	max-height: 400px;
 	max-width: 600px;
@@ -502,14 +511,15 @@ a.on-light-bg {
 }
 
 .test-small-pic {
-	min-width: 140px;
-	width: 90%
+	width: 100%;
+	max-width: 150px;
 }
 
 .explorer-hat-container {
 	background: linear-gradient(90deg, #f8f8f8 0%, #eaebea 101.99%);
-	margin: 0;
 	padding: 1rem;
-	width: 100%;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	width: 95%;
 	height: 100%;
 }

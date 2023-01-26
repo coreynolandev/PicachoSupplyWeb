@@ -26,7 +26,7 @@ const Home = () => {
 						size='large'
 						className='animate__animated  animate__pulse animate__slower animate__delay-2s animate__infinite'
 						sx={{ borderRadius: '24px' }}>
-						Browse our Hoodies
+						Browse Our Products
 					</Button>
 				</Stack>
 			</Stack>

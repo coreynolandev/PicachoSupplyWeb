@@ -1,5 +1,4 @@
 import { Box, Button, Card, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeItem } from '../../features/cartSlice';
@@ -26,8 +25,6 @@ export const EXPLORER_HATS = [
 ];
 
 const HatForCheckout = ({ hat, index, setSnackbarOpen }) => {
-
-    console.log(hat)
 	const dispatch = useDispatch();
 
 	const deleteItemFromOrder = (id) => {
@@ -35,7 +32,7 @@ const HatForCheckout = ({ hat, index, setSnackbarOpen }) => {
 		setSnackbarOpen(true);
 	};
 
-    const selectedHat = EXPLORER_HATS.find(h => h.colorName === hat.colorName)
+	const selectedHat = EXPLORER_HATS.find((h) => h.colorName === hat.colorName);
 
 	return (
 		<Card key={`realhoodie${index}`} raised>
@@ -47,12 +44,12 @@ const HatForCheckout = ({ hat, index, setSnackbarOpen }) => {
 						sx={{
 							overflow: 'hidden',
 							minWidth: '300px',
-							width: '30%'
+							width: '100%'
 						}}
 						position={'relative'}
 						className='hoodie-stitch container '>
-						<Box key={`unzoomed-hoodie-${index}`} className='hoodie-stitch container' sx={{display: 'flex', alignItems: 'center'}}>
-							<img key='base-color-img' className=' hoodie-stitch-only hoodie' src={selectedHat.mainPic} alt='Hoodie' />
+						<Box key={`unzoomed-hoodie-${index}`} className='hoodie-stitch container' sx={{ display: 'flex', alignItems: 'center' }}>
+							<img key='base-color-img' className=' hoodie-stitch hoodie' src={selectedHat.mainPic} alt='Hoodie' />
 						</Box>
 					</Box>
 				</Stack>
@@ -61,17 +58,18 @@ const HatForCheckout = ({ hat, index, setSnackbarOpen }) => {
 					key={`orderItemList-${index}`}
 					direction='column'
 					spacing={1}
-					alignSelf={{ sm: 'center', md: 'flex-end' }}
+					alignSelf={{ sm: 'center' }}
 					alignItems='center'
-					sx={{ width: '100%', maxWidth: '300px' }}
+					sx={{ minWidth: '200px', paddingLeft: {md: '1rem !important'} }}
 					m={'auto !important'}>
 					<Typography key={`itemtype-${index}`} variant='h6' sx={{ fontWeight: 'bold', textDecoration: 'underline' }}>
 						{hat.type}
 					</Typography>
 					<OrderItemDetail key={`orderItem-Hat-Base-${index}`} label='Color' value={hat.colorName} />
-					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{  marginTop: '2rem !important' }}>
+					<QuantitySelector key={`quantitySelector-${index}`} orderItem={hat} />
+					<Stack key='edit-remove-buttons' direction='row' spacing={2} justifyContent='center' sx={{ marginTop: '2rem !important' }}>
 						<Button key={`edithoodie-${index}`} variant='contained' color='edit'>
-							<Link to={'/hoodies'} state={{ editId: hat.id }} style={{ textDecoration: 'none', color: 'black' }}>
+							<Link to={'/explorer-hat'} state={{ editId: hat.id }} style={{ textDecoration: 'none', color: 'black' }}>
 								Edit
 							</Link>
 						</Button>

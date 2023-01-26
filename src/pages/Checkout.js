@@ -25,6 +25,8 @@ const Checkout = () => {
 	const [snackbarError, setSnackbarError] = useState(false);
 	const navigate = useNavigate();
 
+	const shippingAndHandlingCost = useSelector((state) => state.cart.shippingAndHandlingCost);
+
 	const Alert = forwardRef(function Alert(props, ref) {
 		return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 	});
@@ -55,14 +57,14 @@ const Checkout = () => {
 					</Stack>
 					<Stack direction='row' justifyContent='space-between'>
 						<Typography>Est. S+H</Typography>
-						<Typography>$12.00</Typography>
+						<Typography>${shippingAndHandlingCost.toFixed(2)}</Typography>
 					</Stack>
 
 					<Divider />
 
 					<Stack direction='row' justifyContent='space-between'>
 						<Typography>Est. Total</Typography>
-						<Typography>${(sumOfTotalCost + 12).toFixed(2)}</Typography>
+						<Typography>${(sumOfTotalCost + shippingAndHandlingCost).toFixed(2)}</Typography>
 					</Stack>
 				</Stack>
 			</Box>
@@ -118,9 +120,18 @@ const Checkout = () => {
 
 		var orderHtml = '';
 		// var orderHtml = '<p>';
-		formData.orders.map(
-			(order, index) =>
-				(orderHtml += `<br/>Item # ${index + 1} - ${order.type}
+		console.log(formData);
+		console.log(formData, orders);
+		formData.orders.map((order, index) =>
+			order.type === 'Explorer Hat'
+				? (orderHtml += `<br/>Item # ${index + 1} - ${order.type}
+				<br/> &emsp;Hat Color: ${order.baseColor}
+				<br/> &emsp;Quantity: ${order.quantity}
+				<br/> &emsp;Cost: ${order.cost}
+				<br/>
+			
+			`)
+				: (orderHtml += `<br/>Item # ${index + 1} - ${order.type}
 	<br/> &emsp;Hoodie Base Color: ${order.baseColor}
 	<br/> &emsp;Border Color: ${order.borderColor}
 	<br/> &emsp;Fill Color: ${order.fillColor}
@@ -195,8 +206,9 @@ const Checkout = () => {
 				}
 			}
 		} else {
-			const newestres = await dispatch(addToSubscription(htmlFormData));
-			console.log(newestres);
+			// const newestres = await dispatch(addToSubscription(htmlFormData));
+			// console.log(newestres);
+			console.log(htmlFormData)
 			alert('Dev env');
 		}
 	};

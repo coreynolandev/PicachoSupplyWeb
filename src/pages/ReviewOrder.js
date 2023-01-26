@@ -1,14 +1,15 @@
-import { Box, Button, Card, Divider, Snackbar, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, Divider, Snackbar, Stack, TextField, Typography } from '@mui/material';
 import { forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 import HoodieForCheckout from '../components/design/HoodieForCheckout';
-import { removeJustUpdated } from '../features/cartSlice';
+import { changeShippingAndHandlingCost, removeJustUpdated } from '../features/cartSlice';
 import HatForCheckout from '../components/design/HatForCheckout';
 
 const ReviewOrder = () => {
 	var orders = useSelector((state) => state.cart.order);
+	var promoCodes = useSelector((state) => state.cart.promoCode);
 	const numberOfItemsInCart = orders.length;
 
 	const justUpdated = useSelector((state) => state.cart.justUpdated);
@@ -16,6 +17,31 @@ const ReviewOrder = () => {
 
 	var sumOfTotalCost = 0;
 	orders.map((item) => (sumOfTotalCost += item.quantity * item.cost));
+
+	const [promoCodeValue, setPromoCodeValue] = useState('');
+	const tryPromoCode = () => {
+		console.log(promoCodeValue);
+
+		console.log(promoCodes);
+		const appliedPromo = promoCodes.find((promo) => promo.code.toUpperCase() === promoCodeValue.toUpperCase());
+		if (appliedPromo) {
+			switch (appliedPromo.valueChanged) {
+				case 'S+H':
+					dispatch(changeShippingAndHandlingCost(0));
+					break;
+				default:
+					console.log('no codes!');
+			}
+		} else {
+			console.log('bad code');
+		}
+		// var cor = Object.values(promoCodes);
+		// var cor2 = Object.keys(promoCodes);
+		// console.log(cor2);
+		// console.log(cor);
+		// if (promoCodeValue.toUpperCase() === )
+		// useDispatch(changeShippingAndHandlingCost())
+	};
 
 	const OrderDetails = () => {
 		return (
@@ -51,6 +77,25 @@ const ReviewOrder = () => {
 							<Typography key='cart-total-label'>Total</Typography>
 							<Typography key='cart-total-cost'>${(sumOfTotalCost + 12).toFixed(2)}</Typography>
 						</Stack>
+
+						<TextField
+							name={'Promo Code'}
+							// error={}
+							size='medium'
+							type={'text'}
+							onChange={(e) => setPromoCodeValue(e.target.value.toUpperCase())}
+							value={promoCodeValue}
+							fullWidth={true}
+							placeholder={'Enter Promo Code'}
+							label={'Promo Code'}
+							InputProps={{
+								endAdornment: (
+									<Button color='secondary' variant='contained' onClick={() => tryPromoCode()}>
+										Apply
+									</Button>
+								)
+							}}
+						/>
 
 						<Stack direction='row' justifyContent='center'>
 							<Button variant='contained'>
@@ -121,13 +166,10 @@ const ReviewOrder = () => {
 					<>
 						<Stack key='main-hoodie-stack-items' direction='column' spacing={2} sx={{ width: { sm: '100%', md: '66.666%' }, height: '100%' }} mb={2}>
 							{orders.map((hoodie, index) => {
-								console.log(hoodie);
 								if (hoodie.type.includes('Hoodie')) {
-									console.log('hoodie!');
 									return <HoodieForCheckout key={`hoodie-for-checkout-${index}`} hoodie={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
 								}
 								if (hoodie.type.includes('Hat')) {
-									console.log('hat!');
 									return <HatForCheckout key={`hat-for-checkout-${index}`} hat={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
 								} else {
 									return <HoodieForCheckout key={`hoodie-for-checkout-${index}`} hoodie={hoodie} index={index} setSnackbarOpen={setSnackbarOpen} />;
@@ -140,8 +182,8 @@ const ReviewOrder = () => {
 					<Card key='empty-hoodie-cart' raised sx={{ width: { sm: '100%', md: '820px' } }}>
 						<Stack direction='column' alignItems='center' justifyContent={'center'} m={2} spacing={2}>
 							<Typography key='no-item-text'>No Items in Cart</Typography>
-							<Button key='no-item-browseHoodieButton' m={3} variant='contained' component='a' href='/hoodies'>
-								Browse Our Hoodies!
+							<Button key='no-item-browseHoodieButton' m={3} variant='contained' component='a' href='/shop'>
+								Browse Our Products
 							</Button>
 						</Stack>
 					</Card>

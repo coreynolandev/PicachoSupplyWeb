@@ -5,6 +5,8 @@ import { subscribeToMailchimp } from '../api/addToNewsletter';
 
 export const initialState = {
 	order: [],
+	shippingAndHandlingCost: 12.0,
+	promoCode: [{ code: 'LIFESTYLE', valueChanged: 'S+H', newValue: 0 }],
 	contactEmail: null,
 	contactNumber: null,
 	contactName: null,
@@ -79,8 +81,10 @@ const cartSlice = createSlice({
 		},
 		updateHoodie: (state, { payload }) => {
 			// Payload is whole object
+			console.log(payload);
 			var index = state.order.findIndex((item) => item.id === payload.id);
 			if (index !== -1) {
+				console.log(state.order[index]);
 				state.order[index] = payload;
 				state.justUpdated = true;
 			} else console.error('didnt update hoodie');
@@ -107,6 +111,10 @@ const cartSlice = createSlice({
 			console.log('hellp');
 			var index = state.order.find((item) => item.id === payload);
 			index.viewDetails = !index.viewDetails;
+		},
+		changeShippingAndHandlingCost: (state, { payload }) => {
+			console.log(payload)
+			state.shippingAndHandlingCost = payload;
 		}
 	},
 	extraReducers: (builder) => {
@@ -139,5 +147,16 @@ const cartSlice = createSlice({
 	}
 });
 
-export const { addHoodie, emptyCart, removeItem, updateHoodie, resetSubmitOrder, incrementQuantity, decreaseQuantity, switchViewDetails, removeJustUpdated } = cartSlice.actions;
+export const {
+	addHoodie,
+	emptyCart,
+	removeItem,
+	updateHoodie,
+	resetSubmitOrder,
+	incrementQuantity,
+	decreaseQuantity,
+	switchViewDetails,
+	removeJustUpdated,
+	changeShippingAndHandlingCost
+} = cartSlice.actions;
 export default cartSlice.reducer;

@@ -33,7 +33,8 @@ const ExplorerHat = () => {
 	const editItem = editId ? orders.find((item) => item.id === editId) : null;
 	const editMode = editItem !== null;
 
-	const [selectedHat, setSelectedHat] = useState(0);
+	console.log(editItem);
+	const [selectedHat, setSelectedHat] = useState(editItem ? editItem.colorNameId : 0);
 	const [selectedPreview, setSelectedPreview] = useState(0);
 	const previewedHat = EXPLORER_HATS[selectedHat];
 	const previewedImage =
@@ -64,7 +65,6 @@ const ExplorerHat = () => {
 	});
 
 	const addToCart = () => {
-		window.scrollBy(0, -1);
 		console.log('hat: ' + EXPLORER_HATS[selectedHat].colorName);
 		// Need a hoodie base, border color, and size to be able to add
 		if (selectedHat !== null && selectedHat >= 0 && selectedHat <= 3) {
@@ -74,6 +74,7 @@ const ExplorerHat = () => {
 			const hat = {
 				id: id,
 				colorName: EXPLORER_HATS[selectedHat].colorName,
+				colorNameId: selectedHat,
 				quantity: 1,
 				cost: 32.5,
 				type: 'Explorer Hat',
@@ -86,7 +87,7 @@ const ExplorerHat = () => {
 				if (oldHat) {
 					hat.quantity = oldHat.quantity;
 				}
-				var updated = dispatch(updateHoodie(oldHat));
+				var updated = dispatch(updateHoodie(hat));
 				console.log(updated);
 				navigate('/review-order');
 			} else {
@@ -96,66 +97,106 @@ const ExplorerHat = () => {
 			setAddOrUpdateButtonTitle(defaultAddOrUpdateCompleteTitle);
 			setSnackbarOpen(true);
 		}
+		window.scrollBy(0, -1);
 	};
 
 	return (
 		<div className='explorer-hat-container'>
-			<Typography variant='h5'>The Explorer Hat</Typography>
+			<Typography variant='h4'>The Explorer Hat</Typography>
 
-			<Grid container mb={4}>
+			<Grid container mb={3} mt={1}>
 				<Grid item sx={{ display: { xs: 'inherit', sm: 'none' }, marginBottom: { xs: 2, sm: 0 } }}>
 					<img style={{ width: '100%' }} src={previewedImage} alt={`${previewedHat.colorName} Preview`} />
 				</Grid>
 				<Grid item xs={12} sm={3} md={4}>
 					<Grid container columns={{ xs: 12, sm: 3 }}>
 						<Grid item xs={6}>
-							<img onClick={() => setSelectedPreview(0)} className='test-small-pic' src={previewedHat.mainPic} alt={`${previewedHat.colorName} Front`} />{' '}
+							<img
+								onClick={() => setSelectedPreview(0)}
+								className={`test-small-pic cord-hat-image-ratio ${0 === selectedPreview ? 'selected' : ''}`}
+								src={previewedHat.mainPic}
+								alt={`${previewedHat.colorName} Front`}
+							/>
 						</Grid>
 						<Grid item xs={6}>
-							<img onClick={() => setSelectedPreview(1)} className='test-small-pic' src={previewedHat.sidePic} alt={`${previewedHat.colorName} Side`} />{' '}
+							<img
+								onClick={() => setSelectedPreview(1)}
+								className={`test-small-pic cord-hat-image-ratio ${1 === selectedPreview ? 'selected' : ''}`}
+								src={previewedHat.sidePic}
+								alt={`${previewedHat.colorName} Side`}
+							/>
 						</Grid>
 
 						<Grid item xs={6}>
-							<img onClick={() => setSelectedPreview(2)} className='test-small-pic' src={previewedHat.backPic} alt={`${previewedHat.colorName} Back`} />{' '}
+							<img
+								onClick={() => setSelectedPreview(2)}
+								className={`test-small-pic cord-hat-image-ratio ${2 === selectedPreview ? 'selected' : ''}`}
+								src={previewedHat.backPic}
+								alt={`${previewedHat.colorName} Back`}
+							/>
 						</Grid>
 
 						<Grid item xs={6}>
-							<img onClick={() => setSelectedPreview(3)} className='test-small-pic' src={previewedHat.innerPic} alt={`${previewedHat.colorName} Inside`} />{' '}
+							<img
+								onClick={() => setSelectedPreview(3)}
+								className={`test-small-pic cord-hat-image-ratio ${3 === selectedPreview ? 'selected' : ''}`}
+								src={previewedHat.innerPic}
+								alt={`${previewedHat.colorName} Inside`}
+							/>
 						</Grid>
 					</Grid>
 				</Grid>
 				<Grid item xs={12} sm={9} md={8} sx={{ display: { xs: 'none', sm: 'inherit' } }}>
-					<Box alignSelf={'center'} sx={{ width: '100%', maxWidth: '650px' }}>
+					<Box alignSelf={'center'} sx={{ width: '100%', maxWidth: '650px', marginLeft: { xs: 0, sm: '8px' } }}>
 						<img className='cord-hat-image-ratio' style={{ width: '100%' }} src={previewedImage} alt={`${previewedHat.colorName} Preview`} />
 					</Box>
 				</Grid>
 			</Grid>
 
-			<Typography variant='h6'>CHOOSE A COLOR</Typography>
+			<Typography variant='h5'>CHOOSE A COLOR</Typography>
 			{/* <Grid container */}
 
-			<Stack direction='row' justifyContent={'space-evenly'} spacing={2}>
-				{EXPLORER_HATS.map((hat, index) => {
-					return (
-						<div>
-							<img
-								className='cord-hat-image-ratio'
-								style={{ height: 'auto', width: '100%' }}
-								onClick={() => setSelectedHat(index)}
-								src={hat.mainPic}
-								alt={`${hat.colorName} Main`}
-							/>
-							<Typography>{hat.colorName}</Typography>
-						</div>
-					);
-				})}
-			</Stack>
+			<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+				<Stack direction='row' spacing={2} p={2} sx={{ overflowX: 'scroll' }}>
+					{EXPLORER_HATS.map((hat, index) => {
+						return (
+							<Stack direction='column' className='cord-hat-scroll' mb={1}>
+								<img
+									className={`cord-hat-image-ratio ${index === selectedHat ? 'selected' : ''}`}
+									style={{ height: 'auto', width: '100%' }}
+									onClick={() => setSelectedHat(index)}
+									src={hat.mainPic}
+									alt={`${hat.colorName} Main`}
+								/>
+								<Typography variant='body1'>{hat.colorName}</Typography>
+							</Stack>
+						);
+					})}
+				</Stack>
+				{/* <Grid container spacing={1} sx={{ width: { xs: '100%', sm: '90%' } }}>
+					{EXPLORER_HATS.map((hat, index) => {
+						return (
+							<Grid item xs={4} sm={4}>
+								<img
+									className={`cord-hat-image-ratio ${index === selectedHat ? 'selected' : ''}`}
+									style={{ height: 'auto', width: '100%' }}
+									onClick={() => setSelectedHat(index)}
+									src={hat.mainPic}
+									alt={`${hat.colorName} Main`}
+								/>
+								<Typography variant='caption'>{hat.colorName}</Typography>
+							</Grid>
+						);
+					})}
+				</Grid> */}
+			</Box>
 
-			<Stack justifyContent='space-between' spacing={1} direction='row'>
-				<Button fullWidth color={editMode ? 'edit' : 'primary'} variant={'contained'} onClick={addToCart}>
+			{/* TODO: make it so it updates! */}
+			<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+				<Button color={editMode ? 'edit' : 'primary'} variant={'contained'} onClick={addToCart} sx={{ width: { xs: '100%', sm: '90%' } }}>
 					{addOrUpdateButtonTitle}
 				</Button>
-			</Stack>
+			</Box>
 
 			<Snackbar
 				sx={{ marginTop: { xs: '80px !important', sm: '64px !important' } }}

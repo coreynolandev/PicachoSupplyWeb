@@ -1,13 +1,44 @@
 import { Card, CardActionArea, CardContent, CardHeader, Grid } from '@mui/material';
 import HoodieThumbnail from '../assets2/models/hoodie_thumbnail.png';
 import KrownThumbnail from '../assets2/Krown-001.png';
-import ExplorerHatThumbnail from '../assets2/explorer-hat/ExplorerHatThumbnail.png';
+import ExplorerThumbnail from '../assets2/explorer-hat/ExplorerThumbnail.png';
+
+// const styles = {
+// 	cardContainer: {
+// 		backgroundImage: `url(${ExplorerThumbnail})`
+// 	}
+// };
 
 const Shop = () => {
 	return (
 		<Grid container spacing={2} mt={2} mb={2} p={2} justifyContent='center'>
+			{/* <Grid item sm={12} md={6} className=' shop-card'>
+				<Card style={styles.cardContainer} className='shop-card-content thumbnail'>
+					some text
+				</Card>
+			</Grid>
+
 			<Grid item sm={12} md={6} className=' shop-card'>
-				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInLeft shop-card'> */}
+				<img src={ExplorerThumbnail} alt='Explorer Hat Thumbnail' className='shop-card-content thumbnail' />
+			</Grid>
+
+			<Grid item sm={12} md={6} className=' shop-card'>
+				<img src={KrownThumbnail} alt='Krown Thumbnail' className='shop-card-content thumbnail' />
+			</Grid>
+
+			<Grid item sm={12} md={6} className=' shop-card'>
+				<img src={HoodieThumbnail} alt='Hoodie Thumbnail' className='shop-card-content thumbnail' />
+			</Grid>
+
+			<Grid item sm={12} md={6} className=' shop-card'>
+				<img src={ExplorerThumbnail} alt='Explorer Hat Thumbnail' className='shop-card-content thumbnail' />
+			</Grid>
+
+			<Grid item sm={12} md={6} className=' shop-card'>
+				<img src={KrownThumbnail} alt='Krown Thumbnail' className='shop-card-content thumbnail' />
+			</Grid> */}
+
+			<Grid item sm={12} md={6} className=' shop-card'>
 				<Card raised>
 					<CardActionArea disableRipple href='/hoodies'>
 						<CardHeader title='Lifestyle Hoodie' sx={{ paddingBottom: 0 }} />
@@ -19,19 +50,17 @@ const Shop = () => {
 			</Grid>
 
 			<Grid item sm={12} md={6} className=' shop-card'>
-				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInLeft shop-card'> */}
 				<Card raised>
 					<CardActionArea disableRipple href='/explorer-hat'>
 						<CardHeader title='Explorer Hat' sx={{ paddingBottom: 0 }} />
 						<CardContent className='shop-card-content'>
-							<img src={ExplorerHatThumbnail} alt='Explorer Hat Thumbnail' className='shop-card-content thumbnail' />
+							<img src={ExplorerThumbnail} alt='Explorer Hat Thumbnail' className='shop-card-content thumbnail' />
 						</CardContent>
 					</CardActionArea>
 				</Card>
 			</Grid>
 
 			<Grid item sm={12} md={6} className=' shop-card'>
-				{/* <Grid item sm={12} md={6} className='animate__animated animate__slideInRight shop-card'> */}
 				<Card raised>
 					<CardActionArea disableRipple sx={{ cursor: 'auto' }}>
 						<CardHeader title='More Coming Soon!' sx={{ paddingBottom: 0 }} />
