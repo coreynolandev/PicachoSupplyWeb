@@ -7,6 +7,7 @@ export const initialState = {
 	order: [],
 	shippingAndHandlingCost: 12.0,
 	promoCode: [{ code: 'LIFESTYLE', valueChanged: 'S+H', newValue: 0 }],
+	promosAdded: null,
 	contactEmail: null,
 	contactNumber: null,
 	contactName: null,
@@ -37,7 +38,7 @@ export const addToSubscription = createAsyncThunk('cart/addToSubscription', asyn
 			MERGE0: order.email,
 			MERGE1: order.name
 		});
-		console.log(params.toString());
+		// console.log(params.toString());
 
 		return subscribeToMailchimp(params.toString());
 	}
@@ -113,8 +114,18 @@ const cartSlice = createSlice({
 			index.viewDetails = !index.viewDetails;
 		},
 		changeShippingAndHandlingCost: (state, { payload }) => {
-			console.log(payload)
+			console.log(payload);
 			state.shippingAndHandlingCost = payload;
+		},
+		resetAllState: (state) => {
+			console.log(initialState);
+			state.shippingAndHandlingCost = 12.0;
+			state.promoCode = [{ code: 'LIFESTYLE', valueChanged: 'S+H', newValue: 0 }];
+		},
+		updatePromosAdded: (state, { payload }) => {
+			// send empty to clear it (on success purchase)
+			// send {type: 'S+H', message: ''} for a specific code
+			state.promosAdded = payload;
 		}
 	},
 	extraReducers: (builder) => {
@@ -137,7 +148,9 @@ const cartSlice = createSlice({
 				state.contactNumber = null;
 				state.contactName = null;
 				state.numberOfResets = 0;
+				state.shippingAndHandlingCost = 12.0;
 				state.processOrder = { processing: false, error: false, success: true };
+				state.promosAdded = null;
 			})
 			.addCase(processOrderAsync.rejected, (state, action) => {
 				console.log('rejected');
@@ -157,6 +170,8 @@ export const {
 	decreaseQuantity,
 	switchViewDetails,
 	removeJustUpdated,
-	changeShippingAndHandlingCost
+	changeShippingAndHandlingCost,
+	resetAllState,
+	updatePromosAdded
 } = cartSlice.actions;
 export default cartSlice.reducer;

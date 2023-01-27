@@ -15,6 +15,7 @@ body:before {
 }
 
 .cord-hat-image-ratio {
+	cursor: pointer;
 	aspect-ratio: 1.7979;
 	border: 1px solid black;
 }
@@ -196,6 +197,7 @@ body:before {
 
 .separator {
 	height: 10vh;
+	width: 100%;
 	position: relative;
 }
 
@@ -303,6 +305,7 @@ a.on-light-bg {
 	aspect-ratio: 16/9;
 	margin: auto;
 	width: 100%;
+	max-width: 1200px;
 }
 
 .bounceimage {
@@ -435,6 +438,12 @@ a.on-light-bg {
 .swatch-label {
 	cursor: pointer;
 }
+
+.swatch-label.out-of-stock {
+	cursor: not-allowed;
+	opacity: 50%;
+}
+
 .swatch-label.selected {
 	background-color: rgba(255, 255, 255, 0.08);
 }

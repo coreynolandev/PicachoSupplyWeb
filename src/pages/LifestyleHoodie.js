@@ -165,8 +165,8 @@ function LifestyleHoodie() {
 	};
 
 	function areMaterialsEqual(newMaterials) {
-		console.log(newMaterials);
-		console.log(orderMaterials);
+		// console.log(newMaterials);
+		// console.log(orderMaterials);
 		return (
 			newMaterials.hoodie === orderMaterials.hoodie &&
 			newMaterials.border === orderMaterials.border &&
@@ -186,7 +186,7 @@ function LifestyleHoodie() {
 			confirmRandomize = window.confirm('Let the Great Hawk randomize your hoodie? All current selections will be lost.');
 		}
 		if (confirmRandomize) {
-			const hoodieRandom = Math.floor(Math.random() * hoodieSelectionList.length);
+			var hoodieRandom = Math.floor(Math.random() * hoodieSelectionList.length);
 			const borderRandom = Math.floor(Math.random() * borderSelectionList.length);
 			const fillRandom = Math.floor(Math.random() * fillSelectionList.length);
 			var shouldSetGradient = Math.random() >= 0.5;
@@ -197,8 +197,8 @@ function LifestyleHoodie() {
 				setLastThreeRandom(lastThreeRandom);
 				setFullRandom(fullRandom);
 			} else {
-				console.log(lastThreeRandom);
-				console.log(fullRandom);
+				// console.log(lastThreeRandom);
+				// console.log(fullRandom);
 				const sum = lastThreeRandom.reduce((partialSum, a) => partialSum + a, 0);
 				if (sum === 0) shouldSetGradient = true;
 				if (sum === 3) shouldSetGradient = false;
@@ -206,8 +206,8 @@ function LifestyleHoodie() {
 				lastThreeRandom.push(shouldSetGradient ? 1 : 0);
 
 				fullRandom.push(shouldSetGradient ? 1 : 0);
-				const sum2 = fullRandom.reduce((partialSum, a) => partialSum + a, 0);
-				console.log(sum2 / fullRandom.length);
+				// const sum2 = fullRandom.reduce((partialSum, a) => partialSum + a, 0);
+				// console.log(sum2 / fullRandom.length);
 
 				setFullRandom(fullRandom);
 
@@ -216,6 +216,13 @@ function LifestyleHoodie() {
 
 			if (shouldSetGradient) {
 				gradientRandom = Math.floor(Math.random() * fillSelectionList.length);
+			}
+
+			// var outOfStock = !hoodieSelectionList[hoodieRandom].isInStock;
+			// hoodieRandom = 19;
+			while (!hoodieSelectionList[hoodieRandom].isInStock) {
+				hoodieRandom = Math.floor(Math.random() * hoodieSelectionList.length);
+				// console.log('did a new hoodie: ' + hoodieRandom);
 			}
 
 			setSelectedHoodie(hoodieRandom);

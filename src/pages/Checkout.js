@@ -10,7 +10,7 @@ import MuiAlert from '@mui/material/Alert';
 import ProcessingTimeout from '../components/design/ProcessingTimeout';
 import Reaptcha from 'reaptcha';
 
-const Checkout = () => {
+const Checkout = ({ shippingAndHandlingCost }) => {
 	const d = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
 	let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
 	let mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d);
@@ -25,12 +25,15 @@ const Checkout = () => {
 	const [snackbarError, setSnackbarError] = useState(false);
 	const navigate = useNavigate();
 
-	const shippingAndHandlingCost = useSelector((state) => state.cart.shippingAndHandlingCost);
+	// var shippingAndHandlingCost = useSelector((state) => state.cart.shippingAndHandlingCost);
 
 	const Alert = forwardRef(function Alert(props, ref) {
 		return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
 	});
 
+	// const resetallstate = () => {
+	// 	dispatch(resetAllState());
+	// };
 	var submitStatus = cart.processOrder;
 	const OrderDetails = () => {
 		return (
@@ -108,7 +111,9 @@ const Checkout = () => {
 	const { handleSubmit, register, control } = useForm({ defaultValues });
 	const myForm = useRef(null);
 
-	dispatch(addToSubscription(defaultValues));
+	// dispatch(addToSubscription(defaultValues));
+
+	const promosAdded = useSelector((state) => state.cart.promosAdded);
 
 	const sendEmail = async (formData) => {
 		const sendEmail = true;
@@ -144,6 +149,8 @@ const Checkout = () => {
 `)
 		);
 		orderHtml += '';
+
+		console.log(promosAdded);
 
 		let emailHtml = `<a href='mailto: ${formData.email}?subject=Picacho%20Order%20Confirmation'>${formData.email}</a>`;
 		let phoneHtml = `<a href='tel:${formData.phoneNumber}'>${formData.phoneNumber}</a>`;
@@ -181,7 +188,8 @@ const Checkout = () => {
 			replyEmailAddressHtml: replyEmail,
 			subscribeToNewsletterEmailHtml: subscribeToNewsletterEmailHtml,
 			templateTypeCustomer: process.env.REACT_APP_TEMPLATE_CUSTOMER,
-			reply_to: 'sales@picachosupply.com'
+			reply_to: 'sales@picachosupply.com',
+			promosAdded: promosAdded.message
 		};
 
 		console.log(htmlFormData);
@@ -208,7 +216,7 @@ const Checkout = () => {
 		} else {
 			// const newestres = await dispatch(addToSubscription(htmlFormData));
 			// console.log(newestres);
-			console.log(htmlFormData)
+			console.log(htmlFormData);
 			alert('Dev env');
 		}
 	};

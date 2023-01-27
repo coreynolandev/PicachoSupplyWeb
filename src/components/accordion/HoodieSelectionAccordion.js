@@ -18,7 +18,7 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 						return (
 							<Grid item xs={1.5} sm={1} key={`hoodieswatchcaro${index}`}>
 								<Tooltip
-									title={swatch.alt}
+									title={swatch.alt + (swatch.isInStock ? '' : ' - Out of Stock')}
 									enterDelay={0}
 									enterNextDelay={0}
 									disableInteractive={true}
@@ -51,6 +51,7 @@ const HoodieSelectionAccordion = ({ hoodieSelectionList, accordionNumber, expand
 											number={swatch.order}
 											selectedSwatch={selectedHoodie}
 											setSelectedSwatch={setSelectedHoodie}
+											isInStock={swatch.isInStock}
 										/>
 									</IconButton>
 								</Tooltip>

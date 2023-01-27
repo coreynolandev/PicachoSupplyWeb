@@ -15,6 +15,7 @@ import Completed from './pages/Completed';
 import Subscribe from './pages/Subscribe';
 import ErrorPage from './pages/ErrorPage';
 import ExplorerHat from './pages/ExplorerHat';
+import { useSelector } from 'react-redux';
 // import { getLists } from './api/mailchimpActions';
 
 function App(props) {
@@ -75,6 +76,16 @@ function App(props) {
 		setColorMode(newMode);
 	};
 
+	var shippingAndHandlingCost = useSelector((state) => state.cart.shippingAndHandlingCost);
+
+	const CheckoutThing = () => {
+		return <Checkout shippingAndHandlingCost={shippingAndHandlingCost} />;
+	};
+
+	const ReviewThing = () => {
+		return <ReviewOrder shippingAndHandlingCost={shippingAndHandlingCost} />;
+	};
+
 	const router = createBrowserRouter([
 		{
 			path: '/',
@@ -83,37 +94,44 @@ function App(props) {
 		},
 		{
 			path: 'shop',
-			element: <Shop />
+			element: <Shop />,
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'about-us',
-			element: <AboutUs />
+			element: <AboutUs />,
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'hoodies',
-			element: <LifestyleHoodie />
+			element: <LifestyleHoodie />,
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'explorer-hat',
-			element: <ExplorerHat />
+			element: <ExplorerHat />,
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'review-order',
-			element: <ReviewOrder />
+			element: ReviewThing(),
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'checkout',
-			element: <Checkout />
+			element: CheckoutThing(),
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'completed',
-			element: <Completed />
+			element: <Completed />,
+			errorElement: <ErrorPage />
 		},
 		{
 			path: 'subscribe',
-			element: <Subscribe />
+			element: <Subscribe />,
+			errorElement: <ErrorPage />
 		}
-		//TODO: provide default error element
 	]);
 
 	return (
@@ -122,9 +140,11 @@ function App(props) {
 			<div className='App'>
 				<Navbar changeColorMode={changeColorMode} mode={colorMode} />
 				<div className='App-content'>
-					<Container disableGutters maxWidth='false' sx={{ minHeight: '100%', display: 'flex', justifyContent: 'center' }}>
+					<Container disableGutters maxWidth='false' sx={{ minHeight: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
 						{/* <Container disableGutters maxWidth='xl' sx={{ minHeight: '100%' }}> */}
 						<RouterProvider router={router} />
+
+						{/* <Outlet /> */}
 					</Container>
 				</div>
 			</div>

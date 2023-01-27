@@ -33,7 +33,6 @@ const ExplorerHat = () => {
 	const editItem = editId ? orders.find((item) => item.id === editId) : null;
 	const editMode = editItem !== null;
 
-	console.log(editItem);
 	const [selectedHat, setSelectedHat] = useState(editItem ? editItem.colorNameId : 0);
 	const [selectedPreview, setSelectedPreview] = useState(0);
 	const previewedHat = EXPLORER_HATS[selectedHat];
@@ -160,7 +159,7 @@ const ExplorerHat = () => {
 				<Stack direction='row' spacing={2} p={2} sx={{ overflowX: 'scroll' }}>
 					{EXPLORER_HATS.map((hat, index) => {
 						return (
-							<Stack direction='column' className='cord-hat-scroll' mb={1}>
+							<Stack direction='column' className='cord-hat-scroll' mb={1} key={`explorer-hat-selection-list-${index}`}>
 								<img
 									className={`cord-hat-image-ratio ${index === selectedHat ? 'selected' : ''}`}
 									style={{ height: 'auto', width: '100%' }}

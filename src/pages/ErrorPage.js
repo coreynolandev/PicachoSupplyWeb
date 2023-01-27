@@ -2,7 +2,7 @@ import { Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/mate
 
 const ErrorPage = () => {
 	return (
-		<Box p={1}>
+		<Box sx={{width: '100%'}}>
 			<Card raised>
 				<CardHeader title='Wipeout Brooooother' />
 				<CardContent sx={{ margin: '0 !important', padding: '0 !important' }}>

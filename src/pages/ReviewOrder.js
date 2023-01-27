@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 import HoodieForCheckout from '../components/design/HoodieForCheckout';
-import { changeShippingAndHandlingCost, removeJustUpdated } from '../features/cartSlice';
+import { changeShippingAndHandlingCost, removeJustUpdated, updatePromosAdded } from '../features/cartSlice';
 import HatForCheckout from '../components/design/HatForCheckout';
 
-const ReviewOrder = () => {
+const ReviewOrder = ({ shippingAndHandlingCost }) => {
 	var orders = useSelector((state) => state.cart.order);
 	var promoCodes = useSelector((state) => state.cart.promoCode);
 	const numberOfItemsInCart = orders.length;
@@ -20,19 +20,21 @@ const ReviewOrder = () => {
 
 	const [promoCodeValue, setPromoCodeValue] = useState('');
 	const tryPromoCode = () => {
-		console.log(promoCodeValue);
-
-		console.log(promoCodes);
 		const appliedPromo = promoCodes.find((promo) => promo.code.toUpperCase() === promoCodeValue.toUpperCase());
 		if (appliedPromo) {
 			switch (appliedPromo.valueChanged) {
 				case 'S+H':
 					dispatch(changeShippingAndHandlingCost(0));
+					dispatch(updatePromosAdded({ type: 'S+H', message: 'Free S+H' }));
+					setPromoSnackbarError(false);
+					setPromoSnackbarOpen(true);
 					break;
 				default:
 					console.log('no codes!');
 			}
 		} else {
+			setPromoSnackbarOpen(true);
+			setPromoSnackbarError(true);
 			console.log('bad code');
 		}
 		// var cor = Object.values(promoCodes);
@@ -43,6 +45,9 @@ const ReviewOrder = () => {
 		// useDispatch(changeShippingAndHandlingCost())
 	};
 
+	const [promoSnackbarError, setPromoSnackbarError] = useState(false);
+
+	// TODO: make this scroll down if u have a big checkout list
 	const OrderDetails = () => {
 		return (
 			<Box key='allOrderDetails' sx={{ width: { sm: '100%', md: '33.3333%' }, marginLeft: { sm: 'inherit', md: '1rem' } }}>
@@ -68,14 +73,14 @@ const ReviewOrder = () => {
 						</Stack>
 						<Stack direction='row' justifyContent='space-between'>
 							<Typography key='s-h-est-label'>Est. S+H</Typography>
-							<Typography key='s-h-est-cost'>$12.00</Typography>
+							<Typography key='s-h-est-cost'>${shippingAndHandlingCost.toFixed(2)}</Typography>
 						</Stack>
 
 						<Divider />
 
 						<Stack direction='row' justifyContent='space-between'>
 							<Typography key='cart-total-label'>Total</Typography>
-							<Typography key='cart-total-cost'>${(sumOfTotalCost + 12).toFixed(2)}</Typography>
+							<Typography key='cart-total-cost'>${(sumOfTotalCost + shippingAndHandlingCost).toFixed(2)}</Typography>
 						</Stack>
 
 						<TextField
@@ -111,6 +116,7 @@ const ReviewOrder = () => {
 	};
 
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
+	const [promoSnackbarOpen, setPromoSnackbarOpen] = useState(false);
 
 	const Alert = forwardRef(function Alert(props, ref) {
 		return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
@@ -123,6 +129,16 @@ const ReviewOrder = () => {
 		setSnackbarOpen(false);
 	};
 
+	var clickawayCount = 0;
+	const handlePromoSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway' && clickawayCount < 1) {
+			clickawayCount++;
+			return;
+		}
+		setPromoSnackbarOpen(false);
+		setPromoSnackbarError(false);
+		clickawayCount = 0;
+	};
 	const handleUpdatedSnackbarClose = (event, reason) => {
 		if (reason === 'clickaway') {
 			dispatch(removeJustUpdated());
@@ -157,6 +173,17 @@ const ReviewOrder = () => {
 					</Alert>
 				</Snackbar>
 			)}
+
+			<Snackbar
+				sx={{ minWidth: '300px', width: '100%', maxWidth: '600px', marginTop: { xs: '80px !important', sm: '64px !important' } }}
+				anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+				open={promoSnackbarOpen}
+				autoHideDuration={5000}
+				onClose={handlePromoSnackbarClose}>
+				<Alert onClose={handlePromoSnackbarClose} severity={promoSnackbarError ? 'error' : 'success'} sx={{ width: '100%' }}>
+					{promoSnackbarError ? <span>Invalid Promo Code</span> : <span>Success! Enjoy the free stuff</span>}
+				</Alert>
+			</Snackbar>
 			<Typography key='reviewOrder' variant='h2'>
 				Review Order
 			</Typography>

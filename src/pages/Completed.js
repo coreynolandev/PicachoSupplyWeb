@@ -1,4 +1,5 @@
 import { Box, Button, Card, Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetSubmitOrder } from '../features/cartSlice';
 
@@ -6,7 +7,9 @@ const Completed = () => {
 	const refNum = useSelector((state) => state.cart.previousOrderId);
 	console.log(refNum);
 	const dispatch = useDispatch();
-	dispatch(resetSubmitOrder());
+	useEffect(() => {
+		dispatch(resetSubmitOrder());
+	}, []);
 	return (
 		<Box className='scroll-snap'>
 			<Card raised sx={{ padding: 1, margin: 2 }}>
@@ -18,7 +21,7 @@ const Completed = () => {
 							<Typography className='on-light-bg' component='a' href='mailto: sales@picachosupply.com?subject=Picacho%20Supply%20Inquiry'>
 								sales@picachosupply.com
 							</Typography>{' '}
-							with your reference number: <h6>{refNum}</h6>
+							with your reference number: {refNum}
 						</Typography>
 						<Typography variant='h5'>
 							Additionally, a team member will be reaching out shortly to confirm your order details and create an invoice on Stripe.

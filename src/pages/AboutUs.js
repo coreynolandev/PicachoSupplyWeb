@@ -9,7 +9,13 @@ const AboutUs = () => {
 
 			<LightSeparatorTop />
 
-			<Stack spacing={0} sx={{ padding: '0px !important' }} direction='column' alignItems='center' justifyContent='center' className='home-media container light '>
+			<Stack
+				direction='column'
+				spacing={0}
+				sx={{ padding: '0px !important' }}
+				alignItems='center'
+				justifyContent='center'
+				className='home-media container light '>
 				{/* <Box className={'home-media container light  '}> */}
 				{/* <Stack direction='column' sx={{ height: 'calc(100vh - 80px - 2rem)' }}> */}
 				<div className='dontfill'>
@@ -23,10 +29,10 @@ const AboutUs = () => {
 						about.
 						<br />
 						<br />
-						<Typography variant='h6' color=''>
-							"Everything you see exists together, in a delicate balance."
-							<br />- The Lion King
-						</Typography>
+					</Typography>
+					<Typography variant='h6' color=''>
+						"Everything you see exists together, in a delicate balance."
+						<br />- The Lion King
 					</Typography>
 				</div>
 			</Stack>
