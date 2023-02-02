@@ -189,7 +189,7 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 			subscribeToNewsletterEmailHtml: subscribeToNewsletterEmailHtml,
 			templateTypeCustomer: process.env.REACT_APP_TEMPLATE_CUSTOMER,
 			reply_to: 'sales@picachosupply.com',
-			promosAdded: promosAdded.message
+			promosAdded: promosAdded?.message
 		};
 
 		console.log(htmlFormData);
