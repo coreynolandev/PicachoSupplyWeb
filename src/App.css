@@ -118,17 +118,6 @@ body:before {
 	width: 100%;
 	border-radius: 4px;
 }
-.shop-card-content.link {
-	cursor: pointer;
-}
-
-/* .shop-card-content.thumbnail {
-	border-radius: 4px;
-	display: block;
-	width: 90%;
-	height: auto;
-	object-fit: contain;
-} */
 
 .centered-content {
 	display: flex;
