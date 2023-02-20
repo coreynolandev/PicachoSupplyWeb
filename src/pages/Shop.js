@@ -7,6 +7,7 @@ import HoodieThumbnailHover from '../assets2/shop/Hoodie Icon Hover.png';
 import ExplorerThumbnail from '../assets2/shop/Hat Icon.png';
 import ExplorerThumbnailHover from '../assets2/shop/Hat Icon Hover.png';
 import { useState } from 'react';
+import { INITIAL_HAT_COST } from './ExplorerHat';
 
 const Shop = () => {
 	const [hoodieHover, setHoodieHover] = useState(false);
@@ -59,7 +60,7 @@ const Shop = () => {
 					<Card raised>
 						<Stack direction={'row'} justifyContent='space-between' p={1}>
 							<Typography>Explorer Hat</Typography>
-							<Typography>$32.50</Typography>
+							<Typography>${INITIAL_HAT_COST.toFixed(2)}</Typography>
 						</Stack>
 					</Card>
 				</Stack>

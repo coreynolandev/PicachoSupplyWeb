@@ -3,9 +3,10 @@ import { sendTestEmail } from '../api/sendOrderEmail';
 import uuid from 'react-uuid';
 import { subscribeToMailchimp } from '../api/addToNewsletter';
 
+const initSHCost = 0.0;
 export const initialState = {
 	order: [],
-	shippingAndHandlingCost: 12.0,
+	shippingAndHandlingCost: initSHCost,
 	promoCode: [{ code: 'LIFESTYLE', valueChanged: 'S+H', newValue: 0 }],
 	promosAdded: null,
 	contactEmail: null,
@@ -119,7 +120,7 @@ const cartSlice = createSlice({
 		},
 		resetAllState: (state) => {
 			console.log(initialState);
-			state.shippingAndHandlingCost = 12.0;
+			state.shippingAndHandlingCost = initSHCost;
 			state.promoCode = [{ code: 'LIFESTYLE', valueChanged: 'S+H', newValue: 0 }];
 		},
 		updatePromosAdded: (state, { payload }) => {
@@ -148,7 +149,7 @@ const cartSlice = createSlice({
 				state.contactNumber = null;
 				state.contactName = null;
 				state.numberOfResets = 0;
-				state.shippingAndHandlingCost = 12.0;
+				state.shippingAndHandlingCost = initSHCost;
 				state.processOrder = { processing: false, error: false, success: true };
 				state.promosAdded = null;
 			})

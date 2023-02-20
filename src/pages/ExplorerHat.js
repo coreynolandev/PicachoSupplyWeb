@@ -24,6 +24,8 @@ export const EXPLORER_HATS = [
 	{ colorName: 'Powder Blue & Chartreuse', mainPic: PBC_FRONT, sidePic: PBC_SIDE, backPic: PBC_BACK, innerPic: PBC_INNER, order: 2, cost: 32.95 }
 ];
 
+export const INITIAL_HAT_COST = 15.0;
+
 const ExplorerHat = () => {
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -75,7 +77,7 @@ const ExplorerHat = () => {
 				colorName: EXPLORER_HATS[selectedHat].colorName,
 				colorNameId: selectedHat,
 				quantity: 1,
-				cost: 32.5,
+				cost: INITIAL_HAT_COST,
 				type: 'Explorer Hat',
 				viewDetails: false
 			};

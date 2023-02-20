@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Icon, Stack, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Icon, Stack, Typography } from '@mui/material';
 import PicachoWhiteLogo from '../assets2/big_logo.png';
 import UsaFlag from '../assets2/usa.png';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
@@ -6,14 +6,24 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { Landscape } from '@mui/icons-material';
 import MailchimpForm from '../components/form/MailchimpForm';
 import { DarkSeparatorBottom, DarkSeparatorTop, LightSeparatorBottom, LightSeparatorTop } from '../components/design/Separators';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { changeShippingAndHandlingCost } from '../features/cartSlice';
 
 const Home = () => {
+	const dispatch = useDispatch();
+	const hideFreeShipping = () => {
+		sessionStorage.setItem('showFreeShipping', false);
+		setShowFreeShipping(false);
+		dispatch(changeShippingAndHandlingCost(0.0));
+	};
+	const [showFreeShipping, setShowFreeShipping] = useState(sessionStorage.getItem('showFreeShipping') ? false : true);
 	return (
 		<Box className='scroll-snap'>
 			<Stack spacing={0} direction='column' alignItems='center' justifyContent='center' className='home-media container  '>
 				<Stack justifyContent='center' spacing={4} alignItems='center' className='landing-area'>
 					<img className='picacho-white-logo' src={PicachoWhiteLogo} alt='Picacho' />
-					
+
 					<Typography component='h1' variant='h5' sx={{ WebkitTextStroke: '1px black', color: 'white', fontWeight: '800' }}>
 						Outdoor clothing and gear for all sports and lifestyles. Picacho Supply is based in Denver, Colorado.
 					</Typography>
@@ -120,6 +130,32 @@ const Home = () => {
 
 			<DarkSeparatorBottom />
 			<div style={{ height: '45px' }}></div>
+
+			<Dialog
+				PaperProps={{
+					style: {
+						backgroundColor: 'black'
+					}
+				}}
+				sx={{textAlign: 'center'}}
+				open={showFreeShipping}
+				onClose={hideFreeShipping}
+				aria-labelledby='alert-dialog-title'
+				aria-describedby='alert-dialog-description'>
+				<DialogTitle color={'white'} id='alert-dialog-title'>
+					Free Shipping on All Orders in February
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText color={'white'} id='alert-dialog-description'>
+						Snag the new Explorer Hat for just $15
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions sx={{justifyContent: 'center'}}>
+					<Button sx={{width: '50%', maxWidth: '400px'}} variant='contained' color='edit' onClick={hideFreeShipping}>
+						Let's Go!
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Box>
 	);
 };

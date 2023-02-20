@@ -116,7 +116,7 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 	const promosAdded = useSelector((state) => state.cart.promosAdded);
 
 	const sendEmail = async (formData) => {
-		const sendEmail = true;
+		const sendEmail = false;
 
 		if (captchaToken == null) {
 			setNeedRecaptcha(true);
@@ -130,7 +130,7 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 		formData.orders.map((order, index) =>
 			order.type === 'Explorer Hat'
 				? (orderHtml += `<br/>Item # ${index + 1} - ${order.type}
-				<br/> &emsp;Hat Color: ${order.baseColor}
+				<br/> &emsp;Hat Color: ${order.colorName}
 				<br/> &emsp;Quantity: ${order.quantity}
 				<br/> &emsp;Cost: ${order.cost}
 				<br/>
