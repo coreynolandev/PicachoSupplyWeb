@@ -116,7 +116,7 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 	const promosAdded = useSelector((state) => state.cart.promosAdded);
 
 	const sendEmail = async (formData) => {
-		const sendEmail = false;
+		const sendEmail = true;
 
 		if (captchaToken == null) {
 			setNeedRecaptcha(true);
