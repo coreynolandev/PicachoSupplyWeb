@@ -116,7 +116,7 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 	const promosAdded = useSelector((state) => state.cart.promosAdded);
 
 	const sendEmail = async (formData) => {
-		const sendEmail = true;
+		const sendEmail = false;
 
 		if (captchaToken == null) {
 			setNeedRecaptcha(true);
@@ -139,7 +139,7 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 				: (orderHtml += `<br/>Item # ${index + 1} - ${order.type}
 	<br/> &emsp;Hoodie Base Color: ${order.baseColor}
 	<br/> &emsp;Border Color: ${order.borderColor}
-	<br/> &emsp;Fill Color: ${order.fillColor}
+	<br/> &emsp;Fill Color: ${order.fillColor ?? 'N/A' }
 	<br/> &emsp;Gradient Color: ${order.gradientColor ? order.gradientColor : 'N/A'}
 	<br/> &emsp;Size: ${order.size}
 	<br/> &emsp;Quantity: ${order.quantity}
