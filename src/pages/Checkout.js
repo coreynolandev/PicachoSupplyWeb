@@ -80,7 +80,9 @@ const Checkout = ({ shippingAndHandlingCost }) => {
 	const captchaRef = useRef(null);
 
 	const verify = () => {
+		console.log('verify')
 		captchaRef.current.getResponse().then((res) => {
+			console.log(res)
 			setNeedRecaptcha(false);
 			setCaptchaToken(res);
 		});
